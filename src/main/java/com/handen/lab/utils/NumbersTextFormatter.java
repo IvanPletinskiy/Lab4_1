@@ -12,7 +12,7 @@ public class NumbersTextFormatter extends TextFormatter<TextFormatter.Change> {
 
             String text = change.getControlNewText();
 
-            if(isValid(text, maxNumbers)) {
+            if(!isValid(text, maxNumbers)) {
                 return null;
             }
             return change;

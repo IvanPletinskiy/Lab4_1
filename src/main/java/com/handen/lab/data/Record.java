@@ -5,6 +5,7 @@ public class Record {
     private String phone;
     private String yearString;
     private short year;
+    private boolean isChanged;
 
     public Record(String surname, String phone, short year) {
         this.surname = surname;
@@ -35,5 +36,13 @@ public class Record {
 
     public short getYear() {
         return year;
+    }
+
+    public boolean isChanged() {
+        return isChanged;
+    }
+
+    public void setChanged(boolean changed) {
+        isChanged = changed;
     }
 }

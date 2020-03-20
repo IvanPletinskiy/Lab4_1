@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.handen.lab.controller.AddDialogController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+        <Label text="Surname" />
+        <TextArea fx:id="surname_text_area" prefHeight="200.0" prefWidth="200.0" />
+        <Label layoutX="10.0" layoutY="10.0" text="Phone" />
+        <TextArea fx:id="phone_text_area" layoutX="10.0" layoutY="27.0" prefHeight="200.0" prefWidth="200.0" />
+        <Label layoutX="10.0" layoutY="191.0" text="Year" />
+        <TextArea fx:id="year_text_area" layoutX="10.0" layoutY="208.0" prefHeight="200.0" prefWidth="200.0" />
+        <Label fx:id="errorLabel" textFill="red" visible="false"/>
+        <Button fx:id="add_button" mnemonicParsing="false" onAction="#OnAddButtonClick" text="Add" />
+    </VBox>
+
+</AnchorPane>

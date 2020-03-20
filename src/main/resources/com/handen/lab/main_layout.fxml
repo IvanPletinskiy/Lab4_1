@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -10,61 +9,57 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
 
     <MenuBar>
         <Menu text="File">
-            <MenuItem fx:id="menu_load" text="Load" onAction="#OnMenuLoadClicked"/>
-            <MenuItem fx:id="menu_save" text="Save" onAction="#OnMenuSaveClicked"/>
+            <MenuItem fx:id="menu_load" onAction="#OnMenuLoadClicked" text="Load" />
+            <MenuItem fx:id="menu_save" onAction="#OnMenuSaveClicked" text="Save" />
         </Menu>
-        <Menu fx:id="menu_help" text="Help" onAction="#OnMenuHelpClicked"/>
-        <Menu fx:id="menu_about" text="About" onAction="#OnMenuAboutClicked"/>
+        <Menu fx:id="menu_help" onAction="#OnMenuHelpClicked" text="Help" />
+        <Menu fx:id="menu_about" onAction="#OnMenuAboutClicked" text="About" />
     </MenuBar>
 
-    <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.topAnchor="0.0">
+    <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.topAnchor="25.0">
         <top>
             <HBox prefHeight="15.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                 <padding>
-                    <Insets left="15.0"/>
+                    <Insets left="15.0" />
                 </padding>
-                <Label text="Surname:"/>
-                <TextArea fx:id="search_surname" prefHeight="200.0" prefWidth="200.0"/>
+                <Label text="Surname:" />
+                <TextArea fx:id="search_surname" prefHeight="200.0" prefWidth="200.0" />
                 <Label text="From year:">
                     <HBox.margin>
-                        <Insets left="50.0"/>
+                        <Insets left="50.0" />
                     </HBox.margin>
                 </Label>
-                <TextArea fx:id="search_year" prefHeight="200.0" prefWidth="200.0" onKeyTyped="#OnSearchYearKeyTyped"/>
+                <TextArea fx:id="search_year" onKeyTyped="#OnSearchYearKeyTyped" prefHeight="200.0" prefWidth="200.0" />
             </HBox>
         </top>
         <right>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-                <Label text="Surname"/>
-                <TextArea fx:id="surname_text_area" prefHeight="200.0" prefWidth="200.0"/>
-                <Label layoutX="10.0" layoutY="10.0" text="Label"/>
-                <TextArea fx:id="phone_text_area" layoutX="10.0" layoutY="27.0" prefHeight="200.0"
-                          prefWidth="200.0"/>
-                <Label layoutX="10.0" layoutY="191.0" text="Label"/>
-                <TextArea fx:id="year_text_area" layoutX="10.0" layoutY="208.0" prefHeight="200.0"
-                          prefWidth="200.0"/>
+            <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <Label text="Surname" />
+                <TextArea fx:id="surname_text_area" prefHeight="200.0" prefWidth="200.0" />
+                <Label layoutX="10.0" layoutY="10.0" text="Phone" />
+                <TextArea fx:id="phone_text_area" layoutX="10.0" layoutY="27.0" prefHeight="200.0" prefWidth="200.0" />
+                <Label layoutX="10.0" layoutY="191.0" text="Year" />
+                <TextArea fx:id="year_text_area" layoutX="10.0" layoutY="208.0" prefHeight="200.0" prefWidth="200.0" />
+                <Label fx:id="errorLabel" textFill="red" visible="false"/>
                 <HBox prefHeight="100.0" prefWidth="200.0">
-                    <Button fx:id="add_button" mnemonicParsing="false" text="Add"
-                            onAction="#OnAddButtonClick"/>
-                    <Button fx:id="edit_button" mnemonicParsing="false" text="Edit"
-                            onAction="#OnEditButtonClick"/>
-                    <Button fx:id="delete_button" mnemonicParsing="false" text="Delete"
-                            onAction="#OnDeleteButtonClick"/>
+                    <Button fx:id="add_button" mnemonicParsing="false" onAction="#OnAddButtonClick" text="Add" />
+                    <Button fx:id="save_button" mnemonicParsing="false" onAction="#OnSaveButtonClick" text="Save" />
+                    <Button fx:id="delete_button" mnemonicParsing="false" onAction="#OnDeleteButtonClick" text="Delete" />
                 </HBox>
             </VBox>
         </right>
         <center>
-            <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0" focusTraversable="false"
-                       BorderPane.alignment="CENTER">
+            <TableView fx:id="table" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                 <columns>
                     <TableColumn prefWidth="75.0" text="Surname">
                         <cellValueFactory>
@@ -74,12 +69,12 @@
 
                     <TableColumn prefWidth="75.0" text="Phone">
                         <cellValueFactory>
-                            <PropertyValueFactory property="phone"/>
+                            <PropertyValueFactory property="phone" />
                         </cellValueFactory>
                     </TableColumn>
                     <TableColumn prefWidth="75.0" text="Year">
                         <cellValueFactory>
-                            <PropertyValueFactory property="yearString"/>
+                            <PropertyValueFactory property="yearString" />
                         </cellValueFactory>
                     </TableColumn>
 

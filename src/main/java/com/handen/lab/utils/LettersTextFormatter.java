@@ -12,7 +12,7 @@ public class LettersTextFormatter extends TextFormatter<TextFormatter.Change> {
 
             String text = change.getControlNewText();
 
-            if(isValid(text)) {
+            if(!isValid(text)) {
                 return null;
             }
             return change;
