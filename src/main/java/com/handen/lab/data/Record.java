@@ -5,7 +5,6 @@ public class Record {
     private String phone;
     private String yearString;
     private short year;
-    private boolean isChanged;
 
     public Record(String surname, String phone, short year) {
         this.surname = surname;
@@ -21,9 +20,10 @@ public class Record {
 
     public String getYearString() {
         if(year == 0)
-            return "";
+            yearString =  "";
         else
-            return Integer.toString(year);
+            yearString = Integer.toString(year);
+        return yearString;
     }
 
     public String getSurname() {
@@ -38,11 +38,8 @@ public class Record {
         return year;
     }
 
-    public boolean isChanged() {
-        return isChanged;
-    }
-
-    public void setChanged(boolean changed) {
-        isChanged = changed;
+    @Override
+    public String toString() {
+        return surname + ";" + phone + ";" + getYearString();
     }
 }

@@ -9,12 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- * JavaFX App
- */
 public class App extends Application {
-
-    private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -22,6 +17,7 @@ public class App extends Application {
         Scene scene = new Scene(loader.load());
         MainController controller = loader.getController();
         controller.setStage(stage);
+        stage.setTitle("Ivan Pletinski 951008");
         stage.setScene(scene);
         stage.show();
     }

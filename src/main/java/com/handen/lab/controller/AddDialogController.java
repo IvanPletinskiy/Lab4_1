@@ -9,9 +9,12 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class AddDialogController implements Initializable {
@@ -53,7 +56,6 @@ public class AddDialogController implements Initializable {
             isValid = false;
             showError("Year cannot be less than 2000 or grater than 2020");
         }
-
         if(surname_text_area.textProperty().getValue().equals("")) {
             isValid = false;
             showError("Surname field cannot be empty.");
@@ -73,7 +75,9 @@ public class AddDialogController implements Initializable {
     private short getYear() {
         short year = -1;
         try {
-            year = Short.parseShort(year_text_area.textProperty().getValue());
+            if(!year_text_area.textProperty().getValue().isEmpty()) {
+                year = Short.parseShort(year_text_area.textProperty().getValue());
+            }
         }
         catch(NumberFormatException e) {
             e.printStackTrace();
@@ -88,12 +92,28 @@ public class AddDialogController implements Initializable {
         year_text_area.setTextFormatter(new NumbersTextFormatter(4));
     }
 
-    interface AddRecordDialogListener {
-        void addRecord(Record record);
-    }
-
     private void showError(String errorText) {
         errorLabel.setText(errorText);
         errorLabel.setVisible(true);
+    }
+
+    public void focusNextTextArea(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown()) {
+            event.consume();
+            Node node = (Node) event.getSource();
+            KeyEvent newEvent
+                    = new KeyEvent(event.getSource(),
+                    event.getTarget(), event.getEventType(),
+                    event.getCharacter(), event.getText(),
+                    event.getCode(), event.isShiftDown(),
+                    true, event.isAltDown(),
+                    event.isMetaDown());
+
+            node.fireEvent(newEvent);
+        }
+    }
+
+    interface AddRecordDialogListener {
+        void addRecord(Record record);
     }
 }

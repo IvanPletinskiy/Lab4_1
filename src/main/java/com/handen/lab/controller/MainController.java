@@ -2,40 +2,50 @@ package com.handen.lab.controller;
 
 import com.handen.lab.App;
 import com.handen.lab.data.Record;
-import com.handen.lab.model.BaseModel;
-import com.handen.lab.model.Model;
+import com.handen.lab.model.Repository;
 import com.handen.lab.utils.LettersTextFormatter;
 import com.handen.lab.utils.NumbersTextFormatter;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainController implements Initializable {
 
+    public AnchorPane container;
     private Stage stage;
 
     public Label errorLabel;
     private ObservableList<Record> items = FXCollections.observableArrayList();
+    private FilteredList<Record> filteredItems = new FilteredList<>(items, record -> true);
 
     public TextArea search_year;
 
@@ -52,12 +62,12 @@ public class MainController implements Initializable {
     public Button delete_button;
     public MenuItem menu_load;
     public MenuItem menu_save;
-    public Menu menu_help;
-    public Menu menu_about;
+    public MenuItem menu_help;
+    public MenuItem menu_about;
 
     private int selectedRow;
 
-    private BaseModel mModel;
+    private Repository repository;
 
     private RecordChangeListener recordChangedListener = () -> {
         Record item = items.get(selectedRow);
@@ -68,15 +78,15 @@ public class MainController implements Initializable {
         save_button.setVisible(isChanged);
     };
 
-    @FXML public void OnAddButtonClick(ActionEvent actionEvent) {
-
+    @FXML
+    public void OnAddButtonClick(ActionEvent actionEvent) {
         Parent root;
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("add_dialog.fxml"));
             root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Add record");
-            stage.setScene(new Scene(root, 450, 450));
+            stage.setScene(new Scene(root, 450, 300));
             AddDialogController controller = loader.getController();
             controller.setStage(stage);
             controller.setListener(record -> {
@@ -149,7 +159,17 @@ public class MainController implements Initializable {
     }
 
     public void OnDeleteButtonClick(ActionEvent actionEvent) {
-        items.remove(selectedRow);
+        if(!items.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Are you sure want to delete this record?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK) {
+                items.remove(selectedRow);
+            }
+        }
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -157,22 +177,26 @@ public class MainController implements Initializable {
         bindTextListeners();
         initializeTable();
 
-        mModel = new Model();
+        repository = new Repository();
     }
 
     private void initializeTable() {
         table.setEditable(false);
-        items.add(new Record("hahahandenA", "375293190365", (short) 2012));
-        items.add(new Record("hahahandenB", "375293190366", (short) 2013));
-        items.add(new Record("hahahandenC", "375293190367", (short) 2014));
-        table.setItems(items);
+        table.setItems(filteredItems);
         table.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             int newSelectedId = (int) newValue;
-            Record item = items.get(newSelectedId);
-            updateTextAreas(item);
-            selectedRow = newSelectedId;
-            save_button.setVisible(false);
-            errorLabel.setVisible(false);
+            if((int) newValue != -1) {
+                Record item = filteredItems.get(newSelectedId);
+                updateTextAreas(item);
+                selectedRow = newSelectedId;
+                save_button.setVisible(false);
+                errorLabel.setVisible(false);
+            }
+            else {
+                surname_text_area.setText("");
+                year_text_area.setText("");
+                phone_text_area.setText("");
+            }
         });
 
         table.getSelectionModel().clearAndSelect(0);
@@ -203,19 +227,66 @@ public class MainController implements Initializable {
         phone_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
             recordChangedListener.onChanged();
         });
+
+        search_surname.textProperty().addListener(((observable, oldValue, newValue) -> {
+            if(!oldValue.equals(newValue)) {
+                search();
+            }
+        }));
+        search_year.textProperty().addListener(((observable, oldValue, newValue) -> {
+            if(!oldValue.equals(newValue)) {
+                search();
+            }
+        }));
+    }
+
+    private void search() {
+        updatePredicate();
+        filterItems();
+        table.getSelectionModel().clearAndSelect(0);
+    }
+
+    private void updatePredicate() {
+        String surname = search_surname.textProperty().getValue();
+        short year = -1;
+        String yearString = search_year.textProperty().getValue();
+        if(!yearString.isEmpty()) {
+            try {
+                year = Short.parseShort(yearString);
+            }
+            catch(NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        short finalYear = year;
+        Predicate filterPredicate = new Predicate<Record>() {
+            @Override
+            public boolean test(Record record) {
+                return record.getSurname().contains(surname) && record.getYear() >= finalYear;
+            }
+        };
+        filteredItems.setPredicate(filterPredicate);
+    }
+
+    private void filterItems() {
+        SortedList<Record> sortedList = new SortedList<>(filteredItems);
+        sortedList.comparatorProperty().bind(table.comparatorProperty());
+        table.setItems(filteredItems);
     }
 
     public void OnMenuLoadClicked(ActionEvent actionEvent) {
         File file = chooseFile("Open records file");
         if(file != null) {
-            mModel.loadRecords(file);
+            items.clear();
+            items.addAll(repository.loadRecords(file));
+            table.getSelectionModel().clearAndSelect(0);
         }
     }
 
     public void OnMenuSaveClicked(ActionEvent actionEvent) {
-       File file = chooseFile("Save records to file");
+        File file = chooseDirecotory("Save records to directory");
         if(file != null) {
-            mModel.loadRecords(file);
+            repository.saveRecordsInDirectory(file, items);
         }
     }
 
@@ -232,16 +303,49 @@ public class MainController implements Initializable {
         return fileChooser.showOpenDialog(stage);
     }
 
+    private File chooseDirecotory(String title) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle(title);
+
+        String userDirectoryString = System.getProperty("user.home");
+        File userDirectory = new File(userDirectoryString);
+        if(!userDirectory.canRead()) {
+            userDirectory = new File("c:/");
+        }
+        directoryChooser.setInitialDirectory(userDirectory);
+        return directoryChooser.showDialog(stage);
+    }
+
     public void OnMenuHelpClicked(ActionEvent actionEvent) {
-        //TODO
+        showAlert("Help", helpText);
     }
 
     public void OnMenuAboutClicked(ActionEvent actionEvent) {
-        //TODO
+        showAlert("About", aboutText);
     }
 
-    public void OnSearchYearKeyTyped(KeyEvent keyEvent) {
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
 
+    public void focusNextTextArea(KeyEvent event) {
+        if (event.getCode() == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown()) {
+            event.consume();
+            Node node = (Node) event.getSource();
+            KeyEvent newEvent
+                    = new KeyEvent(event.getSource(),
+                    event.getTarget(), event.getEventType(),
+                    event.getCharacter(), event.getText(),
+                    event.getCode(), event.isShiftDown(),
+                    true, event.isAltDown(),
+                    event.isMetaDown());
+
+            node.fireEvent(newEvent);
+        }
     }
 
     interface RecordChangeListener {
@@ -251,4 +355,14 @@ public class MainController implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
+    private static final String helpText =
+            "This program is used for creating, editing, deleting, saving and loading records. The record consists of: owner's surname, phone number, year.\n" +
+            "Use TAB and SHIFT+TAB to navigate between input fields.\n" +
+            "Click on table and use arrows UP and DOWN to navigate between records\n" +
+            "Save button will appear after you change text in input fields\n" +
+            "Add and edit records, then click File -> Save to save them into file.";
+
+    private static final String aboutText =
+            "Made by Ivan Pletinski 951008 2020";
 }
