@@ -9,10 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="200.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.AddDialogController">
+<AnchorPane prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.AddDialogController">
 
-    <VBox prefHeight="200.0" prefWidth="300.0" BorderPane.alignment="CENTER">
-        <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+    <VBox prefHeight="277.0" prefWidth="400.0" BorderPane.alignment="CENTER">
             <Label text="Surname">
                 <font>
                     <Font size="15.0" />
@@ -23,7 +22,7 @@
             </Label>
             <TextArea fx:id="surname_text_area" onKeyPressed="#focusNextTextArea" prefHeight="100.0" prefWidth="200.0">
                 <VBox.margin>
-                    <Insets top="10.0" />
+                    <Insets right="120.0" top="10.0" />
                 </VBox.margin>
             </TextArea>
             <Label layoutX="10.0" layoutY="10.0" text="Phone">
@@ -36,7 +35,7 @@
             </Label>
             <TextArea fx:id="phone_text_area" layoutX="10.0" layoutY="27.0" onKeyPressed="#focusNextTextArea" prefHeight="100.0" prefWidth="200.0">
                 <VBox.margin>
-                    <Insets top="10.0" />
+                    <Insets right="120.0" top="10.0" />
                 </VBox.margin>
             </TextArea>
             <Label layoutX="10.0" layoutY="191.0" text="Year">
@@ -49,10 +48,10 @@
             </Label>
             <TextArea fx:id="year_text_area" layoutX="10.0" layoutY="208.0" onKeyPressed="#focusNextTextArea" prefHeight="100.0" prefWidth="200.0">
                 <VBox.margin>
-                    <Insets top="10.0" />
+                    <Insets right="120.0" top="10.0" />
                 </VBox.margin>
             </TextArea>
-            <Label fx:id="errorLabel" textFill="red" visible="false">
+            <Label fx:id="errorLabel" prefHeight="21.0" prefWidth="392.0" textFill="red" visible="false">
                 <font>
                     <Font size="15.0" />
                 </font>
@@ -61,7 +60,6 @@
                 </VBox.margin>
             </Label>
             <Button fx:id="add_button" focusTraversable="false" mnemonicParsing="false" onAction="#OnAddButtonClick" text="Add" />
-        </VBox>
       <padding>
          <Insets left="20.0" right="20.0" />
       </padding>

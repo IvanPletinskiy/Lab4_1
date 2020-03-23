@@ -54,15 +54,15 @@ public class AddDialogController implements Initializable {
         short year = getYear();
         if(year < 2000 || year > 2020) {
             isValid = false;
-            showError("Year cannot be less than 2000 or grater than 2020");
+            showError("Year cannot be less than 2000 or greater than 2020");
         }
         if(surname_text_area.textProperty().getValue().equals("")) {
             isValid = false;
             showError("Surname field cannot be empty.");
         }
-        if(phone_text_area.textProperty().getValue().equals("")) {
+        if(phone_text_area.textProperty().getValue().length() != 12) {
             isValid = false;
-            showError("Phone field cannot be empty.");
+            showError("Phone number must be 12 characters.");
         }
         if(year_text_area.textProperty().getValue().equals("")) {
             isValid = false;

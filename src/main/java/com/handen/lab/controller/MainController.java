@@ -123,16 +123,16 @@ public class MainController implements Initializable {
         short year = getYear();
         if(year < 2000 || year > 2020) {
             isValid = false;
-            showError("Year cannot be less than 2000 or grater than 2020");
+            showError("Year cannot be less than 2000 or greater than 2020");
         }
 
         if(surname_text_area.textProperty().getValue().equals("")) {
             isValid = false;
             showError("Surname field cannot be empty.");
         }
-        if(phone_text_area.textProperty().getValue().equals("")) {
+        if(phone_text_area.textProperty().getValue().length() != 12) {
             isValid = false;
-            showError("Phone field cannot be empty.");
+            showError("Phone number must be 12 characters.");
         }
         if(year_text_area.textProperty().getValue().equals("")) {
             isValid = false;
@@ -176,6 +176,7 @@ public class MainController implements Initializable {
         bindTextFormatters();
         bindTextListeners();
         initializeTable();
+        disableInput();
 
         repository = new Repository();
     }
@@ -185,21 +186,35 @@ public class MainController implements Initializable {
         table.setItems(filteredItems);
         table.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             int newSelectedId = (int) newValue;
-            if((int) newValue != -1) {
+            if((int) newValue == -1) {
+                disableInput();
+            }
+            else {
                 Record item = filteredItems.get(newSelectedId);
                 updateTextAreas(item);
                 selectedRow = newSelectedId;
-                save_button.setVisible(false);
-                errorLabel.setVisible(false);
+                surname_text_area.setDisable(false);
+                phone_text_area.setDisable(false);
+                year_text_area.setDisable(false);
+                delete_button.setVisible(true);
             }
-            else {
-                surname_text_area.setText("");
-                year_text_area.setText("");
-                phone_text_area.setText("");
-            }
+            save_button.setVisible(false);
+            errorLabel.setVisible(false);
         });
 
-        table.getSelectionModel().clearAndSelect(0);
+        table.getSelectionModel().clearAndSelect(-1);
+    }
+
+    private void disableInput() {
+        surname_text_area.setText("");
+        year_text_area.setText("");
+        phone_text_area.setText("");
+        surname_text_area.setDisable(true);
+        phone_text_area.setDisable(true);
+        year_text_area.setDisable(true);
+        delete_button.setVisible(false);
+        save_button.setVisible(false);
+        errorLabel.setVisible(false);
     }
 
     private void updateTextAreas(Record item) {
