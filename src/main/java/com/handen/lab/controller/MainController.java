@@ -40,44 +40,6 @@ import javafx.stage.Stage;
 
 public class MainController implements Initializable {
 
-    public AnchorPane container;
-    private Stage stage;
-
-    public Label errorLabel;
-    private ObservableList<Record> items = FXCollections.observableArrayList();
-    private FilteredList<Record> filteredItems = new FilteredList<>(items, record -> true);
-
-    public TextArea search_year;
-
-    public TextArea search_surname;
-
-    public TableView table;
-
-    public TextArea year_text_area;
-    public TextArea phone_text_area;
-    public TextArea surname_text_area;
-
-    public Button add_button;
-    public Button save_button;
-    public Button delete_button;
-    public MenuItem menu_load;
-    public MenuItem menu_save;
-    public MenuItem menu_help;
-    public MenuItem menu_about;
-
-    private int selectedRow;
-
-    private Repository repository;
-
-    private RecordChangeListener recordChangedListener = () -> {
-        Record item = items.get(selectedRow);
-        boolean isChanged = !surname_text_area.textProperty().getValue().equals(item.getSurname()) ||
-                !year_text_area.textProperty().getValue().equals(item.getYearString()) ||
-                !phone_text_area.textProperty().getValue().equals(item.getPhone());
-
-        save_button.setVisible(isChanged);
-    };
-
     @FXML
     public void OnAddButtonClick(ActionEvent actionEvent) {
         Parent root;
@@ -89,11 +51,7 @@ public class MainController implements Initializable {
             stage.setScene(new Scene(root, 450, 300));
             AddDialogController controller = loader.getController();
             controller.setStage(stage);
-            controller.setListener(record -> {
-                if(record != null) {
-                    addItem(record);
-                }
-            });
+            controller.setListener();
             stage.show();
         }
         catch(IOException e) {
@@ -183,22 +141,7 @@ public class MainController implements Initializable {
     private void initializeTable() {
         table.setEditable(false);
         table.setItems(filteredItems);
-        table.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-            int newSelectedId = (int) newValue;
-            if((int) newValue != -1) {
-                Record item = filteredItems.get(newSelectedId);
-                updateTextAreas(item);
-                selectedRow = newSelectedId;
-                save_button.setVisible(false);
-                errorLabel.setVisible(false);
-            }
-            else {
-                surname_text_area.setText("");
-                year_text_area.setText("");
-                phone_text_area.setText("");
-            }
-        });
-
+        table.getSelectionModel().selectedIndexProperty().addListener();
         table.getSelectionModel().clearAndSelect(0);
     }
 
@@ -218,26 +161,12 @@ public class MainController implements Initializable {
     }
 
     private void bindTextListeners() {
-        surname_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
-            recordChangedListener.onChanged();
-        });
-        year_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
-            recordChangedListener.onChanged();
-        });
-        phone_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
-            recordChangedListener.onChanged();
-        });
+        surname_text_area.textProperty().addListener();
+        year_text_area.textProperty().addListener();
+        phone_text_area.textProperty().addListener();
 
-        search_surname.textProperty().addListener(((observable, oldValue, newValue) -> {
-            if(!oldValue.equals(newValue)) {
-                search();
-            }
-        }));
-        search_year.textProperty().addListener(((observable, oldValue, newValue) -> {
-            if(!oldValue.equals(newValue)) {
-                search();
-            }
-        }));
+        search_surname.textProperty().addListener();
+        search_year.textProperty().addListener();
     }
 
     private void search() {
@@ -250,21 +179,9 @@ public class MainController implements Initializable {
         String surname = search_surname.textProperty().getValue();
         short year = -1;
         String yearString = search_year.textProperty().getValue();
-        if(!yearString.isEmpty()) {
-            try {
-                year = Short.parseShort(yearString);
-            }
-            catch(NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
+
         short finalYear = year;
-        Predicate filterPredicate = new Predicate<Record>() {
-            @Override
-            public boolean test(Record record) {
-                return record.getSurname().contains(surname) && record.getYear() >= finalYear;
-            }
-        };
+        Predicate filterPredicate = new Predicate<Record>({});
         filteredItems.setPredicate(filterPredicate);
     }
 
@@ -336,33 +253,12 @@ public class MainController implements Initializable {
         if (event.getCode() == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown()) {
             event.consume();
             Node node = (Node) event.getSource();
-            KeyEvent newEvent
-                    = new KeyEvent(event.getSource(),
-                    event.getTarget(), event.getEventType(),
-                    event.getCharacter(), event.getText(),
-                    event.getCode(), event.isShiftDown(),
-                    true, event.isAltDown(),
-                    event.isMetaDown());
-
+            KeyEvent newEvent = new KeyEvent();
             node.fireEvent(newEvent);
         }
-    }
-
-    interface RecordChangeListener {
-        void onChanged();
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-
-    private static final String helpText =
-            "This program is used for creating, editing, deleting, saving and loading records. The record consists of: owner's surname, phone number, year.\n" +
-            "Use TAB and SHIFT+TAB to navigate between input fields.\n" +
-            "Click on table and use arrows UP and DOWN to navigate between records\n" +
-            "Save button will appear after you change text in input fields\n" +
-            "Add and edit records, then click File -> Save to save them into file.";
-
-    private static final String aboutText =
-            "Made by Ivan Pletinski 951008 2020";
 }

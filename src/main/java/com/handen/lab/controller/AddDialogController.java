@@ -18,13 +18,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class AddDialogController implements Initializable {
-    public TextArea surname_text_area;
-    public TextArea phone_text_area;
-    public TextArea year_text_area;
-    public Label errorLabel;
-    public Button add_button;
-    private AddRecordDialogListener mListener;
-    private Stage mStage;
 
     public void setListener(AddRecordDialogListener listener) {
         mListener = listener;
@@ -98,22 +91,14 @@ public class AddDialogController implements Initializable {
     }
 
     public void focusNextTextArea(KeyEvent event) {
-        if (event.getCode() == KeyCode.TAB && !event.isShiftDown() && !event.isControlDown()) {
-            event.consume();
-            Node node = (Node) event.getSource();
-            KeyEvent newEvent
-                    = new KeyEvent(event.getSource(),
-                    event.getTarget(), event.getEventType(),
-                    event.getCharacter(), event.getText(),
-                    event.getCode(), event.isShiftDown(),
-                    true, event.isAltDown(),
-                    event.isMetaDown());
+        if(event.getCode() == KeyCode.TAB) {
+            if(!event.isShiftDown() && !event.isControlDown()) {
+                event.consume();
+                Node node = (Node) event.getSource();
+                KeyEvent newEvent = new KeyEvent();
 
-            node.fireEvent(newEvent);
+                node.fireEvent(newEvent);
+            }
         }
-    }
-
-    interface AddRecordDialogListener {
-        void addRecord(Record record);
     }
 }
