@@ -1,12 +1,5 @@
 module hellofx {
     requires javafx.controls;
     requires javafx.fxml;
-
-    opens com.handen.lab to javafx.fxml;
-    exports com.handen.lab.controller;
-    exports com.handen.lab.data;
-    exports com.handen.lab.model;
-    exports com.handen.lab.utils;
-    exports com.handen.lab;
-    opens com.handen.lab.controller to javafx.fxml;
+    opens com.handen.lab;
 }
