@@ -12,18 +12,7 @@ import javafx.event.EventHandler;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
-class RunnerShape {
-    private Circle shape;
-    private final Random random;
-    private static final double START_ANGULAR_VELOCITY = 0.5;
-    private double angularVelocity;
-    private double angle = 0;
-    private final int lapRadius;
-    private final double lapCenterX;
-    private final double lapCenterY;
-
-    private Timeline timeline;
-    private FinishListener mFinishListener;
+public class RunnerShape {
 
     public RunnerShape(Circle shape, int lapRadius) {
         random = new Random();
@@ -35,32 +24,30 @@ class RunnerShape {
 
         this.shape = shape;
 
-        timeline = new Timeline(new KeyFrame(Duration.millis(40), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                runTick();
-                moveShape();
-            }
-        }));
+        timeline = new Timeline(new KeyFrame(Duration.millis(40), new EventHandler(){}));
 
-        timeline.statusProperty().addListener(new ChangeListener<Animation.Status>() {
-            @Override
-            public void changed(ObservableValue<? extends Animation.Status> observable, Animation.Status oldValue, Animation.Status newValue) {
-                if(oldValue == Animation.Status.RUNNING) {
-                    if(newValue == Animation.Status.STOPPED) {
-                        if(angle < 300) {
-                            timeline.setCycleCount(20);
-                        }
-                        if(angle < 360) {
-                            timeline.play();
-                        }
-                        else {
-                            mFinishListener.onFinish();
-                        }
-                    }
+        timeline.statusProperty().addListener(new ChangeListener<Status>() {});
+    }
+
+    public void handle(ActionEvent t) {
+        runTick();
+        moveShape();
+    }
+
+    public void changed(Status oldValue, Status newValue) {
+        if(oldValue == Animation.Status.RUNNING) {
+            if(newValue == Animation.Status.STOPPED) {
+                if(angle < 300) {
+                    timeline.setCycleCount(20);
+                }
+                if(angle < 360) {
+                    timeline.play();
+                }
+                else {
+                    mFinishListener.onFinish();
                 }
             }
-        });
+        }
     }
 
     private void moveShape() {

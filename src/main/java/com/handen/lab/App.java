@@ -20,24 +20,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    private static final List<Paint> paints = List.of(
-            Paint.valueOf("black"),
-            Paint.valueOf("blue"),
-            Paint.valueOf("red"),
-            Paint.valueOf("green"),
-            Paint.valueOf("black"),
-            Paint.valueOf("blue"),
-            Paint.valueOf("red"),
-            Paint.valueOf("green"));
 
-    private static final int START_RADIUS = 100;
-    private static final int DELTA_RADIUS = 25;
-    private static final int RUNNER_RADIUS = 7;
-    private static ArrayList<RunnerShape> runners = new ArrayList<>();
-    private static Text finishText;
-    private static int finishedCount = 0;
-    private static String finishPattern = "%s-е место: участник № %s\n";
-    private static final int WINDOW_SIDE = 1000;
+    public static void main(String[] args) {
+        launch();
+    }
 
     @Override
     public void start(Stage stage) {
@@ -48,20 +34,15 @@ public class App extends Application {
         root.getChildren().add(container);
 
         stage.setTitle("Ivan Pletinski 951008");
-        stage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if(event.getCode() == KeyCode.ENTER) {
-                    startRace();
-                }
-            }
-        });
+        stage.addEventHandler(...);
         stage.setScene(new Scene(root));
         stage.show();
     }
 
-    public static void main(String[] args) {
-        launch();
+    public void handle(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER) {
+            startRace();
+        }
     }
 
     private static void initializeViews(Pane container) {
@@ -133,15 +114,14 @@ public class App extends Application {
 
     private static void startRace() {
         for(RunnerShape runner : runners) {
-            runner.startRun(new RunnerShape.FinishListener() {
-                @Override
-                public void onFinish() {
-                    finishedCount++;
-                    int id = runners.indexOf(runner) + 1;
-                    updateFinishText(id);
-                }
-            });
+            runner.startRun(new FinishListener() {...});
         }
+    }
+
+    public void onFinish() {
+        finishedCount++;
+        int id = runners.indexOf(runner) + 1;
+        updateFinishText(id);
     }
 
     private static void updateFinishText(int id) {
