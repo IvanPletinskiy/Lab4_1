@@ -1,6 +1,7 @@
 module hellofx {
     requires javafx.controls;
     requires javafx.fxml;
+    requires kotlin.stdlib;
 
     opens com.handen.lab to javafx.fxml;
     exports com.handen.lab;
