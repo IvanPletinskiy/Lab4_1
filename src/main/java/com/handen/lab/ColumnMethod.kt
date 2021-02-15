@@ -1,7 +1,7 @@
 package com.handen.lab
 
 class ColumnMethod : Method {
-    override fun encode(text: String, key: String): String {
+    override fun encode(text: String, key: String): Result<String> {
         val filtered = text.filter {
             (it in 'a'..'z') || (it in 'A'..'Z')
         }
@@ -24,10 +24,10 @@ class ColumnMethod : Method {
             acc + list
         }
 
-        return String(encoded.toCharArray())
+        return Result.Success(String(encoded.toCharArray()))
     }
 
-    override fun decode(text: String, key: String): String {
+    override fun decode(text: String, key: String): Result<String> {
         val filtered = text.filter {
             (it in 'a'..'z') || (it in 'A'..'Z')
         }
@@ -62,7 +62,7 @@ class ColumnMethod : Method {
             columns[columnIndex][it / key.length]
         }.toCharArray()
 
-        return String(decoded)
+        return Result.Success(String(decoded))
     }
 }
 
@@ -70,7 +70,7 @@ fun main() {
     val columnMethod = ColumnMethod()
     val decodedText = "cryptographylove"
     val key = "key"
-    println("Encode: ${columnMethod.encode(decodedText, key)}")
+    println("Encode: ${(columnMethod.encode(decodedText, key) as Result.Success).value}")
     val encoded = "rtrhocpgpleyoayv"
-    println("Decode: ${columnMethod.decode(encoded, key)}")
+    println("Decode: ${(columnMethod.decode(encoded, key) as Result.Success).value}")
 }
