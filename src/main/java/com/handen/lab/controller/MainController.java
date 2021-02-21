@@ -3,6 +3,8 @@ package com.handen.lab.controller;
 import com.handen.lab.App;
 import com.handen.lab.data.Record;
 import com.handen.lab.model.Repository;
+import com.handen.lab.oop1.shapes.Shape;
+import com.handen.lab.oop1.shapes.ShapesList;
 import com.handen.lab.utils.LettersTextFormatter;
 import com.handen.lab.utils.NumbersTextFormatter;
 
@@ -24,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -42,6 +45,8 @@ public class MainController implements Initializable {
 
     public AnchorPane container;
     private Stage stage;
+
+    public Canvas canvas;
 
     public Label errorLabel;
     private ObservableList<Record> items = FXCollections.observableArrayList();
@@ -173,11 +178,7 @@ public class MainController implements Initializable {
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        bindTextFormatters();
-        bindTextListeners();
-        initializeTable();
-
-        repository = new Repository();
+        ShapesList shapesList = new ShapesList();
     }
 
     private void initializeTable() {
