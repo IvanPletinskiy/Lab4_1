@@ -20,8 +20,5 @@ public class Line extends Shape {
     @Override
     public void draw(GraphicsContext context) {
         context.strokeLine(x1, y1, x2, y2);
-//        context.moveTo(x1, y1);
-//        context.lineTo(x2, y2);
-//        context.save();
     }
 }

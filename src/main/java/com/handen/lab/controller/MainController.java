@@ -5,7 +5,12 @@ import com.handen.lab.data.Record;
 import com.handen.lab.model.Repository;
 import com.handen.lab.oop1.shapes.Shape;
 import com.handen.lab.oop1.shapes.ShapesList;
+import com.handen.lab.oop1.shapes.circles.Circle;
+import com.handen.lab.oop1.shapes.circles.FilledCircle;
 import com.handen.lab.oop1.shapes.other.Line;
+import com.handen.lab.oop1.shapes.quardangles.Parallelogram;
+import com.handen.lab.oop1.shapes.quardangles.Rectangle;
+import com.handen.lab.oop1.shapes.quardangles.Square;
 import com.handen.lab.utils.LettersTextFormatter;
 import com.handen.lab.utils.NumbersTextFormatter;
 
@@ -51,10 +56,21 @@ public class MainController implements Initializable {
     public Canvas canvas;
 
     static final Line line = new Line(100, 100, 200, 200);
+    static final Rectangle rectangle = new Rectangle(400, 100, 200, 100);
+    static final Square square = new Square(700, 100, 100);
+    static final Parallelogram parallelogram = new Parallelogram(100, 300, 200, 100, 0.8f);
+    static final Circle circle = new Circle(400, 300, 100);
+    static final Circle filledCircle = new FilledCircle(700, 300, 100);
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ShapesList shapesList = new ShapesList();
         shapesList.addShape(line);
+        shapesList.addShape(rectangle);
+        shapesList.addShape(square);
+        shapesList.addShape(parallelogram);
+        shapesList.addShape(circle);
+        shapesList.addShape(filledCircle);
+
         canvas.setHeight(1000);
         canvas.setWidth(1000);
 
