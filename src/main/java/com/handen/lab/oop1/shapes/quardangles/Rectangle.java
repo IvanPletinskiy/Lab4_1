@@ -1,6 +1,7 @@
 package com.handen.lab.oop1.shapes.quardangles;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.VBox;
 
 public class Rectangle extends Quadrangle {
 
@@ -19,5 +20,10 @@ public class Rectangle extends Quadrangle {
     @Override
     public void draw(GraphicsContext context) {
         context.fillRect(x1, y1, width, height);
+    }
+
+    @Override
+    public void fillOptionsContanier(VBox container) {
+
     }
 }

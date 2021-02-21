@@ -3,6 +3,7 @@ package com.handen.lab.oop1.shapes.circles;
 import com.handen.lab.oop1.shapes.Shape;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.VBox;
 
 public class Circle extends Shape {
 
@@ -19,5 +20,10 @@ public class Circle extends Shape {
     @Override
     public void draw(GraphicsContext context) {
         context.strokeOval(x1, y1, radius, radius);
+    }
+
+    @Override
+    public void fillOptionsContanier(VBox container) {
+
     }
 }

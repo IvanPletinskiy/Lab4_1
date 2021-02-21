@@ -1,6 +1,7 @@
 package com.handen.lab.oop1.shapes.quardangles;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.VBox;
 
 public class Parallelogram extends Quadrangle {
     private int x1, y1, height, width;
@@ -22,5 +23,10 @@ public class Parallelogram extends Quadrangle {
         context.strokeLine(x1, y1 + height , x1 + width * offset, y1 + height);
         context.strokeLine(x1 + width, y1, x1 + width * offset, y1 + height);
         context.strokeLine(x1 + width, y1, startX, y1);
+    }
+
+    @Override
+    public void fillOptionsContanier(VBox container) {
+
     }
 }
