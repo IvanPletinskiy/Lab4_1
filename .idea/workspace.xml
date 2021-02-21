@@ -7,9 +7,6 @@
     <list default="true" id="555b9ecb-4fad-49fe-9cc8-f58cce57a006" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/ShapesList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/ShapesList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/ui/main_layout.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/handen/lab/main_layout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/handen/lab/main_layout.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -351,7 +348,7 @@
       <workItem from="1613414398000" duration="5061000" />
       <workItem from="1613501315538" duration="6457000" />
       <workItem from="1613914535327" duration="235000" />
-      <workItem from="1613914807052" duration="1070000" />
+      <workItem from="1613914807052" duration="1285000" />
     </task>
     <task id="LOCAL-00001" summary="Column encoding is done">
       <created>1613310919188</created>
@@ -374,7 +371,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613915338133</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Work on first lab">
+      <created>1613915899198</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1613915899198</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -448,7 +452,8 @@
     <MESSAGE value="Column encoding is done" />
     <MESSAGE value="Decode works" />
     <MESSAGE value="Add shapes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add shapes" />
+    <MESSAGE value="Work on first lab" />
+    <option name="LAST_COMMIT_MESSAGE" value="Work on first lab" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

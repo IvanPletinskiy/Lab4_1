@@ -179,6 +179,7 @@ public class MainController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ShapesList shapesList = new ShapesList();
+
     }
 
     private void initializeTable() {
