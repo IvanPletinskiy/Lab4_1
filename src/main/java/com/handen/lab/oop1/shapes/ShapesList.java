@@ -9,4 +9,12 @@ public class ShapesList {
     public void addShape(Shape shape) {
         shapes.add(shape);
     }
+
+    public int size() {
+        return shapes.size();
+    }
+
+    public Shape get(int index) {
+        return shapes.get(index);
+    }
 }

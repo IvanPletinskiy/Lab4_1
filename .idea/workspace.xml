@@ -5,7 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="555b9ecb-4fad-49fe-9cc8-f58cce57a006" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/Shape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/ShapesList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/ShapesList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/circles/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/circles/Circle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/circles/Ellipse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/circles/Ellipse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/other/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/other/Line.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/other/Triangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/other/Triangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Rectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Trapeze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Trapeze.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/handen/lab/main_layout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/handen/lab/main_layout.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/controller/MainController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/controller/MainController$RecordChangeListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/controller/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/main_layout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/main_layout.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/Shape.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/Shape.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/ShapesList.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/ShapesList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/Circle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/Circle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/Ellipse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/Ellipse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/other/Line.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/other/Line.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/other/Triangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/other/Triangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Rectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Rectangle.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Trapeze.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Trapeze.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -347,7 +371,7 @@
       <workItem from="1613414398000" duration="5061000" />
       <workItem from="1613501315538" duration="6457000" />
       <workItem from="1613914535327" duration="235000" />
-      <workItem from="1613914807052" duration="1400000" />
+      <workItem from="1613914807052" duration="3934000" />
     </task>
     <task id="LOCAL-00001" summary="Column encoding is done">
       <created>1613310919188</created>
@@ -384,7 +408,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613926957745</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Delete redundant code from MainController">
+      <created>1613927071528</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1613927071528</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -459,7 +490,8 @@
     <MESSAGE value="Decode works" />
     <MESSAGE value="Work on first lab" />
     <MESSAGE value="Add shapes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add shapes" />
+    <MESSAGE value="Delete redundant code from MainController" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete redundant code from MainController" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -468,6 +500,11 @@
           <url>jar://$PROJECT_DIR$/../../Program Files/Java/jdk-12.0.1/lib/src.zip!/java.base/java/lang/Class.java</url>
           <line>2716</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/handen/lab/controller/MainController.java</url>
+          <line>55</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
