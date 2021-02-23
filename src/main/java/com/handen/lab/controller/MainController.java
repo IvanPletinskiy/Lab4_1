@@ -37,6 +37,7 @@ public class MainController implements Initializable {
 
     static final Line line = new Line();
     static final Rectangle rectangle = new Rectangle();
+    static final Square square = new Square();
     public TextField textField1;
     public TextField textField2;
     public TextField textField3;
@@ -47,8 +48,7 @@ public class MainController implements Initializable {
 
     private TextField[] textFields;
 
-    ObservableList<Shape> observableList = FXCollections.observableArrayList(line, rectangle);
-    static final Square square = new Square(700, 100, 100);
+    ObservableList<Shape> observableList = FXCollections.observableArrayList(line, rectangle, square);
     static final Parallelogram parallelogram = new Parallelogram(100, 300, 200, 100, 0.8f);
     static final Circle circle = new Circle(400, 300, 100);
     static final FilledCircle filledCircle = new FilledCircle(700, 300, 100);
@@ -61,14 +61,6 @@ public class MainController implements Initializable {
         combobox.setItems(observableList);
 
         combobox.setValue(line);
-
-        ShapesList shapesList = new ShapesList();
-        shapesList.addShape(line);
-        shapesList.addShape(rectangle);
-        shapesList.addShape(square);
-        shapesList.addShape(parallelogram);
-        shapesList.addShape(circle);
-        shapesList.addShape(filledCircle);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);

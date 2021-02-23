@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="555b9ecb-4fad-49fe-9cc8-f58cce57a006" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Rectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Square.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -413,7 +412,14 @@
       <option name="project" value="LOCAL" />
       <updated>1614109804910</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Implement rectangle">
+      <created>1614110306672</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1614110306672</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -492,7 +498,8 @@
     <MESSAGE value="Draw line" />
     <MESSAGE value="Add rest of shapes" />
     <MESSAGE value="Implement shape choice" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement shape choice" />
+    <MESSAGE value="Implement rectangle" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement rectangle" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
