@@ -39,6 +39,8 @@ public class MainController implements Initializable {
     static final Rectangle rectangle = new Rectangle();
     static final Square square = new Square();
     static final Parallelogram parallelogram = new Parallelogram();
+    static final Circle circle = new Circle();
+    static final FilledCircle filledCircle = new FilledCircle();
     public TextField textField1;
     public TextField textField2;
     public TextField textField3;
@@ -49,9 +51,7 @@ public class MainController implements Initializable {
 
     private TextField[] textFields;
 
-    ObservableList<Shape> observableList = FXCollections.observableArrayList(line, rectangle, square, parallelogram);
-    static final Circle circle = new Circle(400, 300, 100);
-    static final FilledCircle filledCircle = new FilledCircle(700, 300, 100);
+    ObservableList<Shape> observableList = FXCollections.observableArrayList(line, rectangle, square, parallelogram, circle, filledCircle);
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         combobox.setOnAction(actionEvent -> {
