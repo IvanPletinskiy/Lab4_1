@@ -36,6 +36,7 @@ public class MainController implements Initializable {
     public Button drawButton;
 
     static final Line line = new Line();
+    static final Rectangle rectangle = new Rectangle();
     public TextField textField1;
     public TextField textField2;
     public TextField textField3;
@@ -46,9 +47,7 @@ public class MainController implements Initializable {
 
     private TextField[] textFields;
 
-    ObservableList<Shape> observableList = FXCollections.observableArrayList(line);
-
-    static final Rectangle rectangle = new Rectangle(400, 100, 200, 100);
+    ObservableList<Shape> observableList = FXCollections.observableArrayList(line, rectangle);
     static final Square square = new Square(700, 100, 100);
     static final Parallelogram parallelogram = new Parallelogram(100, 300, 200, 100, 0.8f);
     static final Circle circle = new Circle(400, 300, 100);
