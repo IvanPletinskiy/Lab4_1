@@ -8,8 +8,10 @@ import com.handen.lab.oop1.shapes.other.Line;
 import com.handen.lab.oop1.shapes.quardangles.Parallelogram;
 import com.handen.lab.oop1.shapes.quardangles.Rectangle;
 import com.handen.lab.oop1.shapes.quardangles.Square;
+import com.handen.lab.utils.NumbersTextFormatter;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
@@ -19,6 +21,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -31,6 +36,15 @@ public class MainController implements Initializable {
     public Button drawButton;
 
     static final Line line = new Line();
+    public TextField textField1;
+    public TextField textField2;
+    public TextField textField3;
+    public TextField textField4;
+    public TextField textField5;
+    public TextField textField6;
+    public Label errorLabel;
+
+    private TextField[] textFields;
 
     ObservableList<Shape> observableList = FXCollections.observableArrayList(line);
 
@@ -43,6 +57,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         combobox.setOnAction(actionEvent -> {
             System.out.println(combobox.getValue());
+            updateInputView();
         });
         combobox.setItems(observableList);
 
@@ -61,15 +76,39 @@ public class MainController implements Initializable {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(5);
 
-        for(int i = 0; i < shapesList.size(); i++) {
-            Shape shape = shapesList.get(i);
-            shape.draw(gc);
-        }
+        textFields = new TextField[]{textField1, textField2, textField3, textField4, textField5, textField6};
+        Arrays.stream(textFields).forEach(textField -> {
+            textField.setTextFormatter(new NumbersTextFormatter(100));
+        });
+        updateInputView();
+    }
 
-        combobox.getValue().fillOptionsContanier(container);
+    private void updateInputView() {
+        Arrays.stream(textFields).forEach(textField -> {
+            textField.setText("");
+        });
+        container.getChildren().forEach(node -> {
+            node.setVisible(false);
+        });
+        container.getChildren().get(container.getChildren().size() - 1);
+
+        combobox.getValue().setupInputViews(container);
     }
 
     public void OnDrawButtonClicked(MouseEvent mouseEvent) {
-        combobox.getValue().draw(canvas.getGraphicsContext2D());
+        boolean isValid = validateInput();
+        if(isValid) {
+            combobox.getValue().draw(canvas.getGraphicsContext2D());
+        }
+    }
+
+    private boolean validateInput() {
+        boolean isInputValid = Arrays.stream(textFields).allMatch(textField -> !textField1.isVisible() || !textField1.getText().isBlank());
+        errorLabel.setVisible(!isInputValid);
+        if(!isInputValid) {
+            errorLabel.setWrapText(true);
+            errorLabel.setText("Verify your text fields. Some of them are empty");
+        }
+        return isInputValid;
     }
 }

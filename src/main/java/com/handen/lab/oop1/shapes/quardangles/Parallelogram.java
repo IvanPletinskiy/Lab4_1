@@ -26,7 +26,7 @@ public class Parallelogram extends Quadrangle {
     }
 
     @Override
-    public void fillOptionsContanier(VBox container) {
+    public void setupInputViews(VBox container) {
 
     }
 }

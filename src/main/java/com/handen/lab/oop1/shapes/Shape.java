@@ -10,5 +10,5 @@ public abstract class Shape {
 
 
     public abstract void draw(GraphicsContext context);
-    public abstract void fillOptionsContanier(VBox container);
+    public abstract void setupInputViews(VBox container);
 }

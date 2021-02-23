@@ -18,24 +18,10 @@ public class Line extends Shape {
 
     }
 
-    private Label label1 = new Label("Enter x1:");
-    TextField textField1 = new TextField();
-
-    private Label label2 = new Label("Enter y1:");
-    TextField textField2 = new TextField();
-
-    private Label label3 = new Label("Enter x2:");
-    TextField textField3 = new TextField();
-
-    private Label label4 = new Label("Enter y2:");
-    TextField textField4 = new TextField();
-
-    {
-        textField1.setTextFormatter(new NumbersTextFormatter(100));
-        textField2.setTextFormatter(new NumbersTextFormatter(100));
-        textField3.setTextFormatter(new NumbersTextFormatter(100));
-        textField4.setTextFormatter(new NumbersTextFormatter(100));
-    }
+    TextField textField1;
+    TextField textField2;
+    TextField textField3;
+    TextField textField4;
 
     @Override
     public void draw(GraphicsContext context) {
@@ -46,18 +32,30 @@ public class Line extends Shape {
     }
 
     @Override
-    public void fillOptionsContanier(VBox container) {
-        container.getChildren().add(label1);
-        container.getChildren().add(textField1);
+    public void setupInputViews(VBox container) {
+        Label label1 = (Label) container.getChildren().get(0);
+        label1.setText("Enter x1:");
+        label1.setVisible(true);
+        textField1 = (TextField) container.getChildren().get(1);
+        textField1.setVisible(true);
 
-        container.getChildren().add(label2);
-        container.getChildren().add(textField2);
+        Label label2 = (Label) container.getChildren().get(2);
+        label2.setText("Enter y1:");
+        label2.setVisible(true);
+        textField2 = (TextField) container.getChildren().get(3);
+        textField2.setVisible(true);
 
-        container.getChildren().add(label3);
-        container.getChildren().add(textField3);
+        Label label3 = (Label) container.getChildren().get(4);
+        label3.setText("Enter x2:");
+        label3.setVisible(true);
+        textField3 = (TextField) container.getChildren().get(5);
+        textField3.setVisible(true);
 
-        container.getChildren().add(label4);
-        container.getChildren().add(textField4);
+        Label label4 = (Label) container.getChildren().get(6);
+        label4.setText("Enter y2:");
+        label4.setVisible(true);
+        textField4 = (TextField) container.getChildren().get(7);
+        textField4.setVisible(true);
     }
 
     @Override

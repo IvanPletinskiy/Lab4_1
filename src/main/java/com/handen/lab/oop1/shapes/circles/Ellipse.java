@@ -12,7 +12,7 @@ public class Ellipse extends Shape {
     }
 
     @Override
-    public void fillOptionsContanier(VBox container) {
+    public void setupInputViews(VBox container) {
 
     }
 }
