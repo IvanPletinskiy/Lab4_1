@@ -70,6 +70,10 @@ class DecimationMethod() : Method {
         return Result.Success(String(text.toCharArray()))
     }
 
+    override fun toString(): String {
+        return "Метод децимаций"
+    }
+
     companion object {
         const val ENGLISH_LETTERS_COUNT = 26
     }

@@ -64,6 +64,10 @@ class ColumnMethod : Method {
 
         return Result.Success(String(decoded))
     }
+
+    override fun toString(): String {
+        return "Столбцовый метод"
+    }
 }
 
 fun main() {

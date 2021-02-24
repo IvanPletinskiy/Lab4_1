@@ -34,6 +34,10 @@ class VijinerMethod() : Method {
         return A + index
     }
 
+    override fun toString(): String {
+        return "Метод Вижнера, прогрессивный ключ"
+    }
+
     companion object {
         const val RUSSIAN_LETTERS_COUNT = 33
         const val A = 'А'
