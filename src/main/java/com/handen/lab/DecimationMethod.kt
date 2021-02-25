@@ -74,6 +74,11 @@ class DecimationMethod() : Method {
         return "Метод децимаций"
     }
 
+    override val encodedPath: String
+        get() = "C:\\ti\\decimation\\encoded.txt"
+    override val decodedPath: String
+        get() = "C:\\ti\\decimation\\decoded.txt"
+
     companion object {
         const val ENGLISH_LETTERS_COUNT = 26
     }

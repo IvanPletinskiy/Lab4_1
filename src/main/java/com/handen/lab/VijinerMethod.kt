@@ -6,7 +6,6 @@ class VijinerMethod() : Method {
             (it in 'а'..'я') || (it in 'А'..'Я')
         }.toUpperCase().mapIndexed { index, textLetter ->
             val keyLetter = A + (key[index % key.length] - A + index / key.length) % (RUSSIAN_LETTERS_COUNT - 1)
-            print(keyLetter)
             getChar(keyLetter, textLetter)
         }
 
@@ -18,7 +17,6 @@ class VijinerMethod() : Method {
             (it in 'а'..'я') || (it in 'А'..'Я')
         }.toUpperCase().mapIndexed { index, textLetter ->
             val keyLetter = A + (key[index % key.length] - A + index / key.length) % (RUSSIAN_LETTERS_COUNT - 1)
-            print(keyLetter)
             getSourceChar(keyLetter, textLetter)
         }
 
@@ -35,8 +33,13 @@ class VijinerMethod() : Method {
     }
 
     override fun toString(): String {
-        return "Метод Вижнера, прогрессивный ключ"
+        return "Метод Виженера, прогрессивный ключ"
     }
+
+    override val encodedPath: String
+        get() = "C:\\ti\\vigenere\\encoded.txt"
+    override val decodedPath: String
+        get() = "C:\\ti\\vigenere\\decoded.txt"
 
     companion object {
         const val RUSSIAN_LETTERS_COUNT = 33

@@ -68,6 +68,11 @@ class ColumnMethod : Method {
     override fun toString(): String {
         return "Столбцовый метод"
     }
+
+    override val encodedPath: String
+        get() = "C:\\ti\\column\\encoded.txt"
+    override val decodedPath: String
+        get() = "C:\\ti\\column\\decoded.txt"
 }
 
 fun main() {
