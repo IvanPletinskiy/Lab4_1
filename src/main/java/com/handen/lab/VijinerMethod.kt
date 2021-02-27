@@ -23,6 +23,24 @@ class VijinerMethod() : Method {
         return Result.Success(String(filtered.toCharArray()))
     }
 
+    fun indexFromLetter(char: Char): Int {
+        return when {
+            char == 'Ё' -> 6
+            char <= 'E'-> char - 'A'
+            char >= 'Ж' -> char - 'А' + 1
+            else -> -1
+        }
+    }
+
+    fun letterFromIndex(index: Int): Char {
+        return when {
+            index == 6 -> 'Ё'
+            index < 6 -> 'А' + index
+            index > 6 -> 'A' + index - 1
+            else -> '!'
+        }
+    }
+
     fun getChar(keyLetter: Char, textLetter: Char): Char {
         return A + (keyLetter.toUpperCase() - A + textLetter.toUpperCase().toInt() - A.toInt()) % (RUSSIAN_LETTERS_COUNT - 1)
     }
