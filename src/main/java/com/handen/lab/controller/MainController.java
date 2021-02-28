@@ -45,11 +45,6 @@ public class MainController implements Initializable {
 
     public Label errorLabel;
     private ObservableList<Record> items = FXCollections.observableArrayList();
-    private FilteredList<Record> filteredItems = new FilteredList<>(items, record -> true);
-
-    public TextArea search_year;
-
-    public TextArea search_surname;
 
     public TableView table;
 
@@ -182,11 +177,11 @@ public class MainController implements Initializable {
 
     private void initializeTable() {
         table.setEditable(false);
-        table.setItems(filteredItems);
+        table.setItems(items);
         table.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             int newSelectedId = (int) newValue;
             if((int) newValue != -1) {
-                Record item = filteredItems.get(newSelectedId);
+                Record item = items.get(newSelectedId);
                 updateTextAreas(item);
                 selectedRow = newSelectedId;
                 save_button.setVisible(false);
@@ -209,9 +204,6 @@ public class MainController implements Initializable {
     }
 
     private void bindTextFormatters() {
-        search_surname.setTextFormatter(new LettersTextFormatter());
-        search_year.setTextFormatter(new NumbersTextFormatter(4));
-
         surname_text_area.setTextFormatter(new LettersTextFormatter());
         phone_text_area.setTextFormatter(new NumbersTextFormatter(12));
         year_text_area.setTextFormatter(new NumbersTextFormatter(4));
@@ -227,51 +219,6 @@ public class MainController implements Initializable {
         phone_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
             recordChangedListener.onChanged();
         });
-
-        search_surname.textProperty().addListener(((observable, oldValue, newValue) -> {
-            if(!oldValue.equals(newValue)) {
-                search();
-            }
-        }));
-        search_year.textProperty().addListener(((observable, oldValue, newValue) -> {
-            if(!oldValue.equals(newValue)) {
-                search();
-            }
-        }));
-    }
-
-    private void search() {
-        updatePredicate();
-        filterItems();
-        table.getSelectionModel().clearAndSelect(0);
-    }
-
-    private void updatePredicate() {
-        String surname = search_surname.textProperty().getValue();
-        short year = -1;
-        String yearString = search_year.textProperty().getValue();
-        if(!yearString.isEmpty()) {
-            try {
-                year = Short.parseShort(yearString);
-            }
-            catch(NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
-        short finalYear = year;
-        Predicate filterPredicate = new Predicate<Record>() {
-            @Override
-            public boolean test(Record record) {
-                return record.getSurname().contains(surname) && record.getYear() >= finalYear;
-            }
-        };
-        filteredItems.setPredicate(filterPredicate);
-    }
-
-    private void filterItems() {
-        SortedList<Record> sortedList = new SortedList<>(filteredItems);
-        sortedList.comparatorProperty().bind(table.comparatorProperty());
-        table.setItems(filteredItems);
     }
 
     public void OnMenuLoadClicked(ActionEvent actionEvent) {
