@@ -1,22 +1,21 @@
 package com.handen.lab.controller;
 
 import com.handen.lab.App;
+import com.handen.lab.data.Employee;
 import com.handen.lab.data.Record;
+import com.handen.lab.data.developer.Developer;
+import com.handen.lab.data.developer.MobileDeveloper;
 import com.handen.lab.model.Repository;
 import com.handen.lab.utils.LettersTextFormatter;
-import com.handen.lab.utils.NumbersTextFormatter;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,13 +43,15 @@ public class MainController implements Initializable {
     private Stage stage;
 
     public Label errorLabel;
-    private ObservableList<Record> items = FXCollections.observableArrayList();
+    private ObservableList<Employee> items = FXCollections.observableArrayList(new MobileDeveloper(0, "Ivan", "Pletinskiy", 100500));
 
-    public TableView table;
+    public TableView<Employee> table;
 
-    public TextArea year_text_area;
-    public TextArea phone_text_area;
+    public TextArea name_text_area;
     public TextArea surname_text_area;
+    public TextArea salary_text_area;
+    public TextArea mentor_text_area;
+    public Label mentorLabel;
 
     public Button add_button;
     public Button save_button;
@@ -65,12 +66,13 @@ public class MainController implements Initializable {
     private Repository repository;
 
     private RecordChangeListener recordChangedListener = () -> {
-        Record item = items.get(selectedRow);
-        boolean isChanged = !surname_text_area.textProperty().getValue().equals(item.getSurname()) ||
-                !year_text_area.textProperty().getValue().equals(item.getYearString()) ||
-                !phone_text_area.textProperty().getValue().equals(item.getPhone());
-
-        save_button.setVisible(isChanged);
+        //TODO
+//        Record item = items.get(selectedRow);
+//        boolean isChanged = !surname_text_area.textProperty().getValue().equals(item.getSurname()) ||
+//                !year_text_area.textProperty().getValue().equals(item.getYearString()) ||
+//                !phone_text_area.textProperty().getValue().equals(item.getPhone());
+//
+//        save_button.setVisible(isChanged);
     };
 
     @FXML
@@ -97,55 +99,32 @@ public class MainController implements Initializable {
     }
 
     private void addItem(Record record) {
-        items.add(record);
-        table.getSelectionModel().select(items.size() - 1);
+        //TODO
+//        items.add(record);
+//        table.getSelectionModel().select(items.size() - 1);
     }
 
     public void OnSaveButtonClick(ActionEvent actionEvent) {
-        boolean isValid = validate();
-        if(isValid) {
-            String surname = surname_text_area.textProperty().getValue();
-            String year = year_text_area.textProperty().getValue();
-            String phone = phone_text_area.textProperty().getValue();
-            Record record = new Record(surname, phone, Short.parseShort(year));
-            items.set(selectedRow, record);
-        }
+        //TODO
+//        boolean isValid = validate();
+//        if(isValid) {
+//            String surname = surname_text_area.textProperty().getValue();
+//            String year = year_text_area.textProperty().getValue();
+//            String phone = phone_text_area.textProperty().getValue();
+//            Record record = new Record(surname, phone, Short.parseShort(year));
+//            items.set(selectedRow, record);
+//        }
     }
 
     private boolean validate() {
         boolean isValid = true;
 
-        short year = getYear();
-        if(year < 2000 || year > 2020) {
-            isValid = false;
-            showError("Year cannot be less than 2000 or grater than 2020");
-        }
-
         if(surname_text_area.textProperty().getValue().equals("")) {
             isValid = false;
             showError("Surname field cannot be empty.");
         }
-        if(phone_text_area.textProperty().getValue().equals("")) {
-            isValid = false;
-            showError("Phone field cannot be empty.");
-        }
-        if(year_text_area.textProperty().getValue().equals("")) {
-            isValid = false;
-            showError("Year field cannot be empty.");
-        }
 
         return isValid;
-    }
-
-    private short getYear() {
-        short year = -1;
-        try {
-            year = Short.parseShort(year_text_area.textProperty().getValue());
-        }
-        catch(NumberFormatException e) {
-            e.printStackTrace();
-        }
-        return year;
     }
 
     private void showError(String errorText) {
@@ -180,43 +159,44 @@ public class MainController implements Initializable {
         table.setItems(items);
         table.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             int newSelectedId = (int) newValue;
+            mentorLabel.setVisible(false);
+            mentor_text_area.setVisible(false);
             if((int) newValue != -1) {
-                Record item = items.get(newSelectedId);
-                updateTextAreas(item);
+                Employee employee = items.get(newSelectedId);
+                updateTextAreas(employee);
                 selectedRow = newSelectedId;
                 save_button.setVisible(false);
                 errorLabel.setVisible(false);
             }
             else {
                 surname_text_area.setText("");
-                year_text_area.setText("");
-                phone_text_area.setText("");
             }
         });
 
         table.getSelectionModel().clearAndSelect(0);
     }
 
-    private void updateTextAreas(Record item) {
-        surname_text_area.setText(item.getSurname());
-        year_text_area.setText(item.getYearString());
-        phone_text_area.setText(item.getPhone());
+    private void updateTextAreas(Employee employee) {
+        name_text_area.setText(employee.getName());
+        surname_text_area.setText(employee.getSurname());
+        salary_text_area.setText(String.valueOf(employee.getSalary()));
+        if(employee instanceof Developer) {
+            mentorLabel.setVisible(true);
+            mentor_text_area.setVisible(true);
+            if(((Developer) employee).getMentor() == null) {
+                mentor_text_area.setText("");
+            } else {
+                mentor_text_area.setText(((Developer) employee).getMentor().getSurname());
+            }
+        }
     }
 
     private void bindTextFormatters() {
         surname_text_area.setTextFormatter(new LettersTextFormatter());
-        phone_text_area.setTextFormatter(new NumbersTextFormatter(12));
-        year_text_area.setTextFormatter(new NumbersTextFormatter(4));
     }
 
     private void bindTextListeners() {
         surname_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
-            recordChangedListener.onChanged();
-        });
-        year_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
-            recordChangedListener.onChanged();
-        });
-        phone_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
             recordChangedListener.onChanged();
         });
     }

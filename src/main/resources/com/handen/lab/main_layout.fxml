@@ -58,6 +58,20 @@
         </top>
         <right>
             <VBox prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <Label text="Name">
+                    <font>
+                        <Font size="15.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets top="5.0"/>
+                    </VBox.margin>
+                </Label>
+                <TextArea fx:id="name_text_area" onKeyPressed="#focusNextTextArea"
+                          prefHeight="100.0" prefWidth="200.0">
+                    <VBox.margin>
+                        <Insets top="10.0"/>
+                    </VBox.margin>
+                </TextArea>
                 <Label text="Surname">
                     <font>
                         <Font size="15.0"/>
@@ -72,34 +86,36 @@
                         <Insets top="10.0"/>
                     </VBox.margin>
                 </TextArea>
-                <Label layoutX="10.0" layoutY="10.0" text="Phone">
-                    <VBox.margin>
-                        <Insets top="5.0"/>
-                    </VBox.margin>
+                <Label text="Salary">
                     <font>
                         <Font size="15.0"/>
                     </font>
+                    <VBox.margin>
+                        <Insets top="5.0"/>
+                    </VBox.margin>
                 </Label>
-                <TextArea fx:id="phone_text_area" layoutX="10.0" layoutY="27.0"
-                          onKeyPressed="#focusNextTextArea" prefHeight="100.0" prefWidth="200.0">
+                <TextArea fx:id="salary_text_area" onKeyPressed="#focusNextTextArea"
+                          prefHeight="100.0" prefWidth="200.0">
                     <VBox.margin>
                         <Insets top="10.0"/>
                     </VBox.margin>
                 </TextArea>
-                <Label layoutX="10.0" layoutY="191.0" text="Year">
-                    <VBox.margin>
-                        <Insets top="5.0"/>
-                    </VBox.margin>
+
+                <Label text="Mentor" fx:id="mentorLabel">
                     <font>
                         <Font size="15.0"/>
                     </font>
+                    <VBox.margin>
+                        <Insets top="5.0"/>
+                    </VBox.margin>
                 </Label>
-                <TextArea fx:id="year_text_area" layoutX="10.0" layoutY="208.0"
-                          onKeyPressed="#focusNextTextArea" prefHeight="100.0" prefWidth="200.0">
+                <TextArea fx:id="mentor_text_area" onKeyPressed="#focusNextTextArea"
+                          prefHeight="100.0" prefWidth="200.0">
                     <VBox.margin>
                         <Insets top="10.0"/>
                     </VBox.margin>
                 </TextArea>
+
                 <Label fx:id="errorLabel" textFill="red" visible="false">
                     <font>
                         <Font size="15.0"/>
@@ -132,20 +148,24 @@
             <TableView fx:id="table" focusTraversable="false" prefHeight="200.0" prefWidth="400.0"
                        BorderPane.alignment="CENTER">
                 <columns>
+                    <TableColumn prefWidth="150.0" text="Name">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="name"/>
+                        </cellValueFactory>
+                    </TableColumn>
                     <TableColumn prefWidth="200.0" text="Surname">
                         <cellValueFactory>
                             <PropertyValueFactory property="surname"/>
                         </cellValueFactory>
                     </TableColumn>
-
-                    <TableColumn prefWidth="150.0" text="Phone">
+                    <TableColumn prefWidth="150.0" text="Position">
                         <cellValueFactory>
-                            <PropertyValueFactory property="phone"/>
+                            <PropertyValueFactory property="positionTitle"/>
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn prefWidth="100.0" text="Year">
+                    <TableColumn prefWidth="150.0" text="Salary">
                         <cellValueFactory>
-                            <PropertyValueFactory property="yearString"/>
+                            <PropertyValueFactory property="salary"/>
                         </cellValueFactory>
                     </TableColumn>
                 </columns>

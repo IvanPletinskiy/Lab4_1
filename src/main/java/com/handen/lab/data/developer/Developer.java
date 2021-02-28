@@ -2,7 +2,11 @@ package com.handen.lab.data.developer;
 
 import com.handen.lab.data.Employee;
 
-abstract class Developer extends Employee {
+public abstract class Developer extends Employee {
+    public Developer(int id, String name, String surname, int salary) {
+        super(id, name, surname, salary);
+    }
+
     public Developer mentor;
 
     public Developer getMentor() {

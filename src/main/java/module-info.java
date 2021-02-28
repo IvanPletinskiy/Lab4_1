@@ -3,6 +3,8 @@ module hellofx {
     requires javafx.fxml;
 
     opens com.handen.lab to javafx.fxml;
+    opens com.handen.lab.data.developer to javafx.base;
+    exports com.handen.lab.data.developer;
     exports com.handen.lab;
     exports com.handen.lab.controller;
     exports com.handen.lab.data;
@@ -10,5 +12,4 @@ module hellofx {
     exports com.handen.lab.utils;
     exports com.handen.lab.view;
     opens com.handen.lab.controller to javafx.fxml;
-
 }
