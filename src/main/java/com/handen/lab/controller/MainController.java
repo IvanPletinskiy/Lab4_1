@@ -86,9 +86,9 @@ public class MainController implements Initializable {
             stage.setScene(new Scene(root, 450, 300));
             AddDialogController controller = loader.getController();
             controller.setStage(stage);
-            controller.setListener(record -> {
-                if(record != null) {
-                    addItem(record);
+            controller.setListener(employee -> {
+                if(employee != null) {
+                    addItem(employee);
                 }
             });
             stage.show();
@@ -98,10 +98,8 @@ public class MainController implements Initializable {
         }
     }
 
-    private void addItem(Record record) {
-        //TODO
-//        items.add(record);
-//        table.getSelectionModel().select(items.size() - 1);
+    private void addItem(Employee employee) {
+        items.add(employee);
     }
 
     public void OnSaveButtonClick(ActionEvent actionEvent) {

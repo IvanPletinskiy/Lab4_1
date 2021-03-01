@@ -1,6 +1,10 @@
 package com.handen.lab.data.designer;
 
-class UIDesigner extends Designer {
+public class UIDesigner extends Designer {
+    public UIDesigner(int id, String name, String surname, int salary) {
+        super(id, name, surname, salary);
+    }
+
     @Override
     public String getPositionTitle() {
         return "UI Designer";

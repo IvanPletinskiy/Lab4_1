@@ -1,16 +1,27 @@
 package com.handen.lab.controller;
 
+import com.handen.lab.data.Employee;
 import com.handen.lab.data.Record;
+import com.handen.lab.data.designer.UIDesigner;
+import com.handen.lab.data.designer.UXDesigner;
+import com.handen.lab.data.developer.BackendDeveloper;
+import com.handen.lab.data.developer.FrontendDeveloper;
+import com.handen.lab.data.developer.MobileDeveloper;
+import com.handen.lab.data.managers.DepartmentManager;
+import com.handen.lab.data.managers.ProjectManager;
+import com.handen.lab.model.Repository;
 import com.handen.lab.utils.LettersTextFormatter;
-import com.handen.lab.utils.NumbersTextFormatter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
@@ -18,15 +29,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class AddDialogController implements Initializable {
+    public TextArea name_text_area;
     public TextArea surname_text_area;
-    public TextArea phone_text_area;
-    public TextArea year_text_area;
     public Label errorLabel;
     public Button add_button;
-    private AddRecordDialogListener mListener;
+    public TextArea salary_text_area;
+    public ComboBox<String> position_combobox;
+    private OnNewEmploeeAddedListener mListener;
     private Stage mStage;
+    private ObservableList<String> positions = FXCollections.observableArrayList("Department Manager", "Project Manager", "UX Designer", "UI Designer", "Backend Developer", "Frontend Developer", "Mobile Developer");
 
-    public void setListener(AddRecordDialogListener listener) {
+    public void setListener(OnNewEmploeeAddedListener listener) {
         mListener = listener;
     }
 
@@ -37,11 +50,44 @@ public class AddDialogController implements Initializable {
     public void OnAddButtonClick(ActionEvent actionEvent) {
         boolean isValid = validate();
         if(isValid) {
+            String name = name_text_area.textProperty().getValue();
             String surname = surname_text_area.textProperty().getValue();
-            String year = year_text_area.textProperty().getValue();
-            String phone = phone_text_area.textProperty().getValue();
-            Record record = new Record(surname, phone, Short.parseShort(year));
-            mListener.addRecord(record);
+            int positionIndex = positions.indexOf(position_combobox.getValue());
+            int salary = Integer.parseInt(salary_text_area.getText());
+            Employee employee = null;
+            switch(positionIndex) {
+                case 0: {
+                    employee = new DepartmentManager(Repository.getNewId(), name, surname, salary);
+                    break;
+                }
+                case 1: {
+                    employee = new ProjectManager(Repository.getNewId(), name, surname, salary);
+                    break;
+                }
+                case 2: {
+                    employee = new UXDesigner(Repository.getNewId(), name, surname, salary);
+                    break;
+                }
+                case 3: {
+                    employee = new UIDesigner(Repository.getNewId(), name, surname, salary);
+                    break;
+                }
+                case 4: {
+                    employee = new BackendDeveloper(Repository.getNewId(), name, surname, salary);
+                    break;
+                }
+                case 5: {
+                    employee = new FrontendDeveloper(Repository.getNewId(), name, surname, salary);
+                    break;
+                }
+                case 6: {
+                    employee = new MobileDeveloper(Repository.getNewId(), name, surname, salary);
+                    break;
+                }
+            }
+
+            mListener.onEmployeeAdded(employee);
+
             if(mStage != null) {
                 mStage.hide();
             }
@@ -51,45 +97,44 @@ public class AddDialogController implements Initializable {
     private boolean validate() {
         boolean isValid = true;
 
-        short year = getYear();
-        if(year < 2000 || year > 2020) {
-            isValid = false;
-            showError("Year cannot be less than 2000 or grater than 2020");
-        }
-        if(surname_text_area.textProperty().getValue().equals("")) {
-            isValid = false;
-            showError("Surname field cannot be empty.");
-        }
-        if(phone_text_area.textProperty().getValue().equals("")) {
-            isValid = false;
-            showError("Phone field cannot be empty.");
-        }
-        if(year_text_area.textProperty().getValue().equals("")) {
-            isValid = false;
-            showError("Year field cannot be empty.");
-        }
+//        short year = getYear();
+//        if(year < 2000 || year > 2020) {
+//            isValid = false;
+//            showError("Year cannot be less than 2000 or grater than 2020");
+//        }
+//        if(surname_text_area.textProperty().getValue().equals("")) {
+//            isValid = false;
+//            showError("Surname field cannot be empty.");
+//        }
+//        if(phone_text_area.textProperty().getValue().equals("")) {
+//            isValid = false;
+//            showError("Phone field cannot be empty.");
+//        }
+//        if(year_text_area.textProperty().getValue().equals("")) {
+//            isValid = false;
+//            showError("Year field cannot be empty.");
+//        }
 
         return isValid;
     }
 
-    private short getYear() {
-        short year = -1;
-        try {
-            if(!year_text_area.textProperty().getValue().isEmpty()) {
-                year = Short.parseShort(year_text_area.textProperty().getValue());
-            }
-        }
-        catch(NumberFormatException e) {
-            e.printStackTrace();
-        }
-        return year;
-    }
+//    private short getYear() {
+//        short year = -1;
+//        try {
+//            if(!year_text_area.textProperty().getValue().isEmpty()) {
+//                year = Short.parseShort(year_text_area.textProperty().getValue());
+//            }
+//        }
+//        catch(NumberFormatException e) {
+//            e.printStackTrace();
+//        }
+//        return year;
+//    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         surname_text_area.setTextFormatter(new LettersTextFormatter());
-        phone_text_area.setTextFormatter(new NumbersTextFormatter(12));
-        year_text_area.setTextFormatter(new NumbersTextFormatter(4));
+        position_combobox.setItems(positions);
     }
 
     private void showError(String errorText) {
@@ -113,7 +158,7 @@ public class AddDialogController implements Initializable {
         }
     }
 
-    interface AddRecordDialogListener {
-        void addRecord(Record record);
+    interface OnNewEmploeeAddedListener {
+        void onEmployeeAdded(Employee employee);
     }
 }

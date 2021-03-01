@@ -18,6 +18,13 @@ import javafx.collections.ObservableList;
 
 public class Repository {
 
+    private static int id = 1;
+
+    public static int getNewId() {
+        id++;
+        return id;
+    }
+
     public List<Employee> loadRecords(File file) {
         //TODO
         return new ArrayList<>();

@@ -5,6 +5,8 @@ module hellofx {
     opens com.handen.lab to javafx.fxml;
     opens com.handen.lab.data.developer to javafx.base;
     exports com.handen.lab.data.developer;
+    exports com.handen.lab.data.managers;
+    exports com.handen.lab.data.designer;
     exports com.handen.lab;
     exports com.handen.lab.controller;
     exports com.handen.lab.data;

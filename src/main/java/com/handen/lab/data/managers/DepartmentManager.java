@@ -1,6 +1,10 @@
 package com.handen.lab.data.managers;
 
 public class DepartmentManager extends Manager {
+    public DepartmentManager(int id, String name, String surname, int salary) {
+        super(id, name, surname, salary);
+    }
+
     @Override
     public String getPositionTitle() {
         return "Department Manager";
