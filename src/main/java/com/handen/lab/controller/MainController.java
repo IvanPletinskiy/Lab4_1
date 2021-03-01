@@ -4,8 +4,7 @@ import com.handen.lab.App;
 import com.handen.lab.data.Employee;
 import com.handen.lab.data.Record;
 import com.handen.lab.data.developer.Developer;
-import com.handen.lab.data.developer.MobileDeveloper;
-import com.handen.lab.model.Repository;
+import com.handen.lab.model.RepositoryProxy;
 import com.handen.lab.utils.LettersTextFormatter;
 
 import java.io.File;
@@ -14,7 +13,6 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,9 +41,11 @@ public class MainController implements Initializable {
     private Stage stage;
 
     public Label errorLabel;
-    private ObservableList<Employee> items = FXCollections.observableArrayList(new MobileDeveloper(0, "Ivan", "Pletinskiy", 100500));
 
-    public TableView<Employee> table;
+    private RepositoryProxy repository = RepositoryProxy.getInstance();
+    private final ObservableList<com.handen.lab.data.Employee> items = repository.getItems();
+
+    public TableView<com.handen.lab.data.Employee> table;
 
     public TextArea name_text_area;
     public TextArea surname_text_area;
@@ -63,16 +63,26 @@ public class MainController implements Initializable {
 
     private int selectedRow;
 
-    private Repository repository;
+    private EmployeeChangedListener employeeChangedListener = () -> {
+        Employee item = items.get(selectedRow);
+        boolean isChanged = !name_text_area.getText().equals(item.name) || !surname_text_area.textProperty().getValue().equals(item.getSurname()) ||
+                Integer.parseInt(salary_text_area.textProperty().getValue()) != item.salary;
 
-    private RecordChangeListener recordChangedListener = () -> {
-        //TODO
-//        Record item = items.get(selectedRow);
-//        boolean isChanged = !surname_text_area.textProperty().getValue().equals(item.getSurname()) ||
-//                !year_text_area.textProperty().getValue().equals(item.getYearString()) ||
-//                !phone_text_area.textProperty().getValue().equals(item.getPhone());
-//
-//        save_button.setVisible(isChanged);
+        if(item instanceof Developer) {
+            Developer developer = (Developer) item;
+
+            if(developer.mentor != null) {
+                if(!mentor_text_area.getText().equals(developer.mentor.surname)) {
+                    isChanged = true;
+                }
+            } else {
+                if(!mentor_text_area.getText().isBlank()) {
+                    isChanged = true;
+                }
+            }
+        }
+
+        save_button.setVisible(isChanged);
     };
 
     @FXML
@@ -98,20 +108,23 @@ public class MainController implements Initializable {
         }
     }
 
-    private void addItem(Employee employee) {
+    private void addItem(com.handen.lab.data.Employee employee) {
         items.add(employee);
     }
 
     public void OnSaveButtonClick(ActionEvent actionEvent) {
-        //TODO
-//        boolean isValid = validate();
-//        if(isValid) {
-//            String surname = surname_text_area.textProperty().getValue();
-//            String year = year_text_area.textProperty().getValue();
-//            String phone = phone_text_area.textProperty().getValue();
-//            Record record = new Record(surname, phone, Short.parseShort(year));
-//            items.set(selectedRow, record);
-//        }
+        boolean isValid = validate();
+        if(isValid) {
+            Employee employee = items.get(selectedRow);
+            employee.setName(name_text_area.getText());
+            employee.setSurname(surname_text_area.getText());
+            employee.setSalary(Integer.parseInt(salary_text_area.getText()));
+            if(employee instanceof Developer) {
+                ((Developer) employee).setMentor(repository.getMentorBySurname(mentor_text_area.getText()));
+            }
+
+            items.set(selectedRow, employee);
+        }
     }
 
     private boolean validate() {
@@ -120,6 +133,12 @@ public class MainController implements Initializable {
         if(surname_text_area.textProperty().getValue().equals("")) {
             isValid = false;
             showError("Surname field cannot be empty.");
+        }
+        if(mentor_text_area.isVisible() && !mentor_text_area.getText().isBlank()) {
+            if(repository.getMentorBySurname(surname_text_area.getText()) == null) {
+                isValid = false;
+                showError("Can't find mentor by given surname");
+            }
         }
 
         return isValid;
@@ -149,7 +168,7 @@ public class MainController implements Initializable {
         bindTextListeners();
         initializeTable();
 
-        repository = new Repository();
+        save_button.setVisible(false);
     }
 
     private void initializeTable() {
@@ -159,8 +178,9 @@ public class MainController implements Initializable {
             int newSelectedId = (int) newValue;
             mentorLabel.setVisible(false);
             mentor_text_area.setVisible(false);
+            mentor_text_area.setText("");
             if((int) newValue != -1) {
-                Employee employee = items.get(newSelectedId);
+                com.handen.lab.data.Employee employee = items.get(newSelectedId);
                 updateTextAreas(employee);
                 selectedRow = newSelectedId;
                 save_button.setVisible(false);
@@ -174,7 +194,7 @@ public class MainController implements Initializable {
         table.getSelectionModel().clearAndSelect(0);
     }
 
-    private void updateTextAreas(Employee employee) {
+    private void updateTextAreas(com.handen.lab.data.Employee employee) {
         name_text_area.setText(employee.getName());
         surname_text_area.setText(employee.getSurname());
         salary_text_area.setText(String.valueOf(employee.getSalary()));
@@ -194,8 +214,17 @@ public class MainController implements Initializable {
     }
 
     private void bindTextListeners() {
+        name_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
+            employeeChangedListener.onChanged();
+        });
         surname_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
-            recordChangedListener.onChanged();
+            employeeChangedListener.onChanged();
+        });
+        salary_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
+            employeeChangedListener.onChanged();
+        });
+        mentor_text_area.textProperty().addListener((observable, oldValue, newValue) -> {
+            employeeChangedListener.onChanged();
         });
     }
 
@@ -273,7 +302,7 @@ public class MainController implements Initializable {
         }
     }
 
-    interface RecordChangeListener {
+    interface EmployeeChangedListener {
         void onChanged();
     }
 

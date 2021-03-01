@@ -1,22 +1,46 @@
 package com.handen.lab.model;
 
 import com.handen.lab.data.Employee;
-import com.handen.lab.data.Record;
+import com.handen.lab.data.developer.Developer;
+import com.handen.lab.data.developer.MobileDeveloper;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Repository {
+public class RepositoryProxy {
+    private static RepositoryProxy instance = null;
+
+    private ObservableList<Employee> items = FXCollections.observableArrayList(new MobileDeveloper(0, "Ivan", "Pletinskiy", 100500));
+
+    private RepositoryProxy() {
+
+    }
+
+
+    public Developer getMentorBySurname(String surname) {
+        for(Employee employee :items) {
+            if(employee.getSurname().equals(surname)) {
+                return (Developer) employee;
+            }
+        }
+        return null;
+    }
+
+    public static RepositoryProxy getInstance() {
+        if(instance == null) {
+            instance = new RepositoryProxy();
+        }
+        return instance;
+    }
+
+    public ObservableList<Employee> getItems() {
+        return items;
+    }
 
     private static int id = 1;
 

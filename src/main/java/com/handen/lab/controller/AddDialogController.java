@@ -1,7 +1,6 @@
 package com.handen.lab.controller;
 
 import com.handen.lab.data.Employee;
-import com.handen.lab.data.Record;
 import com.handen.lab.data.designer.UIDesigner;
 import com.handen.lab.data.designer.UXDesigner;
 import com.handen.lab.data.developer.BackendDeveloper;
@@ -9,7 +8,7 @@ import com.handen.lab.data.developer.FrontendDeveloper;
 import com.handen.lab.data.developer.MobileDeveloper;
 import com.handen.lab.data.managers.DepartmentManager;
 import com.handen.lab.data.managers.ProjectManager;
-import com.handen.lab.model.Repository;
+import com.handen.lab.model.RepositoryProxy;
 import com.handen.lab.utils.LettersTextFormatter;
 
 import java.net.URL;
@@ -57,31 +56,31 @@ public class AddDialogController implements Initializable {
             Employee employee = null;
             switch(positionIndex) {
                 case 0: {
-                    employee = new DepartmentManager(Repository.getNewId(), name, surname, salary);
+                    employee = new DepartmentManager(RepositoryProxy.getNewId(), name, surname, salary);
                     break;
                 }
                 case 1: {
-                    employee = new ProjectManager(Repository.getNewId(), name, surname, salary);
+                    employee = new ProjectManager(RepositoryProxy.getNewId(), name, surname, salary);
                     break;
                 }
                 case 2: {
-                    employee = new UXDesigner(Repository.getNewId(), name, surname, salary);
+                    employee = new UXDesigner(RepositoryProxy.getNewId(), name, surname, salary);
                     break;
                 }
                 case 3: {
-                    employee = new UIDesigner(Repository.getNewId(), name, surname, salary);
+                    employee = new UIDesigner(RepositoryProxy.getNewId(), name, surname, salary);
                     break;
                 }
                 case 4: {
-                    employee = new BackendDeveloper(Repository.getNewId(), name, surname, salary);
+                    employee = new BackendDeveloper(RepositoryProxy.getNewId(), name, surname, salary);
                     break;
                 }
                 case 5: {
-                    employee = new FrontendDeveloper(Repository.getNewId(), name, surname, salary);
+                    employee = new FrontendDeveloper(RepositoryProxy.getNewId(), name, surname, salary);
                     break;
                 }
                 case 6: {
-                    employee = new MobileDeveloper(Repository.getNewId(), name, surname, salary);
+                    employee = new MobileDeveloper(RepositoryProxy.getNewId(), name, surname, salary);
                     break;
                 }
             }
