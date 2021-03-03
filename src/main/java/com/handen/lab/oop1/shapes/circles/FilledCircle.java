@@ -4,12 +4,12 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class FilledCircle extends Circle {
 
-    public FilledCircle(int x1, int y1, int radius) {
-        super(x1, y1, radius);
+    public FilledCircle(int x, int y, int radius) {
+        super(x, y, radius);
     }
 
     @Override
     public void draw(GraphicsContext context) {
-        context.fillOval(x1, y1, radius, radius);
+        context.fillOval(x, y, radius, radius);
     }
 }

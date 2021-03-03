@@ -6,20 +6,26 @@
   <component name="ChangeListManager">
     <list default="true" id="555b9ecb-4fad-49fe-9cc8-f58cce57a006" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/Shape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/circles/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/circles/Circle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/circles/Ellipse.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/circles/FilledCircle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/circles/FilledCircle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/other/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/other/Line.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/other/Triangle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Parallelogram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Parallelogram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Quadrangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Quadrangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Rectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Square.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Square.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Trapeze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/handen/lab/oop1/shapes/quardangles/Parallelogram.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/controller/MainController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/Circle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/Circle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/FilledCircle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/FilledCircle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/other/Line.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/other/Line.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/App.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/Shape.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/Shape.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/Circle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/Ellipse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/circles/FilledCircle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/other/Line.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/other/Triangle.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Quadrangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Quadrangle.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Rectangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Rectangle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Square.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Square.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Trapeze.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/handen/lab/oop1/shapes/quardangles/Square.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,9 +220,10 @@
       </method>
     </configuration>
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="12.0.1" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.handen.lab.App" />
-      <module name="Lab4_1" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <module name="EasyFlowCharts" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.handen.lab.*" />
@@ -261,15 +268,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
