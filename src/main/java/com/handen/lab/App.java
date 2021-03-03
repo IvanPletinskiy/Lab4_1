@@ -13,8 +13,6 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("main_layout.fxml"));
         Scene scene = new Scene(loader.load());
-//        MainController controller = loader.getController();
-//        controller.setStage(stage);
         stage.setTitle("Ivan Pletinski 951008");
         stage.setScene(scene);
         stage.show();

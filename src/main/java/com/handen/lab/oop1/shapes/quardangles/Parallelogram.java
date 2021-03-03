@@ -6,12 +6,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 public class Parallelogram extends Quadrangle {
-
-    TextField textField1;
-    TextField textField2;
-    TextField textField3;
-    TextField textField4;
-    TextField textField5;
+    TextField widthTextField;
+    TextField heightTextField;
+    TextField offsetTextField;
 
     public Parallelogram() {
 
@@ -19,51 +16,39 @@ public class Parallelogram extends Quadrangle {
 
     @Override
     public void draw(GraphicsContext context) {
-        int x1 = Integer.parseInt(textField1.getText());
-        int y1 = Integer.parseInt(textField2.getText());
-        int width = Integer.parseInt(textField3.getText());
-        int height = Integer.parseInt(textField4.getText());
-        float offset = Float.parseFloat(textField5.getText()) / 100;
+        int x = Integer.parseInt(xTextField.getText());
+        int y = Integer.parseInt(yTextField.getText());
+        int width = Integer.parseInt(widthTextField.getText());
+        int height = Integer.parseInt(heightTextField.getText());
+        float offset = Float.parseFloat(offsetTextField.getText()) / 100;
 
-        int startX = x1 + width / 5;
+        int startX = x + width / 5;
         //counter clockwise
-        context.strokeLine(startX, y1, x1, y1 + height);
-        context.strokeLine(x1, y1 + height, x1 + width * offset, y1 + height);
-        context.strokeLine(x1 + width, y1, x1 + width * offset, y1 + height);
-        context.strokeLine(x1 + width, y1, startX, y1);
+        context.strokeLine(startX, y, x, y + height);
+        context.strokeLine(x, y + height, x + width * offset, y + height);
+        context.strokeLine(x + width, y, x + width * offset, y + height);
+        context.strokeLine(x + width, y, startX, y);
     }
 
     @Override
-    public void setupInputViews(VBox container) {
-        Label label1 = (Label) container.getChildren().get(0);
-        label1.setText("Enter x1:");
-        label1.setVisible(true);
-        textField1 = (TextField) container.getChildren().get(1);
-        textField1.setVisible(true);
+    public void onSetupInputViews(VBox container) {
+        Label widthLabel = (Label) container.getChildren().get(4);
+        widthLabel.setText("Enter width:");
+        widthLabel.setVisible(true);
+        widthTextField = (TextField) container.getChildren().get(5);
+        widthTextField.setVisible(true);
 
-        Label label2 = (Label) container.getChildren().get(2);
-        label2.setText("Enter y1:");
-        label2.setVisible(true);
-        textField2 = (TextField) container.getChildren().get(3);
-        textField2.setVisible(true);
+        Label heightLabel = (Label) container.getChildren().get(6);
+        heightLabel.setText("Enter height:");
+        heightLabel.setVisible(true);
+        heightTextField = (TextField) container.getChildren().get(7);
+        heightTextField.setVisible(true);
 
-        Label label3 = (Label) container.getChildren().get(4);
-        label3.setText("Enter width:");
-        label3.setVisible(true);
-        textField3 = (TextField) container.getChildren().get(5);
-        textField3.setVisible(true);
-
-        Label label4 = (Label) container.getChildren().get(6);
-        label4.setText("Enter height:");
-        label4.setVisible(true);
-        textField4 = (TextField) container.getChildren().get(7);
-        textField4.setVisible(true);
-
-        Label label5 = (Label) container.getChildren().get(8);
-        label5.setText("Enter % offset:");
-        label5.setVisible(true);
-        textField5 = (TextField) container.getChildren().get(9);
-        textField5.setVisible(true);
+        Label offsetLabel = (Label) container.getChildren().get(8);
+        offsetLabel.setText("Enter % offset:");
+        offsetLabel.setVisible(true);
+        offsetTextField = (TextField) container.getChildren().get(9);
+        offsetTextField.setVisible(true);
     }
 
     @Override

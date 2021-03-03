@@ -1,7 +1,6 @@
 package com.handen.lab.controller;
 
 import com.handen.lab.oop1.shapes.Shape;
-import com.handen.lab.oop1.shapes.ShapesList;
 import com.handen.lab.oop1.shapes.circles.Circle;
 import com.handen.lab.oop1.shapes.circles.FilledCircle;
 import com.handen.lab.oop1.shapes.other.Line;
@@ -21,7 +20,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
