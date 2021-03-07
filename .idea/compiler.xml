@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Lab4_1" />
         <module name="hellofx" />
+        <module name="EasyFlowCharts" />
       </profile>
     </annotationProcessing>
   </component>

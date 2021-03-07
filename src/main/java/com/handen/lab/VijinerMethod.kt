@@ -1,53 +1,49 @@
 package com.handen.lab
 
 class VijinerMethod() : Method {
+
+    val alphabet = arrayOf('А','Б','В','Г','Д','Е', 'Ё', 'Ж','З','И','Й','К','Л','М','Н','О','П','Р','С','Т','У','Ф','Х','Ц','Ч','Ш','Щ','Ъ','Ы','Ь','Э','Ю','Я')
+
     override fun encode(text: String, key: String): Result<String> {
+        val upperKey = key.toUpperCase()
         val filtered = text.filter {
             (it in 'а'..'я') || (it in 'А'..'Я')
         }.toUpperCase().mapIndexed { index, textLetter ->
-            val keyLetter = A + (key[index % key.length] - A + index / key.length) % (RUSSIAN_LETTERS_COUNT - 1)
-            getChar(keyLetter, textLetter)
+            val upperKeyLetterIndex = alphabet.indexOf(upperKey[index % upperKey.length])
+            val upperKeyLetter = alphabet[(upperKeyLetterIndex + index / upperKey.length) % alphabet.size]
+//            val upperKeyLetter = A + (upperKey[index % upperKey.length] - A + index / upperKey.length) % (RUSSIAN_LETTERS_COUNT - 1)
+            getChar(upperKeyLetter, textLetter)
         }
 
         return Result.Success(String(filtered.toCharArray()))
     }
 
     override fun decode(text: String, key: String): Result<String> {
+        val upperKey = key.toUpperCase()
         val filtered = text.filter {
             (it in 'а'..'я') || (it in 'А'..'Я')
         }.toUpperCase().mapIndexed { index, textLetter ->
-            val keyLetter = A + (key[index % key.length] - A + index / key.length) % (RUSSIAN_LETTERS_COUNT - 1)
+//            val keyLetter = A + (key[index % key.length] - A + index / key.length) % (RUSSIAN_LETTERS_COUNT - 1)
+            val rawIndex = alphabet.indexOf(upperKey[index % upperKey.length])
+            val offset = index / upperKey.length
+            val letterIndex = (rawIndex + offset) % alphabet.size
+            val keyLetter = alphabet[letterIndex]
             getSourceChar(keyLetter, textLetter)
         }
 
         return Result.Success(String(filtered.toCharArray()))
     }
 
-    fun indexFromLetter(char: Char): Int {
-        return when {
-            char == 'Ё' -> 6
-            char <= 'E'-> char - 'A'
-            char >= 'Ж' -> char - 'А' + 1
-            else -> -1
-        }
-    }
-
-    fun letterFromIndex(index: Int): Char {
-        return when {
-            index == 6 -> 'Ё'
-            index < 6 -> 'А' + index
-            index > 6 -> 'A' + index - 1
-            else -> '!'
-        }
-    }
-
     fun getChar(keyLetter: Char, textLetter: Char): Char {
-        return A + (keyLetter.toUpperCase() - A + textLetter.toUpperCase().toInt() - A.toInt()) % (RUSSIAN_LETTERS_COUNT - 1)
+        return alphabet[(alphabet.indexOf(keyLetter) + alphabet.indexOf(textLetter)) % alphabet.size]
+//        return A + (keyLetter.toUpperCase() - A + textLetter.toUpperCase().toInt() - A.toInt()) % (RUSSIAN_LETTERS_COUNT - 1)
     }
 
     fun getSourceChar(keyLetter: Char, encodedLetter: Char): Char {
-        val index = (encodedLetter + RUSSIAN_LETTERS_COUNT - keyLetter - 1) % (RUSSIAN_LETTERS_COUNT - 1)
-        return A + index
+        val index = (encodedLetter + alphabet.size - keyLetter) % alphabet.size
+//        val index = (encodedLetter + RUSSIAN_LETTERS_COUNT - keyLetter - 1) % (RUSSIAN_LETTERS_COUNT - 1)
+//        return A + index
+        return alphabet[index]
     }
 
     override fun toString(): String {
