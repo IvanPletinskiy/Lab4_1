@@ -7,7 +7,7 @@ class VijinerMethod() : Method {
     override fun encode(text: String, key: String): Result<String> {
         val upperKey = key.toUpperCase()
         val filtered = text.filter {
-            (it in 'а'..'я') || (it in 'А'..'Я')
+            (it in 'а'..'я') || (it in 'А'..'Я') || it == 'Ё'
         }.toUpperCase().mapIndexed { index, textLetter ->
             val upperKeyLetterIndex = alphabet.indexOf(upperKey[index % upperKey.length])
             val upperKeyLetter = alphabet[(upperKeyLetterIndex + index / upperKey.length) % alphabet.size]
@@ -21,7 +21,7 @@ class VijinerMethod() : Method {
     override fun decode(text: String, key: String): Result<String> {
         val upperKey = key.toUpperCase()
         val filtered = text.filter {
-            (it in 'а'..'я') || (it in 'А'..'Я')
+            (it in 'а'..'я') || (it in 'А'..'Я') || it == 'Ё'
         }.toUpperCase().mapIndexed { index, textLetter ->
             val rawIndex = alphabet.indexOf(upperKey[index % upperKey.length])
             val offset = index / upperKey.length
@@ -57,10 +57,12 @@ class VijinerMethod() : Method {
 
 fun main() {
     val vijinerMethod = VijinerMethod()
-    val decodedText = "Криптография"
+    val sourceText = "ЁЛКИ"
     val key = "ВАНЯ"
-    println("Encode: ${(vijinerMethod.encode(decodedText, key) as Result.Success).value}")
 
-    val encoded = "МРЦОХПСРДЦША"
-    println("Decode: ${(vijinerMethod.decode(encoded, key) as Result.Success).value}")
+    val encoded = (vijinerMethod.encode(sourceText, key) as Result.Success).value
+    println("Encode: $encoded")
+    val decoded = (vijinerMethod.decode(encoded, key) as Result.Success).value
+    println("Decode: $decoded")
+//    println("Decode: ${(vijinerMethod.decode(encoded, key) as Result.Success).value}")
 }
