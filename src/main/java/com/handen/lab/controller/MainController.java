@@ -117,7 +117,7 @@ public class MainController implements Initializable {
         }
         if(combobox.getValue() instanceof VijinerMethod) {
             for(char c : key.toCharArray()) {
-                if((c < 'а' || c > 'я') && (c < 'А' || c > 'Я')) {
+                if(c != 'Ё' && c != 'ё' && ((c < 'а' || c > 'я') && (c < 'А' || c > 'Я'))) {
                     isValid = false;
                     errorLabel.setText("Ошибка: Ключ должен содержать только символы русского алфавита");
                 }
