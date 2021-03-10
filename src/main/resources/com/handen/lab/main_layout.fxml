@@ -8,19 +8,25 @@
     <ComboBox fx:id="combobox" layoutX="465.0" layoutY="22.0" prefWidth="150.0" />
     <Label fx:id="decodedFilePath" layoutX="26.0" layoutY="26.0" prefHeight="17.0" prefWidth="352.0" />
     <Label fx:id="encodedFilePath" layoutX="26.0" layoutY="47.0" prefHeight="17.0" prefWidth="352.0" />
-   <TextArea fx:id="inputTextView" editable="false" layoutX="26.0" layoutY="93.0" prefHeight="255.0" prefWidth="192.0">
-      <font>
-         <Font size="24.0" />
-      </font></TextArea>
-   <TextField fx:id="keyText" layoutX="465.0" layoutY="136.0" />
-   <Label fx:id="errorLabel" layoutX="465.0" layoutY="174.0" prefHeight="37.0" prefWidth="219.0" textFill="RED" visible="false" />
-   <Button fx:id="encodeButton" layoutX="465.0" layoutY="211.0" mnemonicParsing="false" onMouseClicked="#onEncodeClicked" prefHeight="25.0" prefWidth="117.0" text="Шифровать" />
-   <Button fx:id="decodeButton" layoutX="465.0" layoutY="257.0" mnemonicParsing="false" onMouseClicked="#onDecodeClicked" prefHeight="25.0" prefWidth="117.0" text="Дешифровать" />
-   <Label layoutX="26.0" layoutY="76.0" prefHeight="17.0" prefWidth="104.0" text="Текст из файла:" />
-   <Label layoutX="224.0" layoutY="76.0" prefHeight="17.0" prefWidth="104.0" text="Результат:" />
-   <TextArea fx:id="resultTextView" editable="false" layoutX="224.0" layoutY="93.0" prefHeight="255.0" prefWidth="192.0">
-      <font>
-         <Font size="24.0" />
-      </font></TextArea>
-   <Label layoutX="465.0" layoutY="112.0" prefHeight="17.0" prefWidth="138.0" text="Введите ключ:" />
+    <TextArea fx:id="inputTextView" editable="false" layoutX="26.0" layoutY="93.0" prefHeight="255.0" prefWidth="192.0">
+        <font>
+            <Font size="24.0" />
+        </font>
+    </TextArea>
+    <TextField fx:id="keyText" layoutX="466.0" layoutY="93.0" />
+    <Label fx:id="errorLabel" layoutX="465.0" layoutY="129.0" prefHeight="82.0" prefWidth="219.0" textFill="RED" visible="false">
+        <font>
+            <Font size="16.0" />
+        </font>
+    </Label>
+    <Button fx:id="encodeButton" layoutX="465.0" layoutY="211.0" mnemonicParsing="false" onMouseClicked="#onEncodeClicked" prefHeight="25.0" prefWidth="117.0" text="Шифровать" />
+    <Button fx:id="decodeButton" layoutX="465.0" layoutY="257.0" mnemonicParsing="false" onMouseClicked="#onDecodeClicked" prefHeight="25.0" prefWidth="117.0" text="Дешифровать" />
+    <Label layoutX="26.0" layoutY="76.0" prefHeight="17.0" prefWidth="104.0" text="Текст из файла:" />
+    <Label layoutX="224.0" layoutY="76.0" prefHeight="17.0" prefWidth="104.0" text="Результат:" />
+    <TextArea fx:id="resultTextView" editable="false" layoutX="224.0" layoutY="93.0" prefHeight="255.0" prefWidth="192.0">
+        <font>
+            <Font size="24.0" />
+        </font>
+    </TextArea>
+    <Label layoutX="465.0" layoutY="68.0" prefHeight="17.0" prefWidth="138.0" text="Введите ключ:" />
 </AnchorPane>

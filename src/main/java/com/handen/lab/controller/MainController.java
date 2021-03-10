@@ -63,6 +63,8 @@ public class MainController implements Initializable {
         keyText.clear();
         resultTextView.clear();
         errorLabel.setVisible(false);
+        inputTextView.setWrapText(true);
+        resultTextView.setWrapText(true);
     }
 
     public void setStage(Stage stage) {
@@ -82,9 +84,12 @@ public class MainController implements Initializable {
                 writeTextToPath(text, combobox.getValue().getDecodedPath());
             }
             else {
+                resultTextView.clear();
                 errorLabel.setVisible(true);
                 errorLabel.setText(((Result.Error) result).getMessage());
             }
+        } else {
+            resultTextView.clear();
         }
     }
 
