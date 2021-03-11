@@ -1,6 +1,7 @@
 package com.handen.lab.controller;
 
 import com.handen.lab.App;
+import com.handen.lab.IoDialogController;
 import com.handen.lab.data.Employee;
 import com.handen.lab.data.Record;
 import com.handen.lab.data.developer.Developer;
@@ -112,6 +113,7 @@ public class MainController implements Initializable {
         items.add(employee);
     }
 
+    @FXML
     public void OnSaveButtonClick(ActionEvent actionEvent) {
         boolean isValid = validate();
         if(isValid) {
@@ -238,10 +240,26 @@ public class MainController implements Initializable {
     }
 
     public void OnMenuSaveClicked(ActionEvent actionEvent) {
-        File file = chooseDirecotory("Save records to directory");
-        if(file != null) {
-            repository.saveRecordsInDirectory(file, items);
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("io_dialog.fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Save/load");
+            stage.setScene(new Scene(root, 313, 400));
+            IoDialogController controller = loader.getController();
+            controller.setStage(stage);
+            stage.show();
         }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+
+//
+//        File file = chooseDirecotory("Save records to directory");
+//        if(file != null) {
+//            repository.saveRecordsInDirectory(file, items);
+//        }
     }
 
     private File chooseFile(String title) {

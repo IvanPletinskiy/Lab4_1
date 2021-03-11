@@ -21,7 +21,6 @@ public class RepositoryProxy {
 
     }
 
-
     public Developer getMentorBySurname(String surname) {
         for(Employee employee :items) {
             if(employee.getSurname().equals(surname)) {
