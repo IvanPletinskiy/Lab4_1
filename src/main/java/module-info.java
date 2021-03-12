@@ -1,6 +1,10 @@
 module hellofx {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.dataformat.xml;
+    requires com.fasterxml.jackson.module.jaxb;
 
     opens com.handen.lab to javafx.fxml;
     opens com.handen.lab.data.developer to javafx.base;
