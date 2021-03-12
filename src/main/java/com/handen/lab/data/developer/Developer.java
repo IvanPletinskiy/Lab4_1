@@ -18,4 +18,13 @@ public abstract class Developer extends Employee {
     }
 
     abstract String doDevelopment();
+
+    @Override
+    public String toCsv() {
+        int mentorId = -1;
+        if(mentor != null) {
+            mentorId = mentor.id;
+        }
+        return super.toCsv() + ";" + mentorId;
+    }
 }
