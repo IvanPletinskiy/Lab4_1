@@ -1,6 +1,10 @@
 package com.handen.lab;
 
-import com.handen.lab.model.writers.Writer;
+import com.handen.lab.model.RepositoryProxy;
+import com.handen.lab.model.writers.BinaryEmployeesProvider;
+import com.handen.lab.model.writers.CsvEmployeesProvider;
+import com.handen.lab.model.writers.IOEmployeesProvider;
+import com.handen.lab.model.writers.XmlIOEmployeesProvider;
 
 import java.io.File;
 import java.net.URL;
@@ -20,6 +24,7 @@ public class IoDialogController implements Initializable {
     public Button csv_button;
     public Label title;
     private Stage stage;
+    private RepositoryProxy repository = RepositoryProxy.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -30,7 +35,7 @@ public class IoDialogController implements Initializable {
         this.stage = stage;
     }
 
-    private File chooseFile(String title) {
+    private File chooseFile(String title, String extension) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(title);
         String userDirectoryString = System.getProperty("user.home");
@@ -39,7 +44,7 @@ public class IoDialogController implements Initializable {
             userDirectory = new File("c:/");
         }
         fileChooser.setInitialDirectory(userDirectory);
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(extension, "*." + extension));
         return fileChooser.showOpenDialog(stage);
     }
 
@@ -52,24 +57,27 @@ public class IoDialogController implements Initializable {
         if(!userDirectory.canRead()) {
             userDirectory = new File("c:/");
         }
+
         directoryChooser.setInitialDirectory(userDirectory);
         return directoryChooser.showDialog(stage);
     }
 
-    private void saveToFile(Writer writer) {
-        File file = chooseDirecotory("Save employees to directory");
+    private void saveToFile(IOEmployeesProvider provider) {
+        File file = chooseFile("Save employees to directory", provider.getFileExtension());
         if(file != null) {
-            writer.write(file, );
+            provider.write(file, repository.getItems());
         }
     }
 
     public void onBinaryClicked(MouseEvent mouseEvent) {
-
+        saveToFile(new BinaryEmployeesProvider());
     }
 
     public void onXmlClicked(MouseEvent mouseEvent) {
+        saveToFile(new XmlIOEmployeesProvider());
     }
 
     public void onCsvClicked(MouseEvent mouseEvent) {
+        saveToFile(new CsvEmployeesProvider());
     }
 }

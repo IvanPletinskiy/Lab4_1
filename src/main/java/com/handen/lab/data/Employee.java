@@ -1,6 +1,8 @@
 package com.handen.lab.data;
 
-public abstract class Employee {
+import java.io.Serializable;
+
+public abstract class Employee implements Serializable {
     public int id;
     public String name, surname;
     public int salary;
