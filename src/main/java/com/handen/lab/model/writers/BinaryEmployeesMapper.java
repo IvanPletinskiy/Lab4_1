@@ -8,11 +8,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class BinaryEmployeesProvider implements IOEmployeesProvider {
+public class BinaryEmployeesMapper implements EmployeesMapper {
     @Override
     public void write(File file, List<Employee> items) {
         try {
@@ -28,8 +29,11 @@ public class BinaryEmployeesProvider implements IOEmployeesProvider {
     public List<Employee> read(File file) {
         try {
             ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(file));
-            Employee[] employeesArray = (Employee[]) objectInputStream.readObject();
-            List<Employee> employees = Arrays.asList(employeesArray);
+            Object[] employeesArray = (Object[]) objectInputStream.readObject();
+            List<Employee> employees = new ArrayList<>();
+            for(Object e: employeesArray) {
+                employees.add((Employee) e);
+            }
             return employees;
         }
         catch(IOException | ClassNotFoundException e) {

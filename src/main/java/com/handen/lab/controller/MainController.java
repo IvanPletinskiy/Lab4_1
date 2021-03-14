@@ -231,12 +231,30 @@ public class MainController implements Initializable {
     }
 
     public void OnMenuLoadClicked(ActionEvent actionEvent) {
-        File file = chooseFile("Open records file");
-        if(file != null) {
-            items.clear();
-            items.addAll(repository.loadRecords(file));
-            table.getSelectionModel().clearAndSelect(0);
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("io_dialog.fxml"));
+            root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Save/load");
+            stage.setScene(new Scene(root, 313, 400));
+            IoDialogController controller = loader.getController();
+            controller.setIoMode(IoDialogController.IOMode.LOAD);
+            controller.setStage(stage);
+            stage.show();
         }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+
+
+//
+//        File file = chooseFile("Open records file");
+//        if(file != null) {
+//            items.clear();
+//            items.addAll(repository.loadRecords(file));
+//            table.getSelectionModel().clearAndSelect(0);
+//        }
     }
 
     public void OnMenuSaveClicked(ActionEvent actionEvent) {
@@ -248,6 +266,7 @@ public class MainController implements Initializable {
             stage.setTitle("Save/load");
             stage.setScene(new Scene(root, 313, 400));
             IoDialogController controller = loader.getController();
+            controller.setIoMode(IoDialogController.IOMode.SAVE);
             controller.setStage(stage);
             stage.show();
         }

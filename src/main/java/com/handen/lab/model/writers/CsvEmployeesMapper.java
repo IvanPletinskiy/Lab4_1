@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class CsvEmployeesProvider implements IOEmployeesProvider {
+public class CsvEmployeesMapper implements EmployeesMapper {
 
     @Override
     public List<Employee> read(File file) {

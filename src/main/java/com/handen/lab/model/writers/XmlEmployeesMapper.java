@@ -1,23 +1,19 @@
 package com.handen.lab.model.writers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.handen.lab.data.Employee;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class XmlIOEmployeesProvider implements IOEmployeesProvider {
+public class XmlEmployeesMapper implements EmployeesMapper {
     @Override
     public void write(File file, List<Employee> items) {
         XmlMapper mapper = new XmlMapper();
