@@ -18,4 +18,5 @@ module hellofx {
     exports com.handen.lab.utils;
     exports com.handen.lab.view;
     opens com.handen.lab.controller to javafx.fxml;
+    opens com.handen.lab.model.writers to com.fasterxml.jackson.databind;
 }

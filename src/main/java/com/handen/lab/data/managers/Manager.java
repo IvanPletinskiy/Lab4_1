@@ -8,4 +8,7 @@ public abstract class Manager extends Employee {
     }
 
     abstract String doQuarterReport();
+
+    public Manager() {
+    }
 }

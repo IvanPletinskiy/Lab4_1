@@ -7,5 +7,8 @@ abstract class Designer extends Employee {
         super(id, name, surname, salary);
     }
 
+    public Designer() {
+    }
+
     abstract String doDesign();
 }

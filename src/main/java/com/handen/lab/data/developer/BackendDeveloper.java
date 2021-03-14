@@ -5,6 +5,10 @@ public class BackendDeveloper extends Developer {
         super(id, name, surname, salary);
     }
 
+    public BackendDeveloper() {
+
+    }
+
     @Override
     public String getPositionTitle() {
         return "Backend Developer";

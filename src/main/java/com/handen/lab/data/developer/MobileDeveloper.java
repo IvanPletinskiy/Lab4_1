@@ -5,6 +5,10 @@ public class MobileDeveloper extends Developer {
         super(id, name, surname, salary);
     }
 
+    public MobileDeveloper() {
+
+    }
+
     @Override
     public String getPositionTitle() {
         return "Mobile Developer";

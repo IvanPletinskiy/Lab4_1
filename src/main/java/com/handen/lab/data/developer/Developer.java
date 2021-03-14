@@ -9,6 +9,9 @@ public abstract class Developer extends Employee {
 
     public Developer mentor;
 
+    public Developer() {
+    }
+
     public Developer getMentor() {
         return mentor;
     }

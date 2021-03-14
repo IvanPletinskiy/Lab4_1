@@ -5,6 +5,9 @@ public class DepartmentManager extends Manager {
         super(id, name, surname, salary);
     }
 
+    public DepartmentManager() {
+    }
+
     @Override
     public String getPositionTitle() {
         return "Department Manager";

@@ -1,15 +1,36 @@
 package com.handen.lab.data;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.handen.lab.data.designer.UIDesigner;
+import com.handen.lab.data.designer.UXDesigner;
+import com.handen.lab.data.developer.BackendDeveloper;
+import com.handen.lab.data.developer.FrontendDeveloper;
+import com.handen.lab.data.developer.MobileDeveloper;
+import com.handen.lab.data.managers.DepartmentManager;
+import com.handen.lab.data.managers.ProjectManager;
+
 import java.io.Serializable;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = UIDesigner.class),
+        @JsonSubTypes.Type(value = UXDesigner.class),
+        @JsonSubTypes.Type(value = BackendDeveloper.class),
+        @JsonSubTypes.Type(value = FrontendDeveloper.class),
+        @JsonSubTypes.Type(value = MobileDeveloper.class),
+        @JsonSubTypes.Type(value = DepartmentManager.class),
+        @JsonSubTypes.Type(value = ProjectManager.class),
+}
+)
 public abstract class Employee implements Serializable {
     public int id;
     public String name, surname;
     public int salary;
-    public String positionTile;
+    public String positionTitle;
 
     public Employee(int id, String name, String surname, int salary) {
-        this.positionTile = getPositionTitle();
+        this.positionTitle = getPositionTitle();
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -17,7 +38,7 @@ public abstract class Employee implements Serializable {
     }
 
     public Employee() {
-        this.positionTile = getPositionTitle();
+        this.positionTitle = getPositionTitle();
     }
 
     public String getName() {
@@ -47,6 +68,6 @@ public abstract class Employee implements Serializable {
     public abstract String getPositionTitle();
 
     public String toCsv() {
-        return this.positionTile + ";" + this.id + ";" + this.name + ";" + this.surname + ";" + this.salary;
+        return this.positionTitle + ";" + this.id + ";" + this.name + ";" + this.surname + ";" + this.salary;
     }
 }

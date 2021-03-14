@@ -5,6 +5,9 @@ public class UIDesigner extends Designer {
         super(id, name, surname, salary);
     }
 
+    public UIDesigner() {
+    }
+
     @Override
     public String getPositionTitle() {
         return "UI Designer";

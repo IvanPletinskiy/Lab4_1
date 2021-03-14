@@ -5,6 +5,9 @@ public class FrontendDeveloper extends Developer {
         super(id, name, surname, salary);
     }
 
+    public FrontendDeveloper() {
+    }
+
     @Override
     public String getPositionTitle() {
         return "Frontend Developer";

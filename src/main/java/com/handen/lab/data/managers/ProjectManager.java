@@ -5,6 +5,9 @@ public class ProjectManager extends Manager {
         super(id, name, surname, salary);
     }
 
+    public ProjectManager() {
+    }
+
     @Override
     String doQuarterReport() {
         return "PM quarter report";
