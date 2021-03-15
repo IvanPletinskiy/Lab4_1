@@ -1,5 +1,7 @@
 package com.handen.lab.data.designer;
 
+import com.handen.lab.data.Employee;
+
 public class UIDesigner extends Designer {
     public UIDesigner(int id, String name, String surname, int salary) {
         super(id, name, surname, salary);

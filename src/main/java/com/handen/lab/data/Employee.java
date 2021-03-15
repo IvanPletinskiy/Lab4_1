@@ -65,6 +65,10 @@ public abstract class Employee implements Serializable {
         this.salary = salary;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public abstract String getPositionTitle();
 
     public String toCsv() {

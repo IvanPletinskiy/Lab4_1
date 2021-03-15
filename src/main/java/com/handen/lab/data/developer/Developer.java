@@ -7,6 +7,16 @@ public abstract class Developer extends Employee {
         super(id, name, surname, salary);
     }
 
+    private int mentorId;
+
+    public int getMentorId() {
+        return mentorId;
+    }
+
+    public void setMentorId(int mentorId) {
+        this.mentorId = mentorId;
+    }
+
     public Developer mentor;
 
     public Developer() {
