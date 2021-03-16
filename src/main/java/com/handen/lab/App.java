@@ -26,3 +26,7 @@ public class App extends Application {
         launch();
     }
 }
+
+//{"EmployeesList":{"employees":{"employees":{"mentor":"","positionTitle":"Mobile Developer","surname":"Pletinskiy","_type":"MobileDeveloper","name":"Ivan","id":0,"salary":100500,"mentorId":0}}}}
+
+//<EmployeesList><employees><employees><mentor/><positionTitle>Mobile Developer</positionTitle><surname>Pletinskiy</surname><_type>MobileDeveloper</_type><name>Ivan</name><id>0</id><salary>100500</salary><mentorId>0</mentorId></employees></employees></EmployeesList>
