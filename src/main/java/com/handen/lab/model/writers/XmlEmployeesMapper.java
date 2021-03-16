@@ -16,6 +16,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class XmlEmployeesMapper implements EmployeesMapper {
+
+    private String pluginPath;
+
+    public XmlEmployeesMapper(String pluginPath) {
+        this.pluginPath = pluginPath;
+    }
+
     @Override
     public void write(File file, List<Employee> items) {
         XmlMapper mapper = new XmlMapper();
@@ -57,6 +64,10 @@ public class XmlEmployeesMapper implements EmployeesMapper {
         }
         br.close();
         return sb.toString();
+    }
+
+    private boolean havePlugin() {
+        return !pluginPath.isEmpty();
     }
 }
 

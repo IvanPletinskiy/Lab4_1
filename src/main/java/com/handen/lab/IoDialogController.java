@@ -101,7 +101,8 @@ public class IoDialogController implements Initializable {
     }
 
     public void onXmlClicked(MouseEvent mouseEvent) {
-        EmployeesMapper mapper = new XmlEmployeesMapper();
+        String pluginPath = "";
+        EmployeesMapper mapper = new XmlEmployeesMapper(pluginPath);
         if(ioMode == IOMode.SAVE) {
             saveToFile(mapper);
         }
