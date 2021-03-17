@@ -1,19 +1,23 @@
 package com.handen.lab.model.writers;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.handen.lab.data.Employee;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class XmlEmployeesMapper implements EmployeesMapper {
 
@@ -29,7 +33,12 @@ public class XmlEmployeesMapper implements EmployeesMapper {
         EmployeesList list = new EmployeesList(items);
 
         try {
-            mapper.writeValue(file, list);
+            String mappedString = mapper.writeValueAsString(list);
+            if(pluginEnabled()) {
+                mappedString = applyPlugin(mappedString, true);
+            }
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+            writer.write(mappedString);
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -45,8 +54,11 @@ public class XmlEmployeesMapper implements EmployeesMapper {
     public List<Employee> read(File file) {
         XmlMapper mapper = new XmlMapper();
         try {
-            String xmlString = inputStreamToString(new FileInputStream(file));
-            EmployeesList employeesList = mapper.readValue(xmlString, EmployeesList.class);
+            String input = inputStreamToString(new FileInputStream(file));
+            if(pluginEnabled()) {
+                input = applyPlugin(input, false);
+            }
+            EmployeesList employeesList = mapper.readValue(input, EmployeesList.class);
             return employeesList.getEmployees();
         }
         catch(IOException e) {
@@ -66,8 +78,31 @@ public class XmlEmployeesMapper implements EmployeesMapper {
         return sb.toString();
     }
 
-    private boolean havePlugin() {
+    private boolean pluginEnabled() {
         return !pluginPath.isEmpty();
+    }
+
+    String applyPlugin(String input, boolean isEncoding) {
+        String modeString;
+        if(isEncoding) {
+            modeString = "encode";
+        }
+        else {
+            modeString = "decode";
+        }
+        try {
+            Process proc = Runtime.getRuntime().exec(new String[]{"java", "-cp", pluginPath, "com.handen.plugin.Main", modeString, input});
+
+            InputStream in = proc.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+            String output = bufferedReader.lines().collect(Collectors.joining());
+            return output;
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        return "Plugin error";
     }
 }
 

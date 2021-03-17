@@ -8,12 +8,20 @@ import com.handen.lab.model.writers.EmployeesMapper;
 import com.handen.lab.model.writers.XmlEmployeesMapper;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
@@ -25,6 +33,9 @@ public class IoDialogController implements Initializable {
     public Button xml_button;
     public Button csv_button;
     public Label title;
+    private final ObservableList<String> plugins = FXCollections.observableArrayList("None");
+    public ComboBox<String> plugins_combobox;
+    public Label xml_plugins_label;
     private Stage stage;
     private final RepositoryProxy repository = RepositoryProxy.getInstance();
     private IOMode ioMode;
@@ -41,7 +52,9 @@ public class IoDialogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        plugins.addAll(fetchPlugins());
+        plugins_combobox.setItems(plugins);
+        plugins_combobox.setValue(plugins.get(0));
     }
 
     public void setStage(Stage stage) {
@@ -102,6 +115,9 @@ public class IoDialogController implements Initializable {
 
     public void onXmlClicked(MouseEvent mouseEvent) {
         String pluginPath = "";
+        if(!plugins_combobox.getValue().equals("None")) {
+            pluginPath = "C:\\oop" + plugins_combobox.getValue();
+        }
         EmployeesMapper mapper = new XmlEmployeesMapper(pluginPath);
         if(ioMode == IOMode.SAVE) {
             saveToFile(mapper);
@@ -119,6 +135,22 @@ public class IoDialogController implements Initializable {
         else {
             loadFromFile(mapper);
         }
+    }
+
+    private List<String> fetchPlugins() {
+        File file = new File("C:\\oop");
+        if(file.listFiles() == null) {
+            return Collections.emptyList();
+        }
+
+        return Arrays.stream(file.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.getAbsolutePath().toLowerCase(Locale.ROOT).contains(".jar");
+            }
+        })).map(file1 -> {
+            return file1.getName();
+        }).collect(Collectors.toList());
     }
 
     public enum IOMode {

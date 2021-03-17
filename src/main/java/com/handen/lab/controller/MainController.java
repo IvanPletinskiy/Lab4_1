@@ -237,7 +237,7 @@ public class MainController implements Initializable {
             root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Save/load");
-            stage.setScene(new Scene(root, 313, 400));
+            stage.setScene(new Scene(root, 600, 600));
             IoDialogController controller = loader.getController();
             controller.setIoMode(IoDialogController.IOMode.LOAD);
             controller.setStage(stage);
@@ -246,15 +246,6 @@ public class MainController implements Initializable {
         catch(IOException e) {
             e.printStackTrace();
         }
-
-
-//
-//        File file = chooseFile("Open records file");
-//        if(file != null) {
-//            items.clear();
-//            items.addAll(repository.loadRecords(file));
-//            table.getSelectionModel().clearAndSelect(0);
-//        }
     }
 
     public void OnMenuSaveClicked(ActionEvent actionEvent) {

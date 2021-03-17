@@ -5,37 +5,52 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="313.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.IoDialogController">
-    <VBox alignment="CENTER" prefHeight="400.0" prefWidth="342.0">
-        <Label alignment="CENTER" prefHeight="17.0" prefWidth="214.0" text="Load" fx:id="title">
-         <font>
-            <Font size="24.0" />
-         </font></Label>
-
-
-        <Button fx:id="binary_button" mnemonicParsing="false" prefHeight="64.0" prefWidth="211.0" text="Binary" onMouseClicked="#onBinaryClicked">
-            <VBox.margin>
-                <Insets bottom="20" top="20.0" />
-            </VBox.margin>
-         <font>
-            <Font size="23.0" />
-         </font>
-        </Button>
-        <Button mnemonicParsing="false" prefHeight="64.0" prefWidth="211.0" text="XML" fx:id="xml_button" onMouseClicked="#onXmlClicked">
-            <VBox.margin>
-                <Insets bottom="20" top="20.0" />
-            </VBox.margin>
-            <font>
-                <Font size="23.0" />
-            </font>
-        </Button>
-        <Button fx:id="csv_button" mnemonicParsing="false" prefHeight="64.0" prefWidth="211.0" text="CSV" onMouseClicked="#onCsvClicked">
-            <VBox.margin>
-                <Insets bottom="20" top="20.0" />
-            </VBox.margin>
-            <font>
-                <Font size="23.0" />
-            </font>
-        </Button>
-    </VBox>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.IoDialogController">
+   <HBox prefHeight="400.0" prefWidth="600.0">
+      <children>
+          <VBox alignment="CENTER" prefHeight="400.0" prefWidth="341.0">
+              <Label fx:id="title" alignment="CENTER" prefHeight="17.0" prefWidth="214.0" text="Load">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+      
+      
+              <Button fx:id="binary_button" mnemonicParsing="false" onMouseClicked="#onBinaryClicked" prefHeight="64.0" prefWidth="211.0" text="Binary">
+                  <VBox.margin>
+                      <Insets bottom="20" top="20.0" />
+                  </VBox.margin>
+               <font>
+                  <Font size="23.0" />
+               </font>
+              </Button>
+              <Button mnemonicParsing="false" onMouseClicked="#onXmlClicked" prefHeight="64.0" prefWidth="211.0" text="XML" fx:id="xml_button">
+                  <VBox.margin>
+                      <Insets bottom="20" top="20.0" />
+                  </VBox.margin>
+                  <font>
+                      <Font size="23.0" />
+                  </font>
+              </Button>
+              <Button fx:id="csv_button" mnemonicParsing="false" onMouseClicked="#onCsvClicked" prefHeight="64.0" prefWidth="211.0" text="CSV">
+                  <VBox.margin>
+                      <Insets bottom="20" top="20.0" />
+                  </VBox.margin>
+                  <font>
+                      <Font size="23.0" />
+                  </font>
+              </Button>
+          </VBox>
+         <VBox alignment="CENTER" prefHeight="400.0" prefWidth="266.0">
+            <children>
+                <Label text="Xml plugins:" fx:id="xml_plugins_label">
+                    <font>
+                        <Font size="24.0" />
+                    </font>
+                </Label>
+                <ComboBox fx:id="plugins_combobox" prefWidth="150.0" />
+            </children>
+         </VBox>
+      </children>
+   </HBox>
 </AnchorPane>
