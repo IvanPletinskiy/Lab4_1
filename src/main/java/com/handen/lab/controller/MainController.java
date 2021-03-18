@@ -44,9 +44,9 @@ public class MainController implements Initializable {
     public Label errorLabel;
 
     private RepositoryProxy repository = RepositoryProxy.getInstance();
-    private final ObservableList<com.handen.lab.data.Employee> items = repository.getItems();
+    private final ObservableList<Employee> items = repository.getItems();
 
-    public TableView<com.handen.lab.data.Employee> table;
+    public TableView<Employee> table;
 
     public TextArea name_text_area;
     public TextArea surname_text_area;
@@ -59,8 +59,6 @@ public class MainController implements Initializable {
     public Button delete_button;
     public MenuItem menu_load;
     public MenuItem menu_save;
-    public MenuItem menu_help;
-    public MenuItem menu_about;
 
     private int selectedRow;
 
@@ -109,7 +107,7 @@ public class MainController implements Initializable {
         }
     }
 
-    private void addItem(com.handen.lab.data.Employee employee) {
+    private void addItem(Employee employee) {
         items.add(employee);
     }
 
@@ -182,7 +180,7 @@ public class MainController implements Initializable {
             mentor_text_area.setVisible(false);
             mentor_text_area.setText("");
             if((int) newValue != -1) {
-                com.handen.lab.data.Employee employee = items.get(newSelectedId);
+                Employee employee = items.get(newSelectedId);
                 updateTextAreas(employee);
                 selectedRow = newSelectedId;
                 save_button.setVisible(false);
@@ -196,7 +194,7 @@ public class MainController implements Initializable {
         table.getSelectionModel().clearAndSelect(0);
     }
 
-    private void updateTextAreas(com.handen.lab.data.Employee employee) {
+    private void updateTextAreas(Employee employee) {
         name_text_area.setText(employee.getName());
         surname_text_area.setText(employee.getSurname());
         salary_text_area.setText(String.valueOf(employee.getSalary()));
@@ -298,14 +296,6 @@ public class MainController implements Initializable {
         return directoryChooser.showDialog(stage);
     }
 
-    public void OnMenuHelpClicked(ActionEvent actionEvent) {
-        showAlert("Help", helpText);
-    }
-
-    public void OnMenuAboutClicked(ActionEvent actionEvent) {
-        showAlert("About", aboutText);
-    }
-
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -337,14 +327,4 @@ public class MainController implements Initializable {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-
-    private static final String helpText =
-            "This program is used for creating, editing, deleting, saving and loading records. The record consists of: owner's surname, phone number, year.\n" +
-            "Use TAB and SHIFT+TAB to navigate between input fields.\n" +
-            "Click on table and use arrows UP and DOWN to navigate between records\n" +
-            "Save button will appear after you change text in input fields\n" +
-            "Add and edit records, then click File -> Save to save them into file.";
-
-    private static final String aboutText =
-            "Made by Ivan Pletinski 951008 2020";
 }
