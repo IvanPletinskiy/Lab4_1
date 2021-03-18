@@ -75,7 +75,7 @@ public class IoDialogController implements Initializable {
     public void onXmlClicked(MouseEvent mouseEvent) {
         String pluginPath = "";
         if(!plugins_combobox.getValue().equals("None")) {
-            pluginPath = "C:\\oop" + plugins_combobox.getValue();
+            pluginPath = "C:\\oop\\" + plugins_combobox.getValue();
         }
 
         EmployeesMapper mapper = new XmlEmployeesMapper(pluginPath);
