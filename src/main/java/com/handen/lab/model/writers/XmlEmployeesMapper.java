@@ -1,6 +1,7 @@
 package com.handen.lab.model.writers;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.handen.lab.data.Employee;
 
@@ -12,7 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.Collections;
@@ -29,16 +29,14 @@ public class XmlEmployeesMapper implements EmployeesMapper {
 
     @Override
     public void write(File file, List<Employee> items) {
-        XmlMapper mapper = new XmlMapper();
-        EmployeesList list = new EmployeesList(items);
-
+        XmlConverter xmlConverter = new XmlAdapter(items);
         try {
-            String mappedString = mapper.writeValueAsString(list);
+            String xml = xmlConverter.getXml();
             if(pluginEnabled()) {
-                mappedString = applyPlugin(mappedString, true);
+                xml = applyPlugin(xml, true);
             }
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
-            writer.write(mappedString);
+            writer.write(xml);
         }
         catch(IOException e) {
             e.printStackTrace();
@@ -104,6 +102,35 @@ public class XmlEmployeesMapper implements EmployeesMapper {
 
         return "Plugin error";
     }
+}
+
+class XmlAdapter implements XmlConverter {
+    private final EmployeesList list;
+
+    public XmlAdapter(List<Employee> employees) {
+        this.list = new EmployeesList(employees);
+    }
+
+    public EmployeesList getList() {
+        return list;
+    }
+
+    @Override
+    public String getXml() {
+        XmlMapper mapper = new XmlMapper();
+        String mappedString = "";
+        try {
+            mappedString = mapper.writeValueAsString(list);
+        }
+        catch(JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return mappedString;
+    }
+}
+
+interface XmlConverter {
+    String getXml();
 }
 
 class EmployeesList implements Serializable {
