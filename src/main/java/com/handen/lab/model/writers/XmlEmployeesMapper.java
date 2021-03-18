@@ -37,6 +37,7 @@ public class XmlEmployeesMapper implements EmployeesMapper {
             }
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
             writer.write(xml);
+            writer.close();
         }
         catch(IOException e) {
             e.printStackTrace();

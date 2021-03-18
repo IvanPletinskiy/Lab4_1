@@ -262,12 +262,6 @@ public class MainController implements Initializable {
         catch(IOException e) {
             e.printStackTrace();
         }
-
-//
-//        File file = chooseDirecotory("Save records to directory");
-//        if(file != null) {
-//            repository.saveRecordsInDirectory(file, items);
-//        }
     }
 
     private File chooseFile(String title) {
