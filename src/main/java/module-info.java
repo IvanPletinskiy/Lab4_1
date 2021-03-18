@@ -11,6 +11,7 @@ module hellofx {
     exports com.handen.lab.data.developer;
     exports com.handen.lab.data.managers;
     exports com.handen.lab.data.designer;
+    exports com.handen.lab.model.writers;
     exports com.handen.lab;
     exports com.handen.lab.controller;
     exports com.handen.lab.data;

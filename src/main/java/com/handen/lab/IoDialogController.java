@@ -1,6 +1,7 @@
 package com.handen.lab;
 
 import com.handen.lab.data.Employee;
+import com.handen.lab.model.Repository;
 import com.handen.lab.model.RepositoryProxy;
 import com.handen.lab.model.writers.BinaryEmployeesMapper;
 import com.handen.lab.model.writers.CsvEmployeesMapper;
@@ -24,7 +25,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -37,7 +37,7 @@ public class IoDialogController implements Initializable {
     public ComboBox<String> plugins_combobox;
     public Label xml_plugins_label;
     private Stage stage;
-    private final RepositoryProxy repository = RepositoryProxy.getInstance();
+    private final Repository repository = RepositoryProxy.getInstance();
     private IOMode ioMode;
 
     public void setIoMode(IOMode ioMode) {
@@ -61,6 +61,44 @@ public class IoDialogController implements Initializable {
         this.stage = stage;
     }
 
+    public void onBinaryClicked(MouseEvent mouseEvent) {
+        EmployeesMapper mapper = new BinaryEmployeesMapper();
+        File file = chooseFile("Choose txt file", mapper.getFileExtension());
+        if(ioMode == IOMode.SAVE) {
+            repository.saveToFile(mapper, file);
+        }
+        else {
+            repository.loadFromFile(mapper, file);
+        }
+    }
+
+    public void onXmlClicked(MouseEvent mouseEvent) {
+        String pluginPath = "";
+        if(!plugins_combobox.getValue().equals("None")) {
+            pluginPath = "C:\\oop" + plugins_combobox.getValue();
+        }
+
+        EmployeesMapper mapper = new XmlEmployeesMapper(pluginPath);
+        File file = chooseFile("Choose xml file", mapper.getFileExtension());
+        if(ioMode == IOMode.SAVE) {
+            repository.saveToFile(mapper, file);
+        }
+        else {
+            repository.loadFromFile(mapper, file);
+        }
+    }
+
+    public void onCsvClicked(MouseEvent mouseEvent) {
+        EmployeesMapper mapper = new CsvEmployeesMapper();
+        File file = chooseFile("Choose csv file", mapper.getFileExtension());
+        if(ioMode == IOMode.SAVE) {
+            repository.saveToFile(mapper, file);
+        }
+        else {
+            repository.loadFromFile(mapper, file);
+        }
+    }
+
     private File chooseFile(String title, String extension) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(title);
@@ -72,69 +110,6 @@ public class IoDialogController implements Initializable {
         fileChooser.setInitialDirectory(userDirectory);
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(extension, "*." + extension));
         return fileChooser.showOpenDialog(stage);
-    }
-
-    private File chooseDirecotory(String title) {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle(title);
-
-        String userDirectoryString = System.getProperty("user.home");
-        File userDirectory = new File(userDirectoryString);
-        if(!userDirectory.canRead()) {
-            userDirectory = new File("c:/");
-        }
-
-        directoryChooser.setInitialDirectory(userDirectory);
-        return directoryChooser.showDialog(stage);
-    }
-
-    private void saveToFile(EmployeesMapper mapper) {
-        File file = chooseFile("Save employees to file", mapper.getFileExtension());
-        if(file != null) {
-            mapper.write(file, repository.getItems());
-        }
-    }
-
-    private void loadFromFile(EmployeesMapper mapper) {
-        File file = chooseFile("Load employees from file", mapper.getFileExtension());
-        if(file != null) {
-            List<Employee> employeeList = mapper.read(file);
-            repository.getItems().setAll(employeeList);
-        }
-    }
-
-    public void onBinaryClicked(MouseEvent mouseEvent) {
-        EmployeesMapper mapper = new BinaryEmployeesMapper();
-        if(ioMode == IOMode.SAVE) {
-            saveToFile(mapper);
-        }
-        else {
-            loadFromFile(mapper);
-        }
-    }
-
-    public void onXmlClicked(MouseEvent mouseEvent) {
-        String pluginPath = "";
-        if(!plugins_combobox.getValue().equals("None")) {
-            pluginPath = "C:\\oop" + plugins_combobox.getValue();
-        }
-        EmployeesMapper mapper = new XmlEmployeesMapper(pluginPath);
-        if(ioMode == IOMode.SAVE) {
-            saveToFile(mapper);
-        }
-        else {
-            loadFromFile(mapper);
-        }
-    }
-
-    public void onCsvClicked(MouseEvent mouseEvent) {
-        EmployeesMapper mapper = new CsvEmployeesMapper();
-        if(ioMode == IOMode.SAVE) {
-            saveToFile(mapper);
-        }
-        else {
-            loadFromFile(mapper);
-        }
     }
 
     private List<String> fetchPlugins() {

@@ -125,7 +125,7 @@ public class MainController implements Initializable {
                 ((Developer) employee).setMentor(repository.getMentorBySurname(mentor_text_area.getText()));
             }
 
-            items.set(selectedRow, employee);
+            repository.saveEmployee(selectedRow, employee);
         }
     }
 
