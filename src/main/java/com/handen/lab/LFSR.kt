@@ -22,6 +22,29 @@ class LFSR(private val state: String) {
         return lastEmitted!!
     }
 
+    fun encodeString(string: String): String {
+        val keyChars = mutableListOf<Byte>()
+        val result = string.map {
+            val byte: Byte = if (it == '0') 0 else 1
+            val keyChar = nextChar()
+            keyChars.add(keyChar)
+            val resultChar = byte xor keyChar
+            resultChar
+        }
+//        println("Key:${keyChars.joinToString("")}")
+        return result.joinToString("")
+    }
+
+    fun decodeString(string: String): String {
+        val result = string.map {
+            val byte: Byte = if (it == '0') 0 else 1
+            val keyChar = nextChar()
+            val resultChar = byte xor keyChar
+            resultChar
+        }
+        return result.joinToString("")
+    }
+
 //    private fun nextByte(): Byte {
 //        val chars = mutableListOf<Byte>()
 //        for(i in 0 until 8) {
