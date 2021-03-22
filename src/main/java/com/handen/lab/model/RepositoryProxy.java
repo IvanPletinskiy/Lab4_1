@@ -58,6 +58,6 @@ public class RepositoryProxy implements Repository {
 
     @Override
     public void loadFromFile(EmployeesMapper mapper, File file) {
-        mActualRepository.saveToFile(mapper, file);
+        mActualRepository.loadFromFile(mapper, file);
     }
 }

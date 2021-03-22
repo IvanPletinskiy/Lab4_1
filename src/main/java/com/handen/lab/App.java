@@ -2,7 +2,11 @@ package com.handen.lab;
 
 import com.handen.lab.controller.MainController;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +17,17 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+//        String output = "-1";
+//        try {
+//            Process proc = Runtime.getRuntime().exec(new String[]{"java", "-cp", "C:\\oop\\XmlTagsToAttributes.jar", "com.handen.plugin.Main", "encode", "<EmployeesList><employees><employees _type=\"MobileDeveloper\"><id>0</id><name>Ivan</name><surname>Pletinskiy</surname><salary>100500</salary><positionTitle>Mobile Developer</positionTitle><mentorId>0</mentorId><mentor/></employees></employees></EmployeesList>"});
+//
+//            InputStream in = proc.getInputStream();
+//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+//            output = bufferedReader.lines().collect(Collectors.joining());
+//        }
+//        catch(IOException e) {
+//            e.printStackTrace();
+//        }
         FXMLLoader loader = new FXMLLoader(App.class.getResource("main_layout.fxml"));
         Scene scene = new Scene(loader.load(), 800, 400);
         MainController controller = loader.getController();

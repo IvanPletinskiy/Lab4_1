@@ -18,9 +18,11 @@ class Main {
     public static void main(String[] args) {
         String mode = args[0];
         String input = args[1];
+        //Input readed in jar: <EmployeesList><employees><employees _type=MobileDeveloper><id>0</id><name>Ivan</name><surname>Pletinskiy</surname><salary>100500</salary><positionTitle>Mobile Developer</positionTitle><mentorId>0</mentorId><mentor/></employees></employees></EmployeesList>
+//        String input = "<EmployeesList><employees><employees _type=\"MobileDeveloper\"><id>0</id><name>Ivan</name><surname>Pletinskiy</surname><salary>100500</salary><positionTitle>Mobile Developer</positionTitle><mentorId>0</mentorId><mentor/></employees></employees></EmployeesList>";
         //        String input = "<EmployeesList><employees><employees _type=\"MobileDeveloper\"><id>0</id><name>Ivan</name><surname>Pletinskiy</surname><salary>100500</salary><positionTitle>Mobile Developer</positionTitle><mentorId>0</mentorId><mentor/></employees></employees></EmployeesList>";
         //        String input = "<EmployeesList><employees><employees _type=\"MobileDeveloper\" id=\"0\" name=\"Ivan\" positionTitle=\"Mobile Developer\" salary=\"100500\" surname=\"Pletinskiy\"><mentorId>0</mentorId><mentor/></employees></employees></EmployeesList>";
-
+        System.out.println("Input:" + input);
         String output = "";
 
         if(mode.equals("encode")) {

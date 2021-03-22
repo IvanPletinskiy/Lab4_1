@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class XmlEmployeesMapper implements EmployeesMapper {
 
-    private String pluginPath;
+    private final String pluginPath;
 
     public XmlEmployeesMapper(String pluginPath) {
         this.pluginPath = pluginPath;
@@ -110,10 +110,6 @@ class XmlAdapter implements XmlConverter {
 
     public XmlAdapter(List<Employee> employees) {
         this.list = new EmployeesList(employees);
-    }
-
-    public EmployeesList getList() {
-        return list;
     }
 
     @Override

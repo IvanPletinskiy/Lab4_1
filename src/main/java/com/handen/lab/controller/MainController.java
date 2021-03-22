@@ -3,12 +3,10 @@ package com.handen.lab.controller;
 import com.handen.lab.App;
 import com.handen.lab.IoDialogController;
 import com.handen.lab.data.Employee;
-import com.handen.lab.data.Record;
 import com.handen.lab.data.developer.Developer;
 import com.handen.lab.model.RepositoryProxy;
 import com.handen.lab.utils.LettersTextFormatter;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -32,8 +30,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainController implements Initializable {
@@ -229,6 +225,14 @@ public class MainController implements Initializable {
     }
 
     public void OnMenuLoadClicked(ActionEvent actionEvent) {
+        showIoDialog(IoDialogController.IOMode.LOAD);
+    }
+
+    public void OnMenuSaveClicked(ActionEvent actionEvent) {
+        showIoDialog(IoDialogController.IOMode.SAVE);
+    }
+
+    private void showIoDialog(IoDialogController.IOMode mode) {
         Parent root;
         try {
             FXMLLoader loader = new FXMLLoader(App.class.getResource("io_dialog.fxml"));
@@ -237,65 +241,13 @@ public class MainController implements Initializable {
             stage.setTitle("Save/load");
             stage.setScene(new Scene(root, 600, 600));
             IoDialogController controller = loader.getController();
-            controller.setIoMode(IoDialogController.IOMode.LOAD);
+            controller.setIoMode(mode);
             controller.setStage(stage);
             stage.show();
         }
         catch(IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void OnMenuSaveClicked(ActionEvent actionEvent) {
-        Parent root;
-        try {
-            FXMLLoader loader = new FXMLLoader(App.class.getResource("io_dialog.fxml"));
-            root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Save/load");
-            stage.setScene(new Scene(root, 313, 400));
-            IoDialogController controller = loader.getController();
-            controller.setIoMode(IoDialogController.IOMode.SAVE);
-            controller.setStage(stage);
-            stage.show();
-        }
-        catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private File chooseFile(String title) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(title);
-        String userDirectoryString = System.getProperty("user.home");
-        File userDirectory = new File(userDirectoryString);
-        if(!userDirectory.canRead()) {
-            userDirectory = new File("c:/");
-        }
-        fileChooser.setInitialDirectory(userDirectory);
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV", "*.csv"));
-        return fileChooser.showOpenDialog(stage);
-    }
-
-    private File chooseDirecotory(String title) {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle(title);
-
-        String userDirectoryString = System.getProperty("user.home");
-        File userDirectory = new File(userDirectoryString);
-        if(!userDirectory.canRead()) {
-            userDirectory = new File("c:/");
-        }
-        directoryChooser.setInitialDirectory(userDirectory);
-        return directoryChooser.showDialog(stage);
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        alert.setHeaderText(null);
-        alert.showAndWait();
     }
 
     public void focusNextTextArea(KeyEvent event) {
