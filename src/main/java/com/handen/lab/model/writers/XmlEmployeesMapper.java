@@ -90,7 +90,10 @@ public class XmlEmployeesMapper implements EmployeesMapper {
             modeString = "decode";
         }
         try {
-            Process proc = Runtime.getRuntime().exec(new String[]{"java", "-cp", pluginPath, "com.handen.plugin.Main", modeString, input});
+            //TODO works, need to test with JSON
+            String formattedInput = input.replace('\"', '\'');
+//            Process proc = Runtime.getRuntime().exec(new String[]{"java", "-cp", pluginPath, "com.handen.plugin.Main", modeString, input});
+            Process proc = Runtime.getRuntime().exec("java -cp " +  pluginPath + " com.handen.plugin.Main " +  modeString + " \"" +  formattedInput + "\"");
 
             InputStream in = proc.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
