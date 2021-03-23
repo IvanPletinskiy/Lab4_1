@@ -5,7 +5,9 @@ import com.handen.lab.utils.BinaryTextFormatter;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -25,6 +28,7 @@ import javafx.stage.Stage;
 
 public class MainController implements Initializable {
     private static final String INITIAL_KEY = "11111111111111111111111111111111111";
+    public CheckBox checkbox;
     private String decodedPath = "C:\\ti\\lfsr\\decoded.txt";
     private String encodedPath = "C:\\ti\\lfsr\\encoded.txt";
     public AnchorPane container;
@@ -52,22 +56,48 @@ public class MainController implements Initializable {
     public void onEncodeClicked(MouseEvent mouseEvent) {
         boolean isValid = validateKey();
         if(isValid) {
-            String text = readTextFromPath(decodedPath);
-            String encoded = new LFSR(keyText.getText()).encodeString(text);
-            inputTextView.setText(text);
-            resultTextView.setText(encoded);
-            writeTextToPath(encoded, encodedPath);
+            if(checkbox.isSelected()) {
+                String text = readTextFromPath(decodedPath);
+                String encoded = new LFSR(keyText.getText()).encodeString(text);
+                inputTextView.setText(text);
+                resultTextView.setText(encoded);
+                writeTextToPath(encoded, encodedPath);
+            }
+            else {
+                byte[] bytes = readBytesFromPath(decodedPath);
+                byte[] encodedBytes = new LFSR(keyText.getText()).encodeBytes(bytes);
+                inputTextView.setText("");
+                resultTextView.setText("");
+                writeBytesToPath(encodedBytes, encodedPath);
+            }
+        }
+        else {
+            inputTextView.setText("");
+            resultTextView.setText("");
         }
     }
 
     public void onDecodeClicked(MouseEvent mouseEvent) {
         boolean isValid = validateKey();
         if(isValid) {
-            String text = readTextFromPath(encodedPath);
-            String decoded = new LFSR(keyText.getText()).decodeString(text);
-            inputTextView.setText(text);
-            resultTextView.setText(decoded);
-            writeTextToPath(decoded, decodedPath);
+            if(checkbox.isSelected()) {
+                String text = readTextFromPath(encodedPath);
+                String decoded = new LFSR(keyText.getText()).decodeString(text);
+                inputTextView.setText(text);
+                resultTextView.setText(decoded);
+                writeTextToPath(decoded, decodedPath);
+            }
+            else {
+                byte[] bytes = readBytesFromPath(encodedPath);
+                byte[] decodedBytes = new LFSR(keyText.getText()).decodeBytes(bytes);
+                inputTextView.setText("");
+                resultTextView.setText("");
+                writeBytesToPath(decodedBytes, decodedPath);
+            }
+        }
+        else {
+            inputTextView.setText("");
+            resultTextView.setText("");
         }
     }
 
@@ -90,7 +120,30 @@ public class MainController implements Initializable {
         return isValid;
     }
 
-    public String readTextFromPath(String path) {
+    private byte[] readBytesFromPath(String path) {
+        FileInputStream fileInputStream = null;
+        File file = new File(path);
+        try {
+            fileInputStream = new FileInputStream(file);
+            return fileInputStream.readAllBytes();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+            return new byte[0];
+        }
+        finally {
+            if(fileInputStream != null) {
+                try {
+                    fileInputStream.close();
+                }
+                catch(IOException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private String readTextFromPath(String path) {
         File file = new File(path);
         BufferedReader bufferedReader = null;
         try {
@@ -116,7 +169,29 @@ public class MainController implements Initializable {
         }
     }
 
-    public void writeTextToPath(String text, String path) {
+    private void writeBytesToPath(byte[] bytes, String path) {
+        File file = new File(path);
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(bytes);
+        }
+        catch(IOException exception) {
+            exception.printStackTrace();
+        }
+        finally {
+            if(fileOutputStream != null) {
+                try {
+                    fileOutputStream.close();
+                }
+                catch(IOException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void writeTextToPath(String text, String path) {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(path, false);
@@ -127,7 +202,9 @@ public class MainController implements Initializable {
         }
         finally {
             try {
-                fileWriter.close();
+                if(fileWriter != null) {
+                    fileWriter.close();
+                }
             }
             catch(IOException e) {
                 e.printStackTrace();
@@ -147,7 +224,7 @@ public class MainController implements Initializable {
         File file = chooseFile("Open encoded file");
         if(file != null) {
             encodedPath = file.getAbsolutePath();
-            encodedFilePath.setText(encodedPath);
+            updateEncodedPath();
         }
     }
 

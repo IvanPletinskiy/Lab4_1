@@ -3,6 +3,7 @@ package com.handen.lab
 import kotlin.experimental.and
 import kotlin.experimental.xor
 
+@ExperimentalUnsignedTypes
 class LFSR(private val state: String) {
     var list = listOf<Byte>()
     private var lastEmitted: Byte? = null
@@ -45,15 +46,33 @@ class LFSR(private val state: String) {
         return result.joinToString("")
     }
 
-//    private fun nextByte(): Byte {
-//        val chars = mutableListOf<Byte>()
-//        for(i in 0 until 8) {
-//            step()
-//            chars.add(lastEmitted!!)
-//        }
-//    }
+    private fun nextByte(): UByte {
+        val chars = mutableListOf<Byte>()
+        for(i in 0 until 8) {
+            step()
+            chars.add(lastEmitted!!)
+        }
+        return chars.joinToString("").toUByte(2)
+    }
+
+    fun encodeBytes(bytes: ByteArray): ByteArray {
+        val encodedBytes = bytes.map {
+            it.toUByte() xor nextByte()
+        }.toUByteArray()
+
+        return encodedBytes.toByteArray()
+    }
+
+    fun decodeBytes(bytes: ByteArray): ByteArray {
+        val decodedBytes = bytes.map {
+            it.toUByte() xor nextByte()
+        }.toUByteArray()
+
+        return decodedBytes.toByteArray()
+    }
 }
 
+@ExperimentalUnsignedTypes
 fun main() {
     fun encodeString(lfsr: LFSR, string: String): String {
         val keyChars = mutableListOf<Byte>()
