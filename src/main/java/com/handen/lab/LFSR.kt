@@ -12,7 +12,7 @@ class LFSR(private val state: String) {
     }
 
     private fun step() {
-        val new = list.first() xor list.last()
+        val new = list.first() xor list[list.lastIndex - 1]
         lastEmitted = list.first()
         list = list.drop(1) + new
     }
