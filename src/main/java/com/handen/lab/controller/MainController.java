@@ -1,11 +1,6 @@
 package com.handen.lab.controller;
 
-import com.handen.lab.ColumnMethod;
-import com.handen.lab.DecimationMethod;
 import com.handen.lab.LFSR;
-import com.handen.lab.Method;
-import com.handen.lab.Result;
-import com.handen.lab.VijinerMethod;
 import com.handen.lab.utils.BinaryTextFormatter;
 
 import java.io.BufferedReader;
@@ -18,12 +13,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainController implements Initializable {
@@ -43,6 +40,8 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         keyText.setText(INITIAL_KEY);
         keyText.setTextFormatter(new BinaryTextFormatter());
+        updateDecodedPath();
+        updateEncodedPath();
         errorLabel.setWrapText(true);
     }
 
@@ -55,6 +54,8 @@ public class MainController implements Initializable {
         if(isValid) {
             String text = readTextFromPath(decodedPath);
             String encoded = new LFSR(keyText.getText()).encodeString(text);
+            inputTextView.setText(text);
+            resultTextView.setText(encoded);
             writeTextToPath(encoded, encodedPath);
         }
     }
@@ -64,6 +65,8 @@ public class MainController implements Initializable {
         if(isValid) {
             String text = readTextFromPath(encodedPath);
             String decoded = new LFSR(keyText.getText()).decodeString(text);
+            inputTextView.setText(text);
+            resultTextView.setText(decoded);
             writeTextToPath(decoded, decodedPath);
         }
     }
@@ -72,7 +75,7 @@ public class MainController implements Initializable {
         String key = keyText.getText();
         boolean isValid = true;
         if(key.length() != 35) {
-            errorLabel.setText("Ошибка: Длина ключа должна быть 35 символов");
+            errorLabel.setText("Ошибка: Длина ключа должна быть 35 символов, сейчас: " + key.length());
             isValid = false;
         }
 
@@ -130,5 +133,42 @@ public class MainController implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void onOpenDecodedFile(ActionEvent actionEvent) {
+        File file = chooseFile("Open decoded file");
+        if(file != null) {
+            decodedPath = file.getAbsolutePath();
+            updateDecodedPath();
+        }
+    }
+
+    public void onOpenEncodedFile(ActionEvent actionEvent) {
+        File file = chooseFile("Open encoded file");
+        if(file != null) {
+            encodedPath = file.getAbsolutePath();
+            encodedFilePath.setText(encodedPath);
+        }
+    }
+
+    private File chooseFile(String title) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(title);
+        String userDirectoryString = System.getProperty("user.home");
+        File userDirectory = new File(userDirectoryString);
+        if(!userDirectory.canRead()) {
+            userDirectory = new File("c:/");
+        }
+        fileChooser.setInitialDirectory(userDirectory);
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("*", "*.*"));
+        return fileChooser.showOpenDialog(stage);
+    }
+
+    private void updateDecodedPath() {
+        decodedFilePath.setText("Расшифрованный файл:" + decodedPath);
+    }
+
+    private void updateEncodedPath() {
+        encodedFilePath.setText("Зашифрованный файл:" + encodedPath);
     }
 }

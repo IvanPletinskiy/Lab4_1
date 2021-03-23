@@ -4,16 +4,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="container" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
-    <Label fx:id="decodedFilePath" layoutX="26.0" layoutY="26.0" prefHeight="17.0" prefWidth="352.0" />
-    <Label fx:id="encodedFilePath" layoutX="26.0" layoutY="47.0" prefHeight="17.0" prefWidth="352.0" />
+<AnchorPane fx:id="container" prefHeight="528.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
+    <Label fx:id="decodedFilePath" layoutX="130.0" layoutY="14.0" prefHeight="17.0" prefWidth="352.0" />
+    <Label fx:id="encodedFilePath" layoutX="130.0" layoutY="47.0" prefHeight="17.0" prefWidth="352.0" />
     <TextArea fx:id="inputTextView" editable="false" layoutX="26.0" layoutY="93.0" prefHeight="255.0" prefWidth="192.0">
         <font>
             <Font size="24.0" />
         </font>
     </TextArea>
-    <TextField fx:id="keyText" layoutX="466.0" layoutY="93.0" prefHeight="100.0" prefWidth="149.0" />
-    <Label fx:id="errorLabel" layoutX="465.0" layoutY="129.0" prefHeight="82.0" prefWidth="219.0" textFill="RED" visible="false">
+    <TextField fx:id="keyText" layoutX="26.0" layoutY="396.0" prefHeight="25.0" prefWidth="465.0" />
+    <Label fx:id="errorLabel" layoutX="27.0" layoutY="430.0" prefHeight="25.0" prefWidth="465.0" textFill="RED" visible="false">
         <font>
             <Font size="16.0" />
         </font>
@@ -22,10 +22,12 @@
     <Button fx:id="decodeButton" layoutX="465.0" layoutY="257.0" mnemonicParsing="false" onMouseClicked="#onDecodeClicked" prefHeight="25.0" prefWidth="117.0" text="Дешифровать" />
     <Label layoutX="26.0" layoutY="76.0" prefHeight="17.0" prefWidth="104.0" text="Текст из файла:" />
     <Label layoutX="224.0" layoutY="76.0" prefHeight="17.0" prefWidth="104.0" text="Результат:" />
-    <TextArea fx:id="resultTextView" editable="false" layoutX="224.0" layoutY="93.0" prefHeight="255.0" prefWidth="192.0">
+    <TextArea fx:id="resultTextView" editable="false" layoutX="224.0" layoutY="93.0" prefHeight="255.0" prefWidth="192.0" wrapText="true">
         <font>
             <Font size="24.0" />
         </font>
     </TextArea>
-    <Label layoutX="465.0" layoutY="68.0" prefHeight="17.0" prefWidth="229.0" text="Введите начальное значение регистра:" />
+    <Label layoutX="26.0" layoutY="379.0" prefHeight="17.0" prefWidth="229.0" text="Введите начальное значение регистра:" />
+    <Button layoutX="30.0" layoutY="10.0" mnemonicParsing="false" onAction="#onOpenDecodedFile" text="Открыть" />
+    <Button layoutX="30.0" layoutY="43.0" mnemonicParsing="false" onAction="#onOpenEncodedFile" text="Открыть" />
 </AnchorPane>
