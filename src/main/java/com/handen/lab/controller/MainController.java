@@ -28,7 +28,6 @@ import javafx.stage.Stage;
 
 public class MainController implements Initializable {
     private static final String INITIAL_KEY = "11111111111111111111111111111111111";
-    public CheckBox checkbox;
     public TextArea keyTextView;
     private String decodedPath = "C:\\ti\\lfsr\\decoded.txt";
     private String encodedPath = "C:\\ti\\lfsr\\encoded.txt";
@@ -58,20 +57,20 @@ public class MainController implements Initializable {
         boolean isValid = validateKey();
         if(isValid) {
             LFSR lfsr = new LFSR(initialRegisterValue.getText());
-            if(checkbox.isSelected()) {
-                String text = readTextFromPath(decodedPath);
-                String encoded = lfsr.encodeString(text);
-                inputTextView.setText(text);
-                resultTextView.setText(encoded);
-                writeTextToPath(encoded, encodedPath);
+            byte[] bytes = readBytesFromPath(decodedPath);
+            byte[] encodedBytes = lfsr.encodeBytes(bytes);
+            StringBuilder bytesString = new StringBuilder();
+            for(int i = 0; i < bytes.length && i < 1000; i++) {
+                bytesString.append(String.format("%8s", Integer.toBinaryString(bytes[i] & 0xFF)).replace(' ', '0'));
             }
-            else {
-                byte[] bytes = readBytesFromPath(decodedPath);
-                byte[] encodedBytes = lfsr.encodeBytes(bytes);
-                inputTextView.setText("");
-                resultTextView.setText("");
-                writeBytesToPath(encodedBytes, encodedPath);
+            inputTextView.setText(bytesString.toString());
+
+            StringBuilder decodedBytesString = new StringBuilder();
+            for(int i = 0; i < encodedBytes.length && i < 1000; i++) {
+                decodedBytesString.append(String.format("%8s", Integer.toBinaryString(encodedBytes[i] & 0xFF)).replace(' ', '0'));
             }
+            resultTextView.setText(decodedBytesString.toString());
+            writeBytesToPath(encodedBytes, encodedPath);
             keyTextView.setText(lfsr.getKey());
         }
         else {
@@ -84,20 +83,20 @@ public class MainController implements Initializable {
         boolean isValid = validateKey();
         if(isValid) {
             LFSR lfsr = new LFSR(initialRegisterValue.getText());
-            if(checkbox.isSelected()) {
-                String text = readTextFromPath(encodedPath);
-                String decoded = lfsr.decodeString(text);
-                inputTextView.setText(text);
-                resultTextView.setText(decoded);
-                writeTextToPath(decoded, decodedPath);
+            byte[] bytes = readBytesFromPath(encodedPath);
+            byte[] decodedBytes = lfsr.decodeBytes(bytes);
+            StringBuilder bytesString = new StringBuilder();
+            for(int i = 0; i < bytes.length && i < 1000; i++) {
+                bytesString.append(String.format("%8s", Integer.toBinaryString(bytes[i] & 0xFF)).replace(' ', '0'));
             }
-            else {
-                byte[] bytes = readBytesFromPath(encodedPath);
-                byte[] decodedBytes = lfsr.decodeBytes(bytes);
-                inputTextView.setText("");
-                resultTextView.setText("");
-                writeBytesToPath(decodedBytes, decodedPath);
+            inputTextView.setText(bytesString.toString());
+
+            StringBuilder decodedBytesString = new StringBuilder();
+            for(int i = 0; i < decodedBytes.length && i < 1000; i++) {
+                decodedBytesString.append(String.format("%8s", Integer.toBinaryString(decodedBytes[i] & 0xFF)).replace(' ', '0'));
             }
+            resultTextView.setText(decodedBytesString.toString());
+            writeBytesToPath(decodedBytes, decodedPath);
             keyTextView.setText(lfsr.getKey());
         }
         else {
@@ -148,32 +147,6 @@ public class MainController implements Initializable {
         }
     }
 
-    private String readTextFromPath(String path) {
-        File file = new File(path);
-        BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(new FileReader(file));
-        }
-        catch(FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            return bufferedReader.lines().collect(Collectors.joining());
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-        finally {
-            try {
-                bufferedReader.close();
-            }
-            catch(IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     private void writeBytesToPath(byte[] bytes, String path) {
         File file = new File(path);
         FileOutputStream fileOutputStream = null;
@@ -192,27 +165,6 @@ public class MainController implements Initializable {
                 catch(IOException exception) {
                     exception.printStackTrace();
                 }
-            }
-        }
-    }
-
-    private void writeTextToPath(String text, String path) {
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(path, false);
-            fileWriter.write(text);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                if(fileWriter != null) {
-                    fileWriter.close();
-                }
-            }
-            catch(IOException e) {
-                e.printStackTrace();
             }
         }
     }

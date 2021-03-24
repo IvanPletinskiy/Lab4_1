@@ -24,29 +24,6 @@ class LFSR(private val state: String) {
         return lastEmitted!!
     }
 
-    fun encodeString(string: String): String {
-        val keyChars = mutableListOf<Byte>()
-        val result = string.map {
-            val byte: Byte = if (it == '0') 0 else 1
-            val keyChar = nextDigit()
-            keyChars.add(keyChar)
-            val resultChar = byte xor keyChar
-            resultChar
-        }
-//        println("Key:${keyChars.joinToString("")}")
-        return result.joinToString("")
-    }
-
-    fun decodeString(string: String): String {
-        val result = string.map {
-            val byte: Byte = if (it == '0') 0 else 1
-            val keyChar = nextDigit()
-            val resultChar = byte xor keyChar
-            resultChar
-        }
-        return result.joinToString("")
-    }
-
     fun getKey(): String {
         return generatedKeyChars.joinToString("")
     }
@@ -75,43 +52,4 @@ class LFSR(private val state: String) {
 
         return decodedBytes.toByteArray()
     }
-}
-
-@ExperimentalUnsignedTypes
-fun main() {
-    fun encodeString(lfsr: LFSR, string: String): String {
-        val keyChars = mutableListOf<Byte>()
-        val result = string.map {
-            val byte: Byte = if (it == '0') 0 else 1
-            val keyChar = lfsr.nextDigit()
-            keyChars.add(keyChar)
-            val resultChar = byte xor keyChar
-            resultChar
-        }
-        println("Key:${keyChars.joinToString("")}")
-        return result.joinToString("")
-    }
-
-    fun decodeString(lfsr: LFSR, string: String): String {
-        val result = string.map {
-            val byte: Byte = if (it == '0') 0 else 1
-            val keyChar = lfsr.nextDigit()
-            val resultChar = byte xor keyChar
-            resultChar
-        }
-        return result.joinToString("")
-    }
-
-    val lfsr = LFSR("1111")
-    val keyChars = mutableListOf<Byte>()
-//    for (i in 0 until 16) {
-//        println("Current lfsr state:${lfsr.list.joinToString("")}")
-//        keyChars.add(lfsr.nextChar())
-//    }
-//    println("Generated key:${keyChars.joinToString("")}")
-
-    val encoded = encodeString(LFSR("1111"), "10101010")
-    println("EncodedString:$encoded")
-    val decoded = decodeString(LFSR("1111"), encoded)
-    println("DecodedString:$decoded")
 }
