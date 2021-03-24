@@ -7,7 +7,6 @@ public class Main {
     public static void main(String[] args) {
         String mode = args[0];
         String input = args[1];
-//        String input = "{\"EmployeesList\":{\"employees\":{\"employees\":{\"mentor\":\"\",\"positionTitle\":\"Mobile Developer\",\"surname\":\"Pletinskiy\",\"_type\":\"MobileDeveloper\",\"name\":\"Ivan\",\"id\":0,\"salary\":100500,\"mentorId\":0}}}}";
 
         String output = "";
 
