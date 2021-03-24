@@ -11,5 +11,9 @@
         <module name="EasyFlowCharts" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="XmlTagsToAttributes" target="12" />
+      <module name="XmlToJsonPlugin" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

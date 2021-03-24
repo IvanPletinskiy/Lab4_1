@@ -29,21 +29,22 @@ import javafx.stage.Stage;
 public class MainController implements Initializable {
     private static final String INITIAL_KEY = "11111111111111111111111111111111111";
     public CheckBox checkbox;
+    public TextArea keyTextView;
     private String decodedPath = "C:\\ti\\lfsr\\decoded.txt";
     private String encodedPath = "C:\\ti\\lfsr\\encoded.txt";
     public AnchorPane container;
     public Label decodedFilePath;
     public Label encodedFilePath;
     public TextArea inputTextView;
-    public TextField keyText;
+    public TextField initialRegisterValue;
     public TextArea resultTextView;
     private Stage stage;
 
     public Label errorLabel;
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        keyText.setText(INITIAL_KEY);
-        keyText.setTextFormatter(new BinaryTextFormatter());
+        initialRegisterValue.setText(INITIAL_KEY);
+        initialRegisterValue.setTextFormatter(new BinaryTextFormatter());
         updateDecodedPath();
         updateEncodedPath();
         errorLabel.setWrapText(true);
@@ -56,20 +57,22 @@ public class MainController implements Initializable {
     public void onEncodeClicked(MouseEvent mouseEvent) {
         boolean isValid = validateKey();
         if(isValid) {
+            LFSR lfsr = new LFSR(initialRegisterValue.getText());
             if(checkbox.isSelected()) {
                 String text = readTextFromPath(decodedPath);
-                String encoded = new LFSR(keyText.getText()).encodeString(text);
+                String encoded = lfsr.encodeString(text);
                 inputTextView.setText(text);
                 resultTextView.setText(encoded);
                 writeTextToPath(encoded, encodedPath);
             }
             else {
                 byte[] bytes = readBytesFromPath(decodedPath);
-                byte[] encodedBytes = new LFSR(keyText.getText()).encodeBytes(bytes);
+                byte[] encodedBytes = lfsr.encodeBytes(bytes);
                 inputTextView.setText("");
                 resultTextView.setText("");
                 writeBytesToPath(encodedBytes, encodedPath);
             }
+            keyTextView.setText(lfsr.getKey());
         }
         else {
             inputTextView.setText("");
@@ -80,20 +83,22 @@ public class MainController implements Initializable {
     public void onDecodeClicked(MouseEvent mouseEvent) {
         boolean isValid = validateKey();
         if(isValid) {
+            LFSR lfsr = new LFSR(initialRegisterValue.getText());
             if(checkbox.isSelected()) {
                 String text = readTextFromPath(encodedPath);
-                String decoded = new LFSR(keyText.getText()).decodeString(text);
+                String decoded = lfsr.decodeString(text);
                 inputTextView.setText(text);
                 resultTextView.setText(decoded);
                 writeTextToPath(decoded, decodedPath);
             }
             else {
                 byte[] bytes = readBytesFromPath(encodedPath);
-                byte[] decodedBytes = new LFSR(keyText.getText()).decodeBytes(bytes);
+                byte[] decodedBytes = lfsr.decodeBytes(bytes);
                 inputTextView.setText("");
                 resultTextView.setText("");
                 writeBytesToPath(decodedBytes, decodedPath);
             }
+            keyTextView.setText(lfsr.getKey());
         }
         else {
             inputTextView.setText("");
@@ -102,7 +107,7 @@ public class MainController implements Initializable {
     }
 
     private boolean validateKey() {
-        String key = keyText.getText();
+        String key = initialRegisterValue.getText();
         boolean isValid = true;
         if(key.length() != 35) {
             errorLabel.setText("Ошибка: Длина ключа должна быть 35 символов, сейчас: " + key.length());
