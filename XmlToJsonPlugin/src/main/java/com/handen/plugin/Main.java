@@ -3,7 +3,7 @@ package com.handen.plugin;
 import org.json.JSONObject;
 import org.json.XML;
 
-class Main {
+public class Main {
     public static void main(String[] args) {
         String mode = args[0];
         String input = args[1];
