@@ -16,7 +16,9 @@ class LFSR(private val state: String) {
         val new = list.first() xor list[list.lastIndex - 1]
         lastEmitted = list.first()
         list = list.drop(1) + new
-        generatedKeyChars.add(lastEmitted!!)
+        if(generatedKeyChars.size < 1000) {
+            generatedKeyChars.add(lastEmitted!!)
+        }
     }
 
     fun nextDigit(): Byte {
