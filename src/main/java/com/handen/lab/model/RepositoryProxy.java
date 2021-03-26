@@ -13,8 +13,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class RepositoryProxy implements Repository {
-    private ActualRepository mActualRepository;
+    private final ActualRepository mActualRepository;
     private static RepositoryProxy instance = null;
+    private static int id = 1;
 
     private RepositoryProxy() {
         mActualRepository = new ActualRepository();
@@ -39,8 +40,6 @@ public class RepositoryProxy implements Repository {
     public ObservableList<Employee> getItems() {
         return mActualRepository.items;
     }
-
-    private static int id = 1;
 
     public static int getNewId() {
         id++;

@@ -105,31 +105,6 @@ public class XmlEmployeesMapper implements EmployeesMapper {
     }
 }
 
-class XmlAdapter implements XmlConverter {
-    private final EmployeesList list;
-
-    public XmlAdapter(List<Employee> employees) {
-        this.list = new EmployeesList(employees);
-    }
-
-    @Override
-    public String getXml() {
-        XmlMapper mapper = new XmlMapper();
-        String mappedString = "";
-        try {
-            mappedString = mapper.writeValueAsString(list);
-        }
-        catch(JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return mappedString;
-    }
-}
-
-interface XmlConverter {
-    String getXml();
-}
-
 class EmployeesList implements Serializable {
 
     @JsonUnwrapped(enabled = false)
