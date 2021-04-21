@@ -34,14 +34,12 @@
             <Font name="System Italic" size="17.0" />
         </font>
     </Text>
-    <Button layoutX="461.0" layoutY="25.0" mnemonicParsing="false" onAction="#onValidatePNumberClicked" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: green;" text="Validate" textFill="WHITE" />
-    <Button layoutX="461.0" layoutY="83.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: green;" text="Enter" textFill="WHITE" />
-    <Button layoutX="461.0" layoutY="147.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: green;" text="Enter" textFill="WHITE" />
-    <Button layoutX="694.0" layoutY="339.0" mnemonicParsing="false" onAction="#encryptSourceData" prefHeight="103.0" prefWidth="210.0" style="-fx-background-color: #F4A460;" text="Encrypt" textFill="WHITE">
+    <Button layoutX="461.0" layoutY="25.0" mnemonicParsing="false" onAction="#onValidatePNumberClicked" prefHeight="26.0" prefWidth="68.0" text="Validate" />
+    <Button layoutX="694.0" layoutY="339.0" mnemonicParsing="false" onAction="#encryptSourceData" prefHeight="103.0" prefWidth="210.0" text="Encrypt">
       <font>
          <Font size="20.0" />
       </font></Button>
-    <Button layoutX="694.0" layoutY="463.0" mnemonicParsing="false" onAction="#decryptSourceData" prefHeight="103.0" prefWidth="210.0" style="-fx-background-color: #F4A460;" text="Decrypt" textFill="WHITE">
+    <Button layoutX="694.0" layoutY="463.0" mnemonicParsing="false" onAction="#decryptSourceData" prefHeight="103.0" prefWidth="210.0" text="Decrypt">
       <font>
          <Font size="20.0" />
       </font></Button>
@@ -50,7 +48,10 @@
             <Cursor fx:constant="OPEN_HAND" />
         </cursor>
     </Button>
-    <TextArea fx:id="resultFileDataTextArea" editable="false" layoutX="81.0" layoutY="317.0" prefHeight="399.0" prefWidth="427.0" wrapText="true"/>
+    <TextArea fx:id="resultFileDataTextArea" editable="false" layoutX="81.0" layoutY="317.0" prefHeight="399.0" prefWidth="427.0" wrapText="true">
+      <font>
+         <Font size="20.0" />
+      </font></TextArea>
     <Text fx:id="messageText" fill="RED" layoutX="760.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid input" textAlignment="CENTER" visible="false">
         <font>
             <Font name="System Italic" size="19.0" />
@@ -62,5 +63,5 @@
          <Font name="System Italic" size="17.0" />
       </font>
    </Text>
-   <Label fx:id="errorLabel" layoutX="545.0" layoutY="656.0" prefHeight="17.0" prefWidth="460.0" text="Label" textFill="RED" />
+   <Label fx:id="errorLabel" layoutX="545.0" layoutY="656.0" prefHeight="17.0" prefWidth="460.0" text="Label" textFill="RED" visible="false" />
 </AnchorPane>

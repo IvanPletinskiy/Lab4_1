@@ -82,9 +82,6 @@ public class MainController implements Initializable {
         if(sourceFile != null) {
             extension = getExtension(sourceFile.getPath());
             sourceFileData = Files.readAllBytes(Paths.get(sourceFile.getPath()));
-            messageText.setText("File data is taken");
-            messageText.setFill(Color.GREEN);
-            messageText.setVisible(true);
         }
     }
 
@@ -95,6 +92,8 @@ public class MainController implements Initializable {
         pNumber = null;
         kNumber = null;
         xNumber = null;
+        errorLabel.setVisible(false);
+        messageText.setVisible(false);
         sourceFile = null;
         sourceFileData = null;
         gRoots.clear();
@@ -127,20 +126,28 @@ public class MainController implements Initializable {
         return result;
     }
 
+    private boolean validateInput() {
+        boolean result = sourceFileData != null;
+        if(!result) {
+            errorLabel.setText("Source file is not set");
+        }
+        return result;
+    }
+
     @FXML
     void onValidatePNumberClicked(ActionEvent event) {
         boolean result = validatePNumber();
-        messageText.setVisible(true);
         if(result) {
+            errorLabel.setVisible(false);
             pNumber = Long.parseLong(NumberPTextField.getText());
             roots = findPrimitiveRoots(pNumber);
             gRoots.setAll(roots);
+            messageText.setVisible(true);
             messageText.setFill(Color.GREEN);
-            messageText.setText("Number P is taken!");
+            messageText.setText("Number P is valid");
         }
         else {
-            messageText.setText("Invalid input, please, try again");
-            messageText.setFill(Color.RED);
+            errorLabel.setVisible(true);
         }
     }
 
@@ -170,14 +177,6 @@ public class MainController implements Initializable {
             }
         }
         return true;
-    }
-
-    private boolean validateInputFile() {
-        boolean result = sourceFileData != null;
-        if(!result) {
-            errorLabel.setText("Source file is not set.");
-        }
-        return result;
     }
 
     // Находим все простые делители числа
@@ -253,15 +252,23 @@ public class MainController implements Initializable {
         return result;
     }
 
-    @FXML
-    void encryptSourceData(ActionEvent event) throws IOException {
+    private boolean validateFields() {
         messageText.setVisible(false);
-        if(!(validateXNumber() && validateKNumber() && validatePNumber())) {
+        if(!(validateXNumber() && validateKNumber() && validatePNumber() && validateInput() && validateGNumber())) {
             errorLabel.setVisible(true);
-            return;
+            return false;
         }
         else {
             errorLabel.setVisible(false);
+        }
+        return true;
+    }
+
+    @FXML
+    void encryptSourceData(ActionEvent event) throws IOException {
+        boolean result = validateFields();
+        if(!result) {
+            return;
         }
 
         kNumber = Long.parseLong(NumberKTextField.getText());
@@ -288,16 +295,24 @@ public class MainController implements Initializable {
                     resultEncrypt.append(b);
                 }
             }
-            //            String subText = resultEncrypt.toString().length() > 1000 ? resultEncrypt.substring(0, 1000) : resultEncrypt.toString();
+
             resultFileDataTextArea.setText(resultEncrypt.substring(0, 1000));
             writeDataToFile(output, "зашфированный файл." + extension);
-            messageText.setText("Cipher is complete");
+            messageText.setText("Encrypting is complete");
             messageText.setFill(Color.GREEN);
         }
         else {
             messageText.setText("Enter, please, all numbers\nand choose source file.");
             messageText.setFill(Color.RED);
         }
+    }
+
+    private boolean validateGNumber() {
+        boolean result = combobox.getValue() != null;
+        if(!result) {
+            errorLabel.setText("G is not set");
+        }
+        return result;
     }
 
     @FXML
@@ -319,14 +334,14 @@ public class MainController implements Initializable {
                 resultDecrypt.append(" ");
             }
             writeDataToFile(output, "дешифрованный файл." + extension);
-            messageText.setText("Decipher is complete");
+            messageText.setText("Decrypting is complete");
             messageText.setFill(Color.GREEN);
+            messageText.setVisible(true);
         }
         else {
-            messageText.setText("Please, encrypt something.");
-            messageText.setFill(Color.RED);
+            errorLabel.setText("Please, encrypt something.");
+            errorLabel.setVisible(true);
         }
-        messageText.setVisible(true);
     }
 
     // Записываем в файл результат
