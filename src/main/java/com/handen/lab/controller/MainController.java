@@ -33,11 +33,10 @@ public class MainController implements Initializable {
     private String extension;
     private File sourceFile;
     private byte[] sourceFileData;
-    private Long pNumber;
-    private Long kNumber;
-    private Long xNumber;
-    private Long gNumber;
-    private ArrayList<Long> roots;
+    private Long p;
+    private Long k;
+    private Long x;
+    private Long g;
     private final ObservableList<Long> gRoots = FXCollections.observableArrayList();
 
     @FXML
@@ -59,7 +58,7 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         combobox.setItems(gRoots);
         combobox.setOnAction(actionEvent -> {
-            gNumber = combobox.getValue();
+            g = combobox.getValue();
         });
         NumberPTextField.setTextFormatter(new NumbersTextFormatter(20));
         NumberXTextField.setTextFormatter(new NumbersTextFormatter(20));
@@ -87,11 +86,10 @@ public class MainController implements Initializable {
 
     @FXML
     void clearAllData(ActionEvent event) {
-        roots = null;
-        gNumber = null;
-        pNumber = null;
-        kNumber = null;
-        xNumber = null;
+        g = null;
+        p = null;
+        k = null;
+        x = null;
         errorLabel.setVisible(false);
         messageText.setVisible(false);
         sourceFile = null;
@@ -109,7 +107,7 @@ public class MainController implements Initializable {
         }
 
         long k = Long.parseLong(NumberKTextField.getText());
-        boolean result = k > 1 && k < pNumber - 1 && findGCD(k, pNumber) == 1;
+        boolean result = k > 1 && k < p - 1 && findGCD(k, p) == 1;
         errorLabel.setText("K is invalid");
         return result;
     }
@@ -121,7 +119,7 @@ public class MainController implements Initializable {
         }
 
         long x = Long.parseLong(NumberXTextField.getText());
-        boolean result = x > 1 && x < pNumber - 1;
+        boolean result = x > 1 && x < p - 1;
         errorLabel.setText("X is invalid");
         return result;
     }
@@ -139,9 +137,8 @@ public class MainController implements Initializable {
         boolean result = validatePNumber();
         if(result) {
             errorLabel.setVisible(false);
-            pNumber = Long.parseLong(NumberPTextField.getText());
-            roots = findPrimitiveRoots(pNumber);
-            gRoots.setAll(roots);
+            p = Long.parseLong(NumberPTextField.getText());
+            gRoots.setAll(findPrimitiveRoots(p));
             messageText.setVisible(true);
             messageText.setFill(Color.GREEN);
             messageText.setText("Number P is valid");
@@ -179,23 +176,6 @@ public class MainController implements Initializable {
         return true;
     }
 
-    // Находим все простые делители числа
-    private ArrayList<Long> findSimplyDividers(long number) {
-        ArrayList<Long> arrayList = new ArrayList<>();
-        for(long i = 2; i * i <= number; ++i) {
-            if(number % i == 0) {
-                arrayList.add(i);
-                while(number % i == 0) {
-                    number /= i;
-                }
-            }
-        }
-        if(number != 1) {
-            arrayList.add(number);
-        }
-        return arrayList;
-    }
-
     // Нахождение НОД двух чисел с помощью алгоритма Эвклида
     private long findGCD(long firstNumber, long secondNumber) {
         if(secondNumber == 0) {
@@ -205,30 +185,29 @@ public class MainController implements Initializable {
     }
 
     // Быстрое возведение в степень a ^ z mod n
-    private long fastExpMod(long firstNumber, long secondNumber, long modNumber) {
-        if(secondNumber == 0) {
+    private long fastExpMod(long base, long power, long mod) {
+        if(power == 0) {
             return 1;
         }
-        if(secondNumber % 2 == 0) {
-            long temp = fastExpMod(firstNumber, secondNumber / 2, modNumber);
-            return helperFastExpMod(temp, temp, modNumber) % modNumber;
+        if(power % 2 == 0) {
+            long temp = fastExpMod(base, power / 2, mod);
+            return helperFastExpMod(temp, temp, mod) % mod;
         }
-        return (helperFastExpMod(fastExpMod(firstNumber, secondNumber - 1, modNumber), firstNumber, modNumber)) % modNumber;
-
+        return (helperFastExpMod(fastExpMod(base, power - 1, mod), base, mod)) % mod;
     }
 
-    private long helperFastExpMod(long firstNumber, long secondNumber, long modNumber) {
-        if(secondNumber == 1) {
-            return firstNumber;
+    private long helperFastExpMod(long base, long power, long mod) {
+        if(power == 1) {
+            return base;
         }
-        if(secondNumber == 0) {
+        if(power == 0) {
             return 1;
         }
-        if(secondNumber % 2 == 0) {
-            long temp = helperFastExpMod(firstNumber, secondNumber / 2, modNumber);
-            return (2 * temp) % modNumber;
+        if(power % 2 == 0) {
+            long temp = helperFastExpMod(base, power / 2, mod);
+            return (2 * temp) % mod;
         }
-        return (helperFastExpMod(firstNumber, secondNumber - 1, modNumber) + firstNumber) % modNumber;
+        return (helperFastExpMod(base, power - 1, mod) + base) % mod;
     }
 
     // Поиск первообразных корней по модулю p
@@ -252,16 +231,21 @@ public class MainController implements Initializable {
         return result;
     }
 
-    private boolean validateFields() {
-        messageText.setVisible(false);
-        if(!(validateXNumber() && validateKNumber() && validatePNumber() && validateInput() && validateGNumber())) {
-            errorLabel.setVisible(true);
-            return false;
+    // Находим все простые делители числа
+    private ArrayList<Long> findSimplyDividers(long number) {
+        ArrayList<Long> arrayList = new ArrayList<>();
+        for(long i = 2; i * i <= number; ++i) {
+            if(number % i == 0) {
+                arrayList.add(i);
+                while(number % i == 0) {
+                    number /= i;
+                }
+            }
         }
-        else {
-            errorLabel.setVisible(false);
+        if(number != 1) {
+            arrayList.add(number);
         }
-        return true;
+        return arrayList;
     }
 
     @FXML
@@ -271,16 +255,16 @@ public class MainController implements Initializable {
             return;
         }
 
-        kNumber = Long.parseLong(NumberKTextField.getText());
-        xNumber = Long.parseLong(NumberXTextField.getText());
+        k = Long.parseLong(NumberKTextField.getText());
+        x = Long.parseLong(NumberXTextField.getText());
 
-        if(pNumber != null && gNumber != null && sourceFileData != null) {
-            long a = fastExpMod(gNumber, kNumber, pNumber);
+        if(p != null && g != null && sourceFileData != null) {
+            long a = fastExpMod(g, k, p);
             long b;
-            long y = fastExpMod(gNumber, xNumber, pNumber);
+            long y = fastExpMod(g, x, p);
             ArrayList<Long> output = new ArrayList<>();
             for(int i = 0; i < sourceFileData.length; i++) {
-                b = ((fastExpMod(y, kNumber, pNumber) * (sourceFileData[i] % pNumber)) % pNumber);
+                b = fastExpMod(y, k, p) * (sourceFileData[i] % p) % p;
                 if(i != sourceFileData.length - 1) {
                     resultEncrypt.append(a);
                     resultEncrypt.append(" ");
@@ -307,6 +291,18 @@ public class MainController implements Initializable {
         }
     }
 
+    private boolean validateFields() {
+        messageText.setVisible(false);
+        if(!(validateXNumber() && validateKNumber() && validatePNumber() && validateInput() && validateGNumber())) {
+            errorLabel.setVisible(true);
+            return false;
+        }
+        else {
+            errorLabel.setVisible(false);
+        }
+        return true;
+    }
+
     private boolean validateGNumber() {
         boolean result = combobox.getValue() != null;
         if(!result) {
@@ -328,7 +324,7 @@ public class MainController implements Initializable {
             for(int i = 0; i < decryptArray.size() - 1; i += 2) {
                 long a = decryptArray.get(i);
                 long b = decryptArray.get(i + 1);
-                m = (fastExpMod(a, xNumber * (pNumber - 2), pNumber) * (b % pNumber)) % pNumber;
+                m = (fastExpMod(a, x * (p - 2), p) * (b % p)) % p;
                 output.add(m);
                 resultDecrypt.append(m);
                 resultDecrypt.append(" ");
