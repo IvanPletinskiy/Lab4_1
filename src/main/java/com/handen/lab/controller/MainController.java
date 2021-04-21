@@ -1,8 +1,11 @@
 package com.handen.lab.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -22,6 +25,7 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
     private final StringBuilder resultEncrypt = new StringBuilder();
     private final StringBuilder resultDecrypt = new StringBuilder();
+    public ComboBox<Long> g_number_combobox;
     private String extension;
     private File sourceFile;
     private byte[] sourceFileData;
@@ -30,6 +34,7 @@ public class MainController implements Initializable {
     private Long xNumber;
     private Long gNumber;
     private ArrayList<Long> roots;
+    private final ObservableList<Long> gRoots = FXCollections.observableArrayList();
 
     @FXML
     private Text messageText;
@@ -44,17 +49,14 @@ public class MainController implements Initializable {
     private TextField NumberXTextField;
 
     @FXML
-    private TextField NumberGTextField;
-
-    @FXML
-    private TextArea AvialableRootGTextArea;
-
-    @FXML
     private TextArea resultFileDataTextArea;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        g_number_combobox.setItems(gRoots);
+        g_number_combobox.setOnAction(actionEvent -> {
+            gNumber = g_number_combobox.getValue();
+        });
     }
 
     String getExtension(String fileName) {
@@ -79,7 +81,6 @@ public class MainController implements Initializable {
         }
     }
 
-
     @FXML
     void clearAllData(ActionEvent event) {
         roots = null;
@@ -89,8 +90,7 @@ public class MainController implements Initializable {
         xNumber = null;
         sourceFile = null;
         sourceFileData = null;
-        NumberGTextField.clear();
-        AvialableRootGTextArea.clear();
+        gRoots.clear();
         NumberXTextField.clear();
         NumberKTextField.clear();
         NumberPTextField.clear();
@@ -126,16 +126,6 @@ public class MainController implements Initializable {
         return result > 1 && result < pNumber - 1;
     }
 
-    private boolean isCorrectGNumber(String number) {
-        long result;
-        try {
-            result = Long.parseLong(number);
-        } catch (Exception e) {
-            return false;
-        }
-        return roots.contains(result);
-    }
-
     @FXML
     void inputPNumber(ActionEvent event) {
         messageText.setText("Invalid input, please, try again");
@@ -144,7 +134,7 @@ public class MainController implements Initializable {
         if (isCorrectPNumber(NumberPTextField.getText())) {
             pNumber = Long.parseLong(NumberPTextField.getText());
             roots = findPrimitiveRoots(pNumber);
-            AvialableRootGTextArea.setText(roots.toString());
+            gRoots.setAll(roots);
             messageText.setFill(Color.GREEN);
             messageText.setText("Number P is taken!");
         }
@@ -172,7 +162,6 @@ public class MainController implements Initializable {
         messageText.setVisible(true);
     }
 
-
     @FXML
     void inputXNumber(ActionEvent event) {
         messageText.setText("Invalid input, please, try again");
@@ -185,27 +174,6 @@ public class MainController implements Initializable {
                 messageText.setText("Number X is taken!");
             } else {
                 messageText.setText("Invalid input, please, try again");
-                messageText.setFill(Color.RED);
-            }
-        } else {
-            messageText.setText("Enter, please, P number");
-            messageText.setFill(Color.RED);
-        }
-        messageText.setVisible(true);
-    }
-
-    @FXML
-    void inputGNumber(ActionEvent event) {
-        messageText.setText("Invalid input, please, try again");
-        messageText.setFill(Color.RED);
-        messageText.setVisible(false);
-        if (pNumber != null) {
-            if (isCorrectGNumber(NumberGTextField.getText())) {
-                gNumber = Long.parseLong(NumberGTextField.getText());
-                messageText.setFill(Color.GREEN);
-                messageText.setText("Number G is taken!");
-            } else {
-                messageText.setText("Please, select G from avialable roots");
                 messageText.setFill(Color.RED);
             }
         } else {
