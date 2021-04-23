@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    private final StringBuilder resultEncrypt = new StringBuilder();
-    private final StringBuilder resultDecrypt = new StringBuilder();
+    private StringBuilder resultEncrypt = new StringBuilder();
+    private StringBuilder resultDecrypt = new StringBuilder();
     public ComboBox<Long> combobox;
     public Label errorLabel;
     private String extension;
@@ -250,6 +250,7 @@ public class MainController implements Initializable {
 
     @FXML
     void encryptSourceData(ActionEvent event) throws IOException {
+        resultEncrypt = new StringBuilder();
         boolean result = validateFields();
         if(!result) {
             return;
@@ -280,8 +281,13 @@ public class MainController implements Initializable {
                 }
             }
 
-            resultFileDataTextArea.setText(resultEncrypt.substring(0, 1000));
-            writeDataToFile(output, "зашфированный файл." + extension);
+            int outputTextLength = resultEncrypt.length();
+            if(outputTextLength > 1000) {
+                outputTextLength = 1000;
+            }
+
+            resultFileDataTextArea.setText(resultEncrypt.substring(0, outputTextLength));
+            writeDataToFile(output, "encrypted." + extension);
             messageText.setText("Encrypting is complete");
             messageText.setFill(Color.GREEN);
         }
@@ -313,6 +319,7 @@ public class MainController implements Initializable {
 
     @FXML
     void decryptSourceData(ActionEvent event) throws IOException {
+        resultDecrypt = new StringBuilder();
         if(!resultEncrypt.toString().isEmpty()) {
             long m;
             String[] temp = resultEncrypt.toString().split(" ");
@@ -329,10 +336,15 @@ public class MainController implements Initializable {
                 resultDecrypt.append(m);
                 resultDecrypt.append(" ");
             }
-            writeDataToFile(output, "дешифрованный файл." + extension);
-            messageText.setText("Decrypting is complete");
-            messageText.setFill(Color.GREEN);
-            messageText.setVisible(true);
+
+            int outputTextLength = resultDecrypt.length();
+            if(outputTextLength > 1000) {
+                outputTextLength = 1000;
+            }
+
+            resultFileDataTextArea.setText(resultDecrypt.substring(0, outputTextLength));
+
+            writeDataToFile(output, "decrypted." + extension);
         }
         else {
             errorLabel.setText("Please, encrypt something.");

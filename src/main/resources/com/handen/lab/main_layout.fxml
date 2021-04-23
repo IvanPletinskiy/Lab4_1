@@ -11,7 +11,7 @@
             <Font name="Book Antiqua" size="25.0" />
         </font>
     </Text>
-    <Button layoutX="933.0" layoutY="9.0" mnemonicParsing="false" onAction="#chooseSourceFile" prefHeight="30.0" prefWidth="146.0" style="-fx-background-color: #DA70D6;" text="Choose source file" textFill="WHITE">
+    <Button layoutX="888.0" layoutY="23.0" mnemonicParsing="false" onAction="#chooseSourceFile" prefHeight="30.0" prefWidth="146.0" text="Choose source file">
         <cursor>
             <Cursor fx:constant="OPEN_HAND" />
         </cursor>
@@ -43,7 +43,7 @@
       <font>
          <Font size="20.0" />
       </font></Button>
-    <Button layoutX="933.0" layoutY="55.0" mnemonicParsing="false" onAction="#clearAllData" prefHeight="30.0" prefWidth="146.0" style="-fx-background-color: #A52A2A;" text="Clear all fields" textFill="WHITE">
+    <Button layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#clearAllData" prefHeight="30.0" prefWidth="146.0" text="Clear all fields" >
         <cursor>
             <Cursor fx:constant="OPEN_HAND" />
         </cursor>
@@ -54,7 +54,7 @@
       </font></TextArea>
     <Text fx:id="messageText" fill="RED" layoutX="760.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid input" textAlignment="CENTER" visible="false">
         <font>
-            <Font name="System Italic" size="19.0" />
+            <Font size="19.0" />
         </font>
     </Text>
    <ComboBox fx:id="combobox" layoutX="244.0" layoutY="198.0" prefWidth="150.0" />
@@ -63,5 +63,8 @@
          <Font name="System Italic" size="17.0" />
       </font>
    </Text>
-   <Label fx:id="errorLabel" layoutX="545.0" layoutY="656.0" prefHeight="17.0" prefWidth="460.0" text="Label" textFill="RED" visible="false" />
+   <Label fx:id="errorLabel" layoutX="545.0" layoutY="605.0" prefHeight="103.0" prefWidth="460.0" text="Label" textAlignment="CENTER" textFill="RED" visible="false">
+      <font>
+         <Font size="22.0" />
+      </font></Label>
 </AnchorPane>
