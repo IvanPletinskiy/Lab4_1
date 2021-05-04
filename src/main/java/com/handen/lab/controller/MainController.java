@@ -90,7 +90,7 @@ public class MainController implements Initializable {
     private boolean validateInput() {
         boolean result = sourceFileData != null;
         if(!result) {
-            errorLabel.setText("Source file is not set");
+            errorLabel.setText("File is not selected");
         }
         return result;
     }
