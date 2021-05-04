@@ -26,33 +26,31 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
-    private StringBuilder resultEncrypt = new StringBuilder();
-    private StringBuilder resultDecrypt = new StringBuilder();
+    @FXML
+    private Text messageText;
+    @FXML
+    private TextField pTextField;
+    @FXML
+    private TextField kTextField;
+    @FXML
+    private TextField xTextField;
+    @FXML
+    private TextArea outputTextArea;
     public ComboBox<Long> combobox;
     public Label errorLabel;
-    private String extension;
-    private File sourceFile;
-    private byte[] sourceFileData;
+
     private Long p;
     private Long k;
     private Long x;
     private Long g;
     private final ObservableList<Long> gRoots = FXCollections.observableArrayList();
 
-    @FXML
-    private Text messageText;
+    private String extension;
+    private File sourceFile;
+    private byte[] sourceFileData;
 
-    @FXML
-    private TextField NumberPTextField;
-
-    @FXML
-    private TextField NumberKTextField;
-
-    @FXML
-    private TextField NumberXTextField;
-
-    @FXML
-    private TextArea resultFileDataTextArea;
+    private StringBuilder encryptStringBuilder = new StringBuilder();
+    private StringBuilder decryptStringBuilder = new StringBuilder();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,65 +58,30 @@ public class MainController implements Initializable {
         combobox.setOnAction(actionEvent -> {
             g = combobox.getValue();
         });
-        NumberPTextField.setTextFormatter(new NumbersTextFormatter(20));
-        NumberXTextField.setTextFormatter(new NumbersTextFormatter(20));
-        NumberKTextField.setTextFormatter(new NumbersTextFormatter(20));
-    }
-
-    String getExtension(String fileName) {
-        String extension = "";
-        String[] array = fileName.split("\\.");
-        extension = array[array.length - 1];
-        return extension;
-    }
-
-    @FXML
-    void chooseSourceFile(ActionEvent event) throws IOException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Выберите файл");
-        Stage stage = new Stage();
-        sourceFile = fileChooser.showOpenDialog(stage);
-        if(sourceFile != null) {
-            extension = getExtension(sourceFile.getPath());
-            sourceFileData = Files.readAllBytes(Paths.get(sourceFile.getPath()));
-        }
-    }
-
-    @FXML
-    void clearAllData(ActionEvent event) {
-        g = null;
-        p = null;
-        k = null;
-        x = null;
-        errorLabel.setVisible(false);
-        messageText.setVisible(false);
-        sourceFile = null;
-        sourceFileData = null;
-        gRoots.clear();
-        NumberXTextField.clear();
-        NumberKTextField.clear();
-        NumberPTextField.clear();
+        pTextField.setTextFormatter(new NumbersTextFormatter(20));
+        xTextField.setTextFormatter(new NumbersTextFormatter(20));
+        kTextField.setTextFormatter(new NumbersTextFormatter(20));
     }
 
     private boolean validateKNumber() {
-        if(NumberKTextField.getText().isBlank()) {
+        if(kTextField.getText().isBlank()) {
             errorLabel.setText("K is empty");
             return false;
         }
 
-        long k = Long.parseLong(NumberKTextField.getText());
+        long k = Long.parseLong(kTextField.getText());
         boolean result = k > 1 && k < p - 1 && findGCD(k, p) == 1;
         errorLabel.setText("K is invalid");
         return result;
     }
 
     private boolean validateXNumber() {
-        if(NumberXTextField.getText().isBlank()) {
+        if(xTextField.getText().isBlank()) {
             errorLabel.setText("X is empty");
             return false;
         }
 
-        long x = Long.parseLong(NumberXTextField.getText());
+        long x = Long.parseLong(xTextField.getText());
         boolean result = x > 1 && x < p - 1;
         errorLabel.setText("X is invalid");
         return result;
@@ -137,7 +100,7 @@ public class MainController implements Initializable {
         boolean result = validatePNumber();
         if(result) {
             errorLabel.setVisible(false);
-            p = Long.parseLong(NumberPTextField.getText());
+            p = Long.parseLong(pTextField.getText());
             gRoots.setAll(findPrimitiveRoots(p));
             messageText.setVisible(true);
             messageText.setFill(Color.GREEN);
@@ -149,11 +112,11 @@ public class MainController implements Initializable {
     }
 
     private boolean validatePNumber() {
-        if(NumberPTextField.getText().isBlank()) {
+        if(pTextField.getText().isBlank()) {
             errorLabel.setText("P is empty");
             return false;
         }
-        long p = Long.parseLong(NumberPTextField.getText());
+        long p = Long.parseLong(pTextField.getText());
         boolean result = p > 255 && validateNumberIsPrime(p);
         errorLabel.setText("P is invalid");
         return result;
@@ -250,14 +213,14 @@ public class MainController implements Initializable {
 
     @FXML
     void encryptSourceData(ActionEvent event) throws IOException {
-        resultEncrypt = new StringBuilder();
+        encryptStringBuilder = new StringBuilder();
         boolean result = validateFields();
         if(!result) {
             return;
         }
 
-        k = Long.parseLong(NumberKTextField.getText());
-        x = Long.parseLong(NumberXTextField.getText());
+        k = Long.parseLong(kTextField.getText());
+        x = Long.parseLong(xTextField.getText());
 
         if(p != null && g != null && sourceFileData != null) {
             long a = fastExpMod(g, k, p);
@@ -267,33 +230,33 @@ public class MainController implements Initializable {
             for(int i = 0; i < sourceFileData.length; i++) {
                 b = fastExpMod(y, k, p) * (sourceFileData[i] % p) % p;
                 if(i != sourceFileData.length - 1) {
-                    resultEncrypt.append(a);
-                    resultEncrypt.append(" ");
-                    resultEncrypt.append(b);
-                    resultEncrypt.append(" ");
+                    encryptStringBuilder.append(a);
+                    encryptStringBuilder.append(" ");
+                    encryptStringBuilder.append(b);
+                    encryptStringBuilder.append(" ");
                     output.add(a);
                     output.add(b);
                 }
                 else {
-                    resultEncrypt.append(a);
-                    resultEncrypt.append(" ");
-                    resultEncrypt.append(b);
+                    encryptStringBuilder.append(a);
+                    encryptStringBuilder.append(" ");
+                    encryptStringBuilder.append(b);
                 }
             }
 
-            int outputTextLength = resultEncrypt.length();
+            int outputTextLength = encryptStringBuilder.length();
             if(outputTextLength > 1000) {
                 outputTextLength = 1000;
             }
 
-            resultFileDataTextArea.setText(resultEncrypt.substring(0, outputTextLength));
+            outputTextArea.setText(encryptStringBuilder.substring(0, outputTextLength));
             writeDataToFile(output, "encrypted." + extension);
             messageText.setText("Encrypting is complete");
             messageText.setFill(Color.GREEN);
         }
         else {
-            messageText.setText("Enter, please, all numbers\nand choose source file.");
-            messageText.setFill(Color.RED);
+            errorLabel.setText("Enter, please, all numbers\nand choose source file.");
+            errorLabel.setVisible(true);
         }
     }
 
@@ -319,10 +282,10 @@ public class MainController implements Initializable {
 
     @FXML
     void decryptSourceData(ActionEvent event) throws IOException {
-        resultDecrypt = new StringBuilder();
-        if(!resultEncrypt.toString().isEmpty()) {
+        decryptStringBuilder = new StringBuilder();
+        if(!encryptStringBuilder.toString().isEmpty()) {
             long m;
-            String[] temp = resultEncrypt.toString().split(" ");
+            String[] temp = encryptStringBuilder.toString().split(" ");
             ArrayList<Long> decryptArray = new ArrayList<>();
             ArrayList<Long> output = new ArrayList<>();
             for(String s : temp) {
@@ -333,16 +296,16 @@ public class MainController implements Initializable {
                 long b = decryptArray.get(i + 1);
                 m = (fastExpMod(a, x * (p - 2), p) * (b % p)) % p;
                 output.add(m);
-                resultDecrypt.append(m);
-                resultDecrypt.append(" ");
+                decryptStringBuilder.append(m);
+                decryptStringBuilder.append(" ");
             }
 
-            int outputTextLength = resultDecrypt.length();
+            int outputTextLength = decryptStringBuilder.length();
             if(outputTextLength > 1000) {
                 outputTextLength = 1000;
             }
 
-            resultFileDataTextArea.setText(resultDecrypt.substring(0, outputTextLength));
+            outputTextArea.setText(decryptStringBuilder.substring(0, outputTextLength));
 
             writeDataToFile(output, "decrypted." + extension);
         }
@@ -364,5 +327,40 @@ public class MainController implements Initializable {
         catch(IOException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @FXML
+    void chooseSourceFile(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Выберите файл");
+        Stage stage = new Stage();
+        sourceFile = fileChooser.showOpenDialog(stage);
+        if(sourceFile != null) {
+            extension = getExtension(sourceFile.getPath());
+            sourceFileData = Files.readAllBytes(Paths.get(sourceFile.getPath()));
+        }
+    }
+
+    String getExtension(String fileName) {
+        String extension = "";
+        String[] array = fileName.split("\\.");
+        extension = array[array.length - 1];
+        return extension;
+    }
+
+    @FXML
+    void clearAllData(ActionEvent event) {
+        g = null;
+        p = null;
+        k = null;
+        x = null;
+        errorLabel.setVisible(false);
+        messageText.setVisible(false);
+        sourceFile = null;
+        sourceFileData = null;
+        gRoots.clear();
+        xTextField.clear();
+        kTextField.clear();
+        pTextField.clear();
     }
 }

@@ -5,36 +5,36 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1080.0" style="-fx-background-color: #FDF5E6;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
-    <Text layoutX="81.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Result file data" wrappingWidth="186.35174560546875">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
+    <Text layoutX="27.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Output" wrappingWidth="186.35174560546875">
         <font>
-            <Font name="Book Antiqua" size="25.0" />
+            <Font size="25.0" />
         </font>
     </Text>
-    <Button layoutX="888.0" layoutY="23.0" mnemonicParsing="false" onAction="#chooseSourceFile" prefHeight="30.0" prefWidth="146.0" text="Choose source file">
+    <Button layoutX="888.0" layoutY="23.0" mnemonicParsing="false" onAction="#chooseSourceFile" prefHeight="30.0" prefWidth="146.0" text="Open file">
         <cursor>
             <Cursor fx:constant="OPEN_HAND" />
         </cursor>
     </Button>
-    <TextField fx:id="NumberPTextField" layoutX="244.0" layoutY="25.0" prefHeight="30.0" prefWidth="193.0" promptText="Enter number p..." />
-    <TextField fx:id="NumberKTextField" layoutX="244.0" layoutY="84.0" prefHeight="26.0" prefWidth="194.0" promptText="Enter number k..." />
-    <TextField fx:id="NumberXTextField" layoutX="244.0" layoutY="148.0" prefHeight="26.0" prefWidth="194.0" promptText="Enter number x..." />
-    <Text layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Simply number p more than 255:" wrappingWidth="223.86431884765625">
+    <TextField fx:id="pTextField" layoutX="29.0" layoutY="38.0" prefHeight="30.0" prefWidth="193.0" promptText="Enter p" />
+    <TextField fx:id="kTextField" layoutX="29.0" layoutY="125.0" prefHeight="26.0" prefWidth="194.0" promptText="Enter k" />
+    <TextField layoutX="29.0" layoutY="213.0" prefHeight="26.0" prefWidth="194.0" promptText="Enter x" fx:id="xTextField" />
+    <Text layoutX="27.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Simple number p &gt; 255:" wrappingWidth="223">
         <font>
-            <Font name="System Italic" size="17.0" />
+            <Font size="17.0" />
         </font>
     </Text>
-    <Text layoutX="14.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Positive number x, not equal to 1 and less than p-1:" wrappingWidth="223.86431884765625">
+    <Text layoutX="29.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Positive number x, not equal to 1 and less than p-1:" wrappingWidth="318.0">
         <font>
-            <Font name="System Italic" size="17.0" />
+            <Font size="17.0" />
         </font>
     </Text>
-    <Text layoutX="14.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number k more than 1, less than p-1 and mutually simple with p-1:" wrappingWidth="223.86431884765625">
+    <Text layoutX="27.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number k more than 1, less than p-1 and mutually simple with p-1:" wrappingWidth="318.0">
         <font>
-            <Font name="System Italic" size="17.0" />
+            <Font size="17.0" />
         </font>
     </Text>
-    <Button layoutX="461.0" layoutY="25.0" mnemonicParsing="false" onAction="#onValidatePNumberClicked" prefHeight="26.0" prefWidth="68.0" text="Validate" />
+    <Button layoutX="244.0" layoutY="40.0" mnemonicParsing="false" onAction="#onValidatePNumberClicked" prefHeight="26.0" prefWidth="68.0" text="Validate" />
     <Button layoutX="694.0" layoutY="339.0" mnemonicParsing="false" onAction="#encryptSourceData" prefHeight="103.0" prefWidth="210.0" text="Encrypt">
       <font>
          <Font size="20.0" />
@@ -43,12 +43,12 @@
       <font>
          <Font size="20.0" />
       </font></Button>
-    <Button layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#clearAllData" prefHeight="30.0" prefWidth="146.0" text="Clear all fields" >
+    <Button layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#clearAllData" prefHeight="30.0" prefWidth="146.0" text="Clear">
         <cursor>
             <Cursor fx:constant="OPEN_HAND" />
         </cursor>
     </Button>
-    <TextArea fx:id="resultFileDataTextArea" editable="false" layoutX="81.0" layoutY="317.0" prefHeight="399.0" prefWidth="427.0" wrapText="true">
+    <TextArea fx:id="outputTextArea" editable="false" layoutX="29.0" layoutY="371.0" prefHeight="345.0" prefWidth="549.0" wrapText="true">
       <font>
          <Font size="20.0" />
       </font></TextArea>
@@ -57,10 +57,10 @@
             <Font size="19.0" />
         </font>
     </Text>
-   <ComboBox fx:id="combobox" layoutX="244.0" layoutY="198.0" prefWidth="150.0" />
-   <Text layoutX="14.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select g:">
+   <ComboBox fx:id="combobox" layoutX="29.0" layoutY="279.0" prefWidth="150.0" />
+   <Text layoutX="29.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select g:">
       <font>
-         <Font name="System Italic" size="17.0" />
+         <Font size="17.0" />
       </font>
    </Text>
    <Label fx:id="errorLabel" layoutX="545.0" layoutY="605.0" prefHeight="103.0" prefWidth="460.0" text="Label" textAlignment="CENTER" textFill="RED" visible="false">
