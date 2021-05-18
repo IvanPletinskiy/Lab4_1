@@ -1,386 +1,82 @@
 package com.handen.lab.controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 
+import static com.handen.lab.PushNotificationsKt.sendAtTime;
+import static com.handen.lab.PushNotificationsKt.sendNow;
+
 public class MainController implements Initializable {
-    private final StringBuilder resultEncrypt = new StringBuilder();
-    private final StringBuilder resultDecrypt = new StringBuilder();
-    private String extension;
-    private File sourceFile;
-    private byte[] sourceFileData;
-    private Long pNumber;
-    private Long kNumber;
-    private Long xNumber;
-    private Long gNumber;
-    private ArrayList<Long> roots;
 
-    @FXML
-    private Text messageText;
+    public TextField title_text_field;
+    public TextField message_text_field;
+    public DatePicker date_picker;
+    public CheckBox now_check_box;
+    public Label select_date_label;
+    public Label select_time_label;
+    public TextField time_text_field;
+    public Label error_label;
 
-    @FXML
-    private TextField NumberPTextField;
+    public void onSendButtonClicked(ActionEvent actionEvent) {
+        boolean sendingNow = now_check_box.isSelected();
+        String title = title_text_field.getText();
+        String message = message_text_field.getText();
+        if (sendingNow) {
+            sendNow(title, message);
+        } else {
+            LocalDate localDate = date_picker.getValue();
+            Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+            Date date = Date.from(instant);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            String timeString = time_text_field.getText();
+            long timeMillis = -1;
+            try {
+                Date timeDate = dateFormat.parse(timeString);
+                timeMillis = timeDate.getTime();
+            } catch(ParseException exception) {
+                exception.printStackTrace();
+            }
 
-    @FXML
-    private TextField NumberKTextField;
-
-    @FXML
-    private TextField NumberXTextField;
-
-    @FXML
-    private TextField NumberGTextField;
-
-    @FXML
-    private TextArea AvialableRootGTextArea;
-
-    @FXML
-    private TextArea resultFileDataTextArea;
+            long sendMillis = date.getTime() + timeMillis;
+            sendAtTime(title, message, sendMillis);
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
-
-    String getExtension(String fileName) {
-        String extension = "";
-        String[] array = fileName.split("\\.");
-        extension = array[array.length - 1];
-        return extension;
-    }
-
-    @FXML
-    void chooseSourceFile(ActionEvent event) throws IOException {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Выберите файл");
-        Stage stage = new Stage();
-        sourceFile = fileChooser.showOpenDialog(stage);
-        if (sourceFile != null) {
-            extension = getExtension(sourceFile.getPath());
-            sourceFileData = Files.readAllBytes(Paths.get(sourceFile.getPath()));
-            messageText.setText("File data is taken");
-            messageText.setFill(Color.GREEN);
-            messageText.setVisible(true);
-        }
-    }
-
-
-    @FXML
-    void clearAllData(ActionEvent event) {
-        roots = null;
-        gNumber = null;
-        pNumber = null;
-        kNumber = null;
-        xNumber = null;
-        sourceFile = null;
-        sourceFileData = null;
-        NumberGTextField.clear();
-        AvialableRootGTextArea.clear();
-        NumberXTextField.clear();
-        NumberKTextField.clear();
-        NumberPTextField.clear();
-    }
-
-    private boolean isCorrectPNumber(String number) {
-        long result;
-        try {
-            result = Long.parseLong(number);
-        } catch (Exception e) {
-            return false;
-        }
-        return result > 255 && simplyNumberFermaTest(result);
-    }
-
-    private boolean isCorrectKNumber(String number) {
-        long result;
-        try {
-            result = Long.parseLong(number);
-        } catch (Exception e) {
-            return false;
-        }
-        return result > 1 && result < pNumber - 1 && findGCD(result, pNumber) == 1;
-    }
-
-    private boolean isCorrectXNumber(String number) {
-        long result;
-        try {
-            result = Long.parseLong(number);
-        } catch (Exception e) {
-            return false;
-        }
-        return result > 1 && result < pNumber - 1;
-    }
-
-    private boolean isCorrectGNumber(String number) {
-        long result;
-        try {
-            result = Long.parseLong(number);
-        } catch (Exception e) {
-            return false;
-        }
-        return roots.contains(result);
-    }
-
-    @FXML
-    void inputPNumber(ActionEvent event) {
-        messageText.setText("Invalid input, please, try again");
-        messageText.setFill(Color.RED);
-        messageText.setVisible(false);
-        if (isCorrectPNumber(NumberPTextField.getText())) {
-            pNumber = Long.parseLong(NumberPTextField.getText());
-            roots = findPrimitiveRoots(pNumber);
-            AvialableRootGTextArea.setText(roots.toString());
-            messageText.setFill(Color.GREEN);
-            messageText.setText("Number P is taken!");
-        }
-        messageText.setVisible(true);
-    }
-
-    @FXML
-    void inputKNumber(ActionEvent event) {
-        messageText.setText("Invalid input, please, try again");
-        messageText.setFill(Color.RED);
-        messageText.setVisible(false);
-        if (pNumber != null) {
-            if (isCorrectKNumber(NumberKTextField.getText())) {
-                kNumber = Long.parseLong(NumberKTextField.getText());
-                messageText.setFill(Color.GREEN);
-                messageText.setText("Number K is taken!");
-            } else {
-                messageText.setText("Invalid input, please, try again");
-                messageText.setFill(Color.RED);
+        now_check_box.setSelected(true);
+        now_check_box.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                changeDatetimePickerVisibility(!observableValue.getValue());
             }
-        } else {
-            messageText.setText("Enter, please, P number");
-            messageText.setFill(Color.RED);
-        }
-        messageText.setVisible(true);
+        });
+        changeDatetimePickerVisibility(false);
     }
 
-
-    @FXML
-    void inputXNumber(ActionEvent event) {
-        messageText.setText("Invalid input, please, try again");
-        messageText.setFill(Color.RED);
-        messageText.setVisible(false);
-        if (pNumber != null) {
-            if (isCorrectXNumber(NumberXTextField.getText())) {
-                xNumber = Long.parseLong(NumberXTextField.getText());
-                messageText.setFill(Color.GREEN);
-                messageText.setText("Number X is taken!");
-            } else {
-                messageText.setText("Invalid input, please, try again");
-                messageText.setFill(Color.RED);
-            }
-        } else {
-            messageText.setText("Enter, please, P number");
-            messageText.setFill(Color.RED);
-        }
-        messageText.setVisible(true);
+    private void changeDatetimePickerVisibility(boolean isVisible) {
+        select_date_label.setVisible(isVisible);
+        date_picker.setVisible(isVisible);
+        select_time_label.setVisible(isVisible);
+        time_text_field.setVisible(isVisible);
     }
 
-    @FXML
-    void inputGNumber(ActionEvent event) {
-        messageText.setText("Invalid input, please, try again");
-        messageText.setFill(Color.RED);
-        messageText.setVisible(false);
-        if (pNumber != null) {
-            if (isCorrectGNumber(NumberGTextField.getText())) {
-                gNumber = Long.parseLong(NumberGTextField.getText());
-                messageText.setFill(Color.GREEN);
-                messageText.setText("Number G is taken!");
-            } else {
-                messageText.setText("Please, select G from avialable roots");
-                messageText.setFill(Color.RED);
-            }
-        } else {
-            messageText.setText("Enter, please, P number");
-            messageText.setFill(Color.RED);
-        }
-        messageText.setVisible(true);
-    }
-
-    // Находим все простые делители числа
-    private ArrayList<Long> findSimplyDividers(long number) {
-        ArrayList<Long> arrayList = new ArrayList<>();
-        for (long i = 2; i * i <= number; ++i) {
-            if (number % i == 0) {
-                arrayList.add(i);
-                while (number % i == 0) {
-                    number /= i;
-                }
-            }
-        }
-        if (number != 1) {
-            arrayList.add(number);
-        }
-        return arrayList;
-    }
-
-    // Нахождение НОД двух чисел с помощью алгоритма Эвклида
-    private long findGCD(long firstNumber, long secondNumber) {
-        if (secondNumber == 0) {
-            return firstNumber;
-        }
-        return findGCD(secondNumber, firstNumber % secondNumber);
-    }
-
-    // Проверка на простоту, вероятностный тест Ферма
-    private boolean simplyNumberFermaTest(long number) {
-        if (number == 2) {
-            return true;
-        }
-        for (int i = 0; i < 100; i++) {
-            long temp = (long) ((Math.random() % (number - 2)) + 2);
-            if (findGCD(temp, number) != 1) {
-                return false;
-            }
-            if (fastExpMod(temp, number - 1, number) != 1) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // Быстрое возведение в степень a ^ z mod n
-    private long fastExpMod(long firstNumber, long secondNumber, long modNumber) {
-        if (secondNumber == 0) {
-            return 1;
-        }
-        if (secondNumber % 2 == 0) {
-            long temp = fastExpMod(firstNumber, secondNumber / 2, modNumber);
-            return helperFastExpMod(temp, temp, modNumber) % modNumber;
-        }
-        return (helperFastExpMod(fastExpMod(firstNumber, secondNumber - 1, modNumber), firstNumber, modNumber)) % modNumber;
-
-    }
-
-    private long helperFastExpMod(long firstNumber, long secondNumber, long modNumber) {
-        if (secondNumber == 1) {
-            return firstNumber;
-        }
-        if (secondNumber == 0) {
-            return 1;
-        }
-        if (secondNumber % 2 == 0) {
-            long temp = helperFastExpMod(firstNumber, secondNumber / 2, modNumber);
-            return (2 * temp) % modNumber;
-        }
-        return (helperFastExpMod(firstNumber, secondNumber - 1, modNumber) + firstNumber) % modNumber;
-    }
-
-    // Поиск первообразных корней по модулю p
-    ArrayList<Long> findPrimitiveRoots(long p) {
-        ArrayList<Long> simplyDividers = findSimplyDividers(p - 1);
-        ArrayList<Long> result = new ArrayList<>();
-        boolean flag;
-        for (long g = 2; g < p; g++) {
-            flag = true;
-            for (int j = 0; j < simplyDividers.size(); j++) {
-                if (fastExpMod(g, (p - 1) / simplyDividers.get(j), p) == 1) {
-                    flag = false;
-                } else {
-                    if ((j == simplyDividers.size() - 1) && flag) {
-                        result.add(g);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-    @FXML
-    void encryptSourceData(ActionEvent event) throws IOException {
-        messageText.setVisible(false);
-        if (pNumber != null && kNumber != null && xNumber != null && gNumber != null && sourceFileData != null) {
-            long a = fastExpMod(gNumber, kNumber, pNumber);
-            long b;
-            long y = fastExpMod(gNumber, xNumber, pNumber);
-            ArrayList<Long> output = new ArrayList<>();
-            for (int i = 0; i < sourceFileData.length; i++) {
-                b = ((fastExpMod(y, kNumber, pNumber) * (sourceFileData[i] % pNumber)) % pNumber);
-                if (i != sourceFileData.length - 1) {
-                    resultEncrypt.append(a);
-                    resultEncrypt.append(" ");
-                    resultEncrypt.append(b);
-                    resultEncrypt.append(" ");
-                    output.add(a);
-                    output.add(b);
-                } else {
-                    resultEncrypt.append(a);
-                    resultEncrypt.append(" ");
-                    resultEncrypt.append(b);
-                }
-            }
-            String subText = resultEncrypt.toString().length() > 1000 ? resultEncrypt.substring(0, 1000) : resultEncrypt.toString();
-            resultFileDataTextArea.setText(subText);
-            writeDataToFile(output, "зашфированный файл." + extension);
-            messageText.setText("Cipher is complete");
-            messageText.setFill(Color.GREEN);
-        } else {
-            messageText.setText("Enter, please, all numbers\nand choose source file.");
-            messageText.setFill(Color.RED);
-        }
-        messageText.setVisible(true);
-    }
-
-    @FXML
-    void decryptSourceData(ActionEvent event) throws IOException {
-        if (!resultEncrypt.toString().isEmpty()) {
-            long m;
-            String[] temp = resultEncrypt.toString().split(" ");
-            ArrayList<Long> decryptArray = new ArrayList<>();
-            ArrayList<Long> output = new ArrayList<>();
-            for (String s : temp) {
-                decryptArray.add(Long.parseLong(s));
-            }
-            for (int i = 0; i < decryptArray.size() - 1; i += 2) {
-                long a = decryptArray.get(i);
-                long b = decryptArray.get(i + 1);
-                m = (fastExpMod(a, xNumber * (pNumber - 2), pNumber) * (b % pNumber)) % pNumber;
-                output.add(m);
-                resultDecrypt.append(m);
-                resultDecrypt.append(" ");
-            }
-            writeDataToFile(output, "дешифрованный файл." + extension);
-            messageText.setText("Decipher is complete");
-            messageText.setFill(Color.GREEN);
-        } else {
-            messageText.setText("Please, encrypt something.");
-            messageText.setFill(Color.RED);
-        }
-        messageText.setVisible(true);
-    }
-
-    // Записываем в файл результат
-    void writeDataToFile(ArrayList<Long> data, String fileName) throws IOException {
-        try (FileOutputStream fos = new FileOutputStream(fileName)) {
-            byte[] bytes = new byte[data.size()];
-            for (int i = 0; i < data.size(); i++) {
-                bytes[i] = data.get(i).byteValue();
-            }
-            fos.write(bytes, 0, bytes.length);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-//    private static final String INITIAL_KEY = "11111111111111111111111111111111111";
+    //    private static final String INITIAL_KEY = "11111111111111111111111111111111111";
 //    public TextArea keyTextView;
 //    private String decodedPath = "C:\\ti\\lfsr\\decoded.txt";
 //    private String encodedPath = "C:\\ti\\lfsr\\encoded.txt";

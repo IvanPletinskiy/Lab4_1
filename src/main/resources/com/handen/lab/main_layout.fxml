@@ -1,69 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1080.0" style="-fx-background-color: #FDF5E6;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
-    <Text layoutX="447.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Result file data" wrappingWidth="186.35174560546875">
-        <font>
-            <Font name="Book Antiqua" size="25.0" />
-        </font>
-    </Text>
-    <Button layoutX="933.0" layoutY="9.0" mnemonicParsing="false" onAction="#chooseSourceFile" prefHeight="30.0" prefWidth="146.0" style="-fx-background-color: #DA70D6;" text="Choose source file" textFill="WHITE">
-        <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
-        </cursor>
-    </Button>
-    <TextField fx:id="NumberPTextField" layoutX="244.0" layoutY="25.0" prefHeight="30.0" prefWidth="193.0" promptText="Enter number p..." />
-    <TextField fx:id="NumberKTextField" layoutX="244.0" layoutY="84.0" prefHeight="26.0" prefWidth="194.0" promptText="Enter number k..." />
-    <TextField fx:id="NumberXTextField" layoutX="244.0" layoutY="148.0" prefHeight="26.0" prefWidth="194.0" promptText="Enter number x..." />
-    <Text layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Simply number p more than 255:" wrappingWidth="223.86431884765625">
-        <font>
-            <Font name="System Italic" size="17.0" />
-        </font>
-    </Text>
-    <Text layoutX="14.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Positive number x, not equal to 1 and less than p-1:" wrappingWidth="223.86431884765625">
-        <font>
-            <Font name="System Italic" size="17.0" />
-        </font>
-    </Text>
-    <Text layoutX="14.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number k more than 1, less than p-1 and mutually simple with p-1:" wrappingWidth="223.86431884765625">
-        <font>
-            <Font name="System Italic" size="17.0" />
-        </font>
-    </Text>
-    <Button layoutX="461.0" layoutY="25.0" mnemonicParsing="false" onAction="#inputPNumber" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: green;" text="Enter" textFill="WHITE" />
-    <Button layoutX="461.0" layoutY="83.0" mnemonicParsing="false" onAction="#inputKNumber" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: green;" text="Enter" textFill="WHITE" />
-    <Button layoutX="461.0" layoutY="147.0" mnemonicParsing="false" onAction="#inputXNumber" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: green;" text="Enter" textFill="WHITE" />
-    <Text layoutX="14.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available primitive root g:" wrappingWidth="223.86431884765614">
-        <font>
-            <Font name="System Italic" size="17.0" />
-        </font>
-    </Text>
-    <TextArea fx:id="AvialableRootGTextArea" layoutX="244.0" layoutY="198.0" prefHeight="40.0" prefWidth="194.0" />
-    <Text layoutX="14.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selected g from available: ">
-        <font>
-            <Font name="System Italic" size="17.0" />
-        </font>
-    </Text>
-    <TextField fx:id="NumberGTextField" layoutX="244.0" layoutY="262.0" prefHeight="26.0" prefWidth="194.0" promptText="Enter number g..." />
-    <Button layoutX="461.0" layoutY="260.0" mnemonicParsing="false" onAction="#inputGNumber" prefHeight="26.0" prefWidth="68.0" style="-fx-background-color: green;" text="Enter" textFill="WHITE" />
-    <Button layoutX="662.0" layoutY="255.0" mnemonicParsing="false" onAction="#encryptSourceData" prefHeight="40.0" prefWidth="114.0" style="-fx-background-color: #F4A460;" text="Encrypt" textFill="WHITE" />
-    <Button layoutX="849.0" layoutY="255.0" mnemonicParsing="false" onAction="#decryptSourceData" prefHeight="40.0" prefWidth="114.0" style="-fx-background-color: #F4A460;" text="Decrypt" textFill="WHITE" />
-    <Button layoutX="933.0" layoutY="55.0" mnemonicParsing="false" onAction="#clearAllData" prefHeight="30.0" prefWidth="146.0" style="-fx-background-color: #A52A2A;" text="Clear all fields" textFill="WHITE">
-        <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
-        </cursor>
-    </Button>
-    <TextArea fx:id="resultFileDataTextArea" layoutY="342.0" prefHeight="399.0" prefWidth="1091.0" />
-    <Text fx:id="messageText" fill="RED" layoutX="760.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid input" textAlignment="CENTER" visible="false">
-        <font>
-            <Font name="System Italic" size="19.0" />
-        </font>
-    </Text>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
+   <Button layoutX="257.0" layoutY="360.0" mnemonicParsing="false" onAction="#onSendButtonClicked" prefHeight="26.0" prefWidth="87.0" style="-fx-background-color: green;" text="Отправить" textFill="WHITE" />
+   <TextField fx:id="title_text_field" layoutX="125.0" layoutY="44.0" prefHeight="25.0" prefWidth="289.0" />
+   <Label layoutX="125.0" layoutY="20.0" prefHeight="17.0" prefWidth="169.0" text="Введите заголовок:" />
+   <TextField fx:id="message_text_field" layoutX="125.0" layoutY="108.0" prefHeight="77.0" prefWidth="289.0" />
+   <Label layoutX="125.0" layoutY="83.0" prefHeight="17.0" prefWidth="169.0" text="Введите сообщение:" />
+   <Label layoutX="125.0" layoutY="200.0" prefHeight="17.0" prefWidth="169.0" text="Дата отправки:" />
+   <CheckBox fx:id="now_check_box" layoutX="125.0" layoutY="228.0" mnemonicParsing="false" text="Сейчас" />
+   <Label fx:id="select_date_label" layoutX="125.0" layoutY="257.0" prefHeight="17.0" prefWidth="169.0" text="Выбрать дату:" />
+    <DatePicker fx:id="date_picker" layoutX="125.0" layoutY="280.0" />
+   <Label fx:id="select_time_label" layoutX="344.0" layoutY="257.0" prefHeight="17.0" prefWidth="229.0" text="Введите время HH:mm:" />
+   <TextField fx:id="time_text_field" layoutX="344.0" layoutY="280.0" prefHeight="25.0" prefWidth="174.0" />
+   <Label layoutX="125.0" layoutY="316.0" prefHeight="35.0" prefWidth="393.0" text="Label" textFill="RED" fx:id="error_label" visible="false">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
 </AnchorPane>
