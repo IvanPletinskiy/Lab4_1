@@ -11,7 +11,7 @@
       </font></Button>
    <TextField fx:id="title_text_field" layoutX="125.0" layoutY="44.0" prefHeight="25.0" prefWidth="289.0" />
    <Label layoutX="125.0" layoutY="20.0" prefHeight="17.0" prefWidth="169.0" text="Введите заголовок:" />
-   <TextField fx:id="message_text_field" layoutX="125.0" layoutY="108.0" prefHeight="77.0" prefWidth="289.0" />
+   <TextField fx:id="message_text_field" layoutX="125.0" layoutY="108.0" prefHeight="77.0" prefWidth="289.0"  alignment="TOP_LEFT"/>
    <Label layoutX="125.0" layoutY="83.0" prefHeight="17.0" prefWidth="169.0" text="Введите сообщение:" />
    <Label layoutX="125.0" layoutY="200.0" prefHeight="17.0" prefWidth="169.0" text="Дата отправки:" />
    <CheckBox fx:id="now_check_box" layoutX="125.0" layoutY="228.0" mnemonicParsing="false" text="Сейчас" />
