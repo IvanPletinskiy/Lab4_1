@@ -1,366 +1,338 @@
 package com.handen.lab.controller;
 
-import com.handen.lab.utils.NumbersTextFormatter;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.io.*;
 
-public class MainController implements Initializable {
-    @FXML
-    private Text messageText;
-    @FXML
-    private TextField pTextField;
-    @FXML
-    private TextField kTextField;
-    @FXML
-    private TextField xTextField;
-    @FXML
-    private TextArea outputTextArea;
-    public ComboBox<Long> combobox;
-    public Label errorLabel;
+public class MainController {
+    // Подпись
+    private Long pNumber;
+    private Long qNumber;
+    private Long rNumber;
+    private Long eulerFunction;
+    private Long dNumber;
+    private Long eNumber;
+    private Long signHash;
+    private Long sign;
 
-    private Long p;
-    private Long k;
-    private Long x;
-    private Long g;
-    private final ObservableList<Long> gRoots = FXCollections.observableArrayList();
-
-    private String extension;
-    private File sourceFile;
-    private byte[] sourceFileData;
-
-    private StringBuilder encryptStringBuilder = new StringBuilder();
-    private StringBuilder decryptStringBuilder = new StringBuilder();
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        combobox.setItems(gRoots);
-        combobox.setOnAction(actionEvent -> {
-            g = combobox.getValue();
-        });
-        pTextField.setTextFormatter(new NumbersTextFormatter(20));
-        xTextField.setTextFormatter(new NumbersTextFormatter(20));
-        kTextField.setTextFormatter(new NumbersTextFormatter(20));
-    }
-
-    private boolean validateKNumber() {
-        if(kTextField.getText().isBlank()) {
-            errorLabel.setText("K is empty");
-            return false;
-        }
-
-        long k = Long.parseLong(kTextField.getText());
-        boolean result = k > 1 && k < p - 1 && findGCD(k, p) == 1;
-        errorLabel.setText("K is invalid");
-        return result;
-    }
-
-    private boolean validateXNumber() {
-        if(xTextField.getText().isBlank()) {
-            errorLabel.setText("X is empty");
-            return false;
-        }
-
-        long x = Long.parseLong(xTextField.getText());
-        boolean result = x > 1 && x < p - 1;
-        errorLabel.setText("X is invalid");
-        return result;
-    }
-
-    private boolean validateInput() {
-        boolean result = sourceFileData != null;
-        if(!result) {
-            errorLabel.setText("File is not selected");
-        }
-        return result;
-    }
+    //Проверка подписи
+    private Long signCheckRNumber;
+    private Long signCheckENumber;
+    private Long signCheckHash;
+    private Long signCheckSign;
 
     @FXML
-    void onValidatePNumberClicked(ActionEvent event) {
-        boolean result = validatePNumber();
-        if(result) {
-            errorLabel.setVisible(false);
-            p = Long.parseLong(pTextField.getText());
-            gRoots.setAll(findPrimitiveRoots(p));
-            messageText.setVisible(true);
-            messageText.setFill(Color.GREEN);
-            messageText.setText("Number P is valid");
-        }
-        else {
-            errorLabel.setVisible(true);
-        }
+    private TextField InputPTextField;
+
+    @FXML
+    private TextField InputQTextField;
+
+    @FXML
+    private TextField RTextField;
+
+    @FXML
+    private TextField EulerFunctionTextField;
+
+    @FXML
+    private TextField InputDTextField;
+
+    @FXML
+    private TextField ETextField;
+
+    @FXML
+    private TextArea SignCheckHashTextArea;
+
+    @FXML
+    private TextArea SignTextArea;
+
+    @FXML
+    private TextField InputSignCheckRTextField;
+
+    @FXML
+    private TextField InputSignCheckETextField;
+
+    @FXML
+    private TextArea HashTextArea;
+
+    public void showErrorMessage(String errorText) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Error message!");
+        alert.setContentText(errorText);
+        alert.showAndWait();
     }
 
-    private boolean validatePNumber() {
-        if(pTextField.getText().isBlank()) {
-            errorLabel.setText("P is empty");
-            return false;
-        }
-        long p = Long.parseLong(pTextField.getText());
-        boolean result = p > 255 && validateNumberIsPrime(p);
-        errorLabel.setText("P is invalid");
-        return result;
-    }
-
-    //Вероятностный тест Ферма
-    private boolean validateNumberIsPrime(long number) {
-        if(number == 2) {
-            return true;
-        }
-        for(int i = 0; i < 100; i++) {
-            long temp = (long) ((Math.random() % (number - 2)) + 2);
-            if(findGCD(temp, number) != 1) {
-                return false;
-            }
-            if(fastExpMod(temp, number - 1, number) != 1) {
+    //Input checkers
+    public boolean isPrimeNumber(long num) {
+        long temp;
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            temp = num % i;
+            if (temp == 0) {
                 return false;
             }
         }
         return true;
     }
 
-    // Нахождение НОД двух чисел с помощью алгоритма Эвклида
-    private long findGCD(long firstNumber, long secondNumber) {
-        if(secondNumber == 0) {
-            return firstNumber;
+    public long findENumber(long a, long b) {
+        long d0 = a;
+        long d1 = b;
+        long x0 = 1;
+        long x1 = 0;
+        long y0 = 0;
+        long y1 = 1;
+        while (d1 > 1) {
+            long q = d0 / d1;
+            long d2 = d0 % d1;
+            long x2 = x0 - q * x1;
+            long y2 = y0 - q * y1;
+            d0 = d1;
+            d1 = d2;
+            x0 = x1;
+            x1 = x2;
+            y0 = y1;
+            y1 = y2;
         }
-        return findGCD(secondNumber, firstNumber % secondNumber);
+        return y1;
     }
 
-    // Быстрое возведение в степень a ^ z mod n
-    private long fastExpMod(long base, long power, long mod) {
-        if(power == 0) {
-            return 1;
+    public long gcd(long e, long z) {
+        if (e == 0) {
+            return z;
+        } else {
+            return gcd(z % e, e);
         }
-        if(power % 2 == 0) {
-            long temp = fastExpMod(base, power / 2, mod);
-            return helperFastExpMod(temp, temp, mod) % mod;
-        }
-        return (helperFastExpMod(fastExpMod(base, power - 1, mod), base, mod)) % mod;
     }
 
-    private long helperFastExpMod(long base, long power, long mod) {
-        if(power == 1) {
-            return base;
+    boolean isCorrectPQ(String p) {
+        long temp;
+        try {
+            temp = Long.parseLong(p);
+        } catch (NumberFormatException e) {
+            return false;
         }
-        if(power == 0) {
-            return 1;
-        }
-        if(power % 2 == 0) {
-            long temp = helperFastExpMod(base, power / 2, mod);
-            return (2 * temp) % mod;
-        }
-        return (helperFastExpMod(base, power - 1, mod) + base) % mod;
+        return isPrimeNumber(temp);
     }
 
-    // Поиск первообразных корней по модулю p
-    ArrayList<Long> findPrimitiveRoots(long p) {
-        ArrayList<Long> simplyDividers = findSimplyDividers(p - 1);
-        ArrayList<Long> result = new ArrayList<>();
-        boolean flag;
-        for(long g = 2; g < p; g++) {
-            flag = true;
-            for(int j = 0; j < simplyDividers.size(); j++) {
-                if(fastExpMod(g, (p - 1) / simplyDividers.get(j), p) == 1) {
-                    flag = false;
-                }
-                else {
-                    if((j == simplyDividers.size() - 1) && flag) {
-                        result.add(g);
+    boolean isCorrectLongNumber(String d) {
+        long temp;
+        try {
+            temp = Long.parseLong(d);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
+    // Input values
+    @FXML
+    public void inputPQ(ActionEvent event) {
+        if (InputQTextField.getText().isEmpty() || InputPTextField.getText().isEmpty()) {
+            showErrorMessage("Пожалуйста, заполните поля p и q");
+        } else {
+            if (isCorrectPQ(InputPTextField.getText()) && isCorrectPQ(InputQTextField.getText())) {
+                RTextField.clear();
+                EulerFunctionTextField.clear();
+                pNumber = Long.parseLong(InputPTextField.getText());
+                qNumber = Long.parseLong(InputQTextField.getText());
+                rNumber = pNumber * qNumber;
+                RTextField.setText(String.valueOf(rNumber));
+
+                eulerFunction = (pNumber - 1) * (qNumber - 1);
+                EulerFunctionTextField.setText(String.valueOf(eulerFunction));
+            } else {
+                showErrorMessage("Числа p и q должны быть простыми");
+                InputPTextField.clear();
+                InputQTextField.clear();
+                RTextField.clear();
+                EulerFunctionTextField.clear();
+                rNumber = null;
+                eulerFunction = null;
+            }
+        }
+    }
+
+    @FXML
+    public void inputD(ActionEvent event) {
+        if (eulerFunction == null) {
+            showErrorMessage("Пожалуйста, введите p и q");
+        } else {
+            if (InputDTextField.getText().isEmpty()) {
+                showErrorMessage("Пожалуйста, заполните полe d");
+            } else {
+                if (isCorrectLongNumber(InputDTextField.getText())) {
+                    dNumber = Long.parseLong(InputDTextField.getText());
+                    eNumber = findENumber(eulerFunction, dNumber);
+                    if (eNumber > 1 && eNumber < eulerFunction && gcd(eNumber, eulerFunction) == 1) {
+                        ETextField.setText(String.valueOf(eNumber));
+                    } else {
+                        showErrorMessage("Число d не удовлетворяет условиями (число е не прошло проверку)");
+                        InputDTextField.clear();
+                        dNumber = null;
+                        eNumber = null;
                     }
+                } else {
+                    showErrorMessage("Пожалуйста, проверьте корректность вводимых данных");
                 }
             }
-        }
-        return result;
-    }
-
-    // Находим все простые делители числа
-    private ArrayList<Long> findSimplyDividers(long number) {
-        ArrayList<Long> arrayList = new ArrayList<>();
-        for(long i = 2; i * i <= number; ++i) {
-            if(number % i == 0) {
-                arrayList.add(i);
-                while(number % i == 0) {
-                    number /= i;
-                }
-            }
-        }
-        if(number != 1) {
-            arrayList.add(number);
-        }
-        return arrayList;
-    }
-
-    @FXML
-    void encryptSourceData(ActionEvent event) throws IOException {
-        encryptStringBuilder = new StringBuilder();
-        boolean result = validateFields();
-        if(!result) {
-            return;
-        }
-
-        k = Long.parseLong(kTextField.getText());
-        x = Long.parseLong(xTextField.getText());
-
-        if(p != null && g != null && sourceFileData != null) {
-            long a = fastExpMod(g, k, p);
-            long b;
-            long y = fastExpMod(g, x, p);
-            ArrayList<Long> output = new ArrayList<>();
-            for(int i = 0; i < sourceFileData.length; i++) {
-                b = fastExpMod(y, k, p) * (sourceFileData[i] % p) % p;
-                if(i != sourceFileData.length - 1) {
-                    encryptStringBuilder.append(a);
-                    encryptStringBuilder.append(" ");
-                    encryptStringBuilder.append(b);
-                    encryptStringBuilder.append(" ");
-                    output.add(a);
-                    output.add(b);
-                }
-                else {
-                    encryptStringBuilder.append(a);
-                    encryptStringBuilder.append(" ");
-                    encryptStringBuilder.append(b);
-                }
-            }
-
-            int outputTextLength = encryptStringBuilder.length();
-            if(outputTextLength > 1000) {
-                outputTextLength = 1000;
-            }
-
-            outputTextArea.setText(encryptStringBuilder.substring(0, outputTextLength));
-            writeDataToFile(output, "encrypted." + extension);
-            messageText.setText("Encrypting is complete");
-            messageText.setFill(Color.GREEN);
-        }
-        else {
-            errorLabel.setText("Enter, please, all numbers\nand choose source file.");
-            errorLabel.setVisible(true);
-        }
-    }
-
-    private boolean validateFields() {
-        messageText.setVisible(false);
-        if(!(validateXNumber() && validateKNumber() && validatePNumber() && validateInput() && validateGNumber())) {
-            errorLabel.setVisible(true);
-            return false;
-        }
-        else {
-            errorLabel.setVisible(false);
-        }
-        return true;
-    }
-
-    private boolean validateGNumber() {
-        boolean result = combobox.getValue() != null;
-        if(!result) {
-            errorLabel.setText("G is not set");
-        }
-        return result;
-    }
-
-    @FXML
-    void decryptSourceData(ActionEvent event) throws IOException {
-        decryptStringBuilder = new StringBuilder();
-        if(!encryptStringBuilder.toString().isEmpty()) {
-            long m;
-            String[] temp = encryptStringBuilder.toString().split(" ");
-            ArrayList<Long> decryptArray = new ArrayList<>();
-            ArrayList<Long> output = new ArrayList<>();
-            for(String s : temp) {
-                decryptArray.add(Long.parseLong(s));
-            }
-            for(int i = 0; i < decryptArray.size() - 1; i += 2) {
-                long a = decryptArray.get(i);
-                long b = decryptArray.get(i + 1);
-                m = (fastExpMod(a, x * (p - 2), p) * (b % p)) % p;
-                output.add(m);
-                decryptStringBuilder.append(m);
-                decryptStringBuilder.append(" ");
-            }
-
-            int outputTextLength = decryptStringBuilder.length();
-            if(outputTextLength > 1000) {
-                outputTextLength = 1000;
-            }
-
-            outputTextArea.setText(decryptStringBuilder.substring(0, outputTextLength));
-
-            writeDataToFile(output, "decrypted." + extension);
-        }
-        else {
-            errorLabel.setText("Please, encrypt something.");
-            errorLabel.setVisible(true);
-        }
-    }
-
-    // Записываем в файл результат
-    void writeDataToFile(ArrayList<Long> data, String fileName) throws IOException {
-        try(FileOutputStream fos = new FileOutputStream(fileName)) {
-            byte[] bytes = new byte[data.size()];
-            for(int i = 0; i < data.size(); i++) {
-                bytes[i] = data.get(i).byteValue();
-            }
-            fos.write(bytes, 0, bytes.length);
-        }
-        catch(IOException ex) {
-            System.out.println(ex.getMessage());
         }
     }
 
     @FXML
-    void chooseSourceFile(ActionEvent event) throws IOException {
+    public void inputSignCheckE(ActionEvent event) {
+        if (InputSignCheckETextField.getText().isEmpty()) {
+            showErrorMessage("Пожалуйста, введите e для проверки подписи");
+        } else {
+            if (isCorrectLongNumber(InputSignCheckETextField.getText())) {
+                signCheckENumber = Long.parseLong(InputSignCheckETextField.getText());
+            } else {
+                showErrorMessage("Пожалуйста, проверьте корректность ввода");
+            }
+        }
+    }
+
+    @FXML
+    public void inputSignCheckR(ActionEvent event) {
+        if (InputSignCheckRTextField.getText().isEmpty()) {
+            showErrorMessage("Пожалуйста, введите r для проверки подписи");
+        } else {
+            if (isCorrectLongNumber(InputSignCheckRTextField.getText())) {
+                signCheckRNumber = Long.parseLong(InputSignCheckRTextField.getText());
+            } else {
+                showErrorMessage("Пожалуйста, проверьте корректность ввода");
+            }
+        }
+    }
+
+    // Subscribe & Verification
+    @FXML
+    public void subscribeFile(ActionEvent event) throws IOException {
+        if (rNumber == null && dNumber == null) {
+            showErrorMessage("Пожалуйста, введите p, q и d");
+        } else {
+            String fileData = readUnsignedFile();
+            signHash = hashFunction(fileData, rNumber);
+            sign = modExp(signHash, dNumber, rNumber);
+            HashTextArea.setText(String.valueOf(signHash));
+            SignTextArea.setText(String.valueOf(sign));
+            writeToFile(new File("Подпись.txt"), fileData, sign);
+        }
+    }
+
+    @FXML
+    public void signVerification(ActionEvent event) throws IOException {
+        SignCheckHashTextArea.clear();
+        if (signCheckRNumber == null && signCheckENumber == null) {
+            showErrorMessage("Пожалуйста, введите r и e для проверки подписи");
+        } else {
+            String[] fileData = readSignedFile();
+            try {
+                signCheckHash = hashFunction(fileData[0], signCheckRNumber);
+                signCheckSign = modExp(Long.parseLong(fileData[1].replace(" ", "")), signCheckENumber, signCheckRNumber);
+            }catch (ArrayIndexOutOfBoundsException e){
+                showErrorMessage("Данный файл не содержит подписи");
+                return;
+            }
+            SignCheckHashTextArea.setText(String.valueOf(signCheckHash));
+            Alert alert;
+            if(signCheckHash.equals(signCheckSign)){
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Проверка подписи");
+                alert.setHeaderText("Подпись действительна");
+            }else {
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Проверка подписи");
+                alert.setHeaderText("Подпись не действительна");
+            }
+            alert.showAndWait();
+        }
+    }
+
+
+    public long hashFunction(String text, long r) {
+        long resultHash = 100;
+        for (int i = 0; i < text.length(); i++) {
+            resultHash = modExp((resultHash + (byte) text.charAt(i)), 2, r);
+        }
+        return resultHash;
+    }
+
+    //  косячно работает
+ /*   public long modExp(long x, long y, long N) {
+        if (y == 0) return 1;
+        long z = modExp(x, y / 2, N);
+        if (y % 2 == 0)
+            return (z * z) % N;
+        else
+            return (x * z * z) % N;
+    }*/
+
+    private long modExp(long m,long pow,long n){
+        long a1 = m;
+        long z1 = pow;
+        long x = 1;
+        while (z1 != 0){
+            while (z1 % 2 == 0){
+                z1/=2;
+                a1 = (a1 * a1) % n;
+            }
+            z1--;
+            x = (x*a1) % n;
+        }
+        return x;
+    }
+
+    // Работа с файлами
+    public void writeToFile(File file, String message, long sign) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(message).append(" , ").append(sign);
+        try (FileWriter writer = new FileWriter(file, false)) {
+            writer.write(stringBuilder.toString());
+            writer.flush();
+        } catch (IOException ex) {
+            ex.getStackTrace();
+        }
+    }
+
+    private String readUnsignedFile() throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        File file = chooseSourceFile();
+        FileInputStream fis = new FileInputStream(file);
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(isr);
+        String line;
+        while ((line = br.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+        br.close();
+        return stringBuilder.toString();
+    }
+
+    private String[] readSignedFile() throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        File file = chooseSourceFile();
+        FileInputStream fis = new FileInputStream(file);
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(isr);
+        String line;
+        while ((line = br.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+        br.close();
+        //todo то что сказал в гс
+        return stringBuilder.toString().split(" , ");
+    }
+
+    @FXML
+    private File chooseSourceFile() throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Выберите файл");
-        Stage stage = new Stage();
-        sourceFile = fileChooser.showOpenDialog(stage);
-        if(sourceFile != null) {
-            extension = getExtension(sourceFile.getPath());
-            sourceFileData = Files.readAllBytes(Paths.get(sourceFile.getPath()));
-        }
-    }
-
-    String getExtension(String fileName) {
-        String extension = "";
-        String[] array = fileName.split("\\.");
-        extension = array[array.length - 1];
-        return extension;
-    }
-
-    @FXML
-    void clearAllData(ActionEvent event) {
-        g = null;
-        p = null;
-        k = null;
-        x = null;
-        errorLabel.setVisible(false);
-        messageText.setVisible(false);
-        sourceFile = null;
-        sourceFileData = null;
-        gRoots.clear();
-        xTextField.clear();
-        kTextField.clear();
-        pTextField.clear();
+        return fileChooser.showOpenDialog(new Stage());
     }
 }

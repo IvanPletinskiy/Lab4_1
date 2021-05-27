@@ -14,11 +14,12 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("main_layout.fxml"));
-        Scene scene = new Scene(loader.load());
+        Scene scene = new Scene(loader.load(), 800, 500);
         MainController controller = loader.getController();
 //        controller.setStage(stage);
         stage.setTitle("Ivan Pletinski 951008");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

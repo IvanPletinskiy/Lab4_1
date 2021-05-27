@@ -1,70 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
-    <Text layoutX="27.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Output" wrappingWidth="186.35174560546875">
-        <font>
-            <Font size="25.0" />
-        </font>
-    </Text>
-    <Button layoutX="888.0" layoutY="23.0" mnemonicParsing="false" onAction="#chooseSourceFile" prefHeight="30.0" prefWidth="146.0" text="Open file">
-        <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
-        </cursor>
-    </Button>
-    <TextField fx:id="pTextField" layoutX="29.0" layoutY="38.0" prefHeight="30.0" prefWidth="193.0"  />
-    <TextField fx:id="kTextField" layoutX="29.0" layoutY="190.0" prefHeight="26.0" prefWidth="194.0"  />
-    <TextField layoutX="29.0" layoutY="278.0" prefHeight="26.0" prefWidth="194.0"  fx:id="xTextField" />
-    <Text layoutX="27.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Simple number p &gt; 255:" wrappingWidth="223">
-        <font>
-            <Font size="17.0" />
-        </font>
-    </Text>
-    <Text layoutX="29.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X, not equal to 1 and less than p-1:" wrappingWidth="318.0">
-        <font>
-            <Font size="17.0" />
-        </font>
-    </Text>
-    <Text layoutX="27.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="K more than 1, less than p-1 and mutually simple with p-1:" wrappingWidth="318.0">
-        <font>
-            <Font size="17.0" />
-        </font>
-    </Text>
-    <Button layoutX="244.0" layoutY="40.0" mnemonicParsing="false" onAction="#onValidatePNumberClicked" prefHeight="26.0" prefWidth="68.0" text="Validate" />
-    <Button layoutX="694.0" layoutY="339.0" mnemonicParsing="false" onAction="#encryptSourceData" prefHeight="103.0" prefWidth="210.0" text="Encrypt">
-      <font>
-         <Font size="20.0" />
-      </font></Button>
-    <Button layoutX="694.0" layoutY="463.0" mnemonicParsing="false" onAction="#decryptSourceData" prefHeight="103.0" prefWidth="210.0" text="Decrypt">
-      <font>
-         <Font size="20.0" />
-      </font></Button>
-    <Button layoutX="888.0" layoutY="62.0" mnemonicParsing="false" onAction="#clearAllData" prefHeight="30.0" prefWidth="146.0" text="Clear">
-        <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
-        </cursor>
-    </Button>
-    <TextArea fx:id="outputTextArea" editable="false" layoutX="29.0" layoutY="371.0" prefHeight="345.0" prefWidth="549.0" wrapText="true">
-      <font>
-         <Font size="20.0" />
-      </font></TextArea>
-    <Text fx:id="messageText" layoutX="500.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Invalid input" textAlignment="CENTER" visible="false" wrappingWidth="320.0">
-        <font>
-            <Font size="19.0" />
-        </font>
-    </Text>
-   <ComboBox fx:id="combobox" layoutX="27.0" layoutY="106.0" prefWidth="150.0" />
-   <Text layoutX="27.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select g:">
-      <font>
-         <Font size="17.0" />
-      </font>
-   </Text>
-   <Label fx:id="errorLabel" layoutX="632.0" layoutY="605.0" prefHeight="103.0" prefWidth="373.0" text="Label" textAlignment="CENTER" textFill="RED" visible="false">
-      <font>
-         <Font size="22.0" />
-      </font></Label>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #6B8E23;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
+    <children>
+        <Button layoutX="139.0" layoutY="408.0" mnemonicParsing="false" onAction="#subscribeFile" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: #FF8C00;" text="Подписать" textFill="WHITE" />
+        <TextField fx:id="InputPTextField" layoutX="76.0" layoutY="42.0" promptText="Простое число" />
+        <TextField fx:id="InputQTextField" layoutX="76.0" layoutY="79.0" promptText="Простое число" />
+        <TextField fx:id="RTextField" layoutX="76.0" layoutY="119.0" promptText="Произведение r * q" />
+        <TextField fx:id="EulerFunctionTextField" layoutX="76.0" layoutY="159.0" promptText=" φ(r) = (p–1)*(q–1)" />
+        <Text fill="WHITE" layoutX="43.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="p:">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="43.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="q:">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="45.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="r:">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="32.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="φ(r):">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <TextField fx:id="InputDTextField" layoutX="76.0" layoutY="203.0" promptText="(e*d)mod φ(r) = 1" />
+        <TextField fx:id="ETextField" layoutX="76.0" layoutY="250.0" promptText=" 1&lt;e&lt;φ(r) и (e, φ(r)) = 1" />
+        <Text fill="WHITE" layoutX="42.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="d:">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="43.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e:">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <Button layoutX="294.0" layoutY="55.0" mnemonicParsing="false" onAction="#inputPQ" text="Ввод p и q" />
+        <Button layoutX="294.0" layoutY="203.0" mnemonicParsing="false" onAction="#inputD" prefHeight="26.0" prefWidth="74.0" text="Ввод d" />
+        <TextArea fx:id="SignCheckHashTextArea" layoutX="480.0" layoutY="153.0" prefHeight="25.0" prefWidth="262.0" />
+        <Text fill="WHITE" layoutX="389.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Хэш h(M):">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="19.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Подпись:">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <TextArea fx:id="SignTextArea" layoutX="110.0" layoutY="345.0" prefHeight="38.0" prefWidth="262.0" />
+        <Text fill="WHITE" layoutX="201.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Подпись:">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <Text fill="WHITE" layoutX="520.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Проверка подписи:">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <TextField fx:id="InputSignCheckRTextField" layoutX="480.0" layoutY="42.0" />
+        <Text fill="WHITE" layoutX="449.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="r:">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <TextField fx:id="InputSignCheckETextField" layoutX="480.0" layoutY="92.0" />
+        <Text fill="WHITE" layoutX="449.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e:">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+        <Button layoutX="690.0" layoutY="41.0" mnemonicParsing="false" onAction="#inputSignCheckR" text="Ввод r" />
+        <Button layoutX="689.0" layoutY="91.0" mnemonicParsing="false" onAction="#inputSignCheckE" text="Ввод e" />
+        <Button layoutX="530.0" layoutY="228.0" mnemonicParsing="false" onAction="#signVerification" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: #FF8C00;" text="Проверка подписи" textFill="WHITE" />
+        <TextArea fx:id="HashTextArea" layoutX="110.0" layoutY="292.0" prefHeight="25.0" prefWidth="262.0" />
+        <Text fill="WHITE" layoutX="19.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Хэш h(M):">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Text>
+    </children>
 </AnchorPane>
