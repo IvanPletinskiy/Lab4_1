@@ -263,16 +263,6 @@ public class MainController {
         return resultHash;
     }
 
-    //  косячно работает
- /*   public long modExp(long x, long y, long N) {
-        if (y == 0) return 1;
-        long z = modExp(x, y / 2, N);
-        if (y % 2 == 0)
-            return (z * z) % N;
-        else
-            return (x * z * z) % N;
-    }*/
-
     private long modExp(long m,long pow,long n){
         long a1 = m;
         long z1 = pow;
@@ -288,10 +278,9 @@ public class MainController {
         return x;
     }
 
-    // Работа с файлами
     public void writeToFile(File file, String message, long sign) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(message).append(" , ").append(sign);
+        stringBuilder.append(message).append("@").append(sign);
         try (FileWriter writer = new FileWriter(file, false)) {
             writer.write(stringBuilder.toString());
             writer.flush();
@@ -326,7 +315,7 @@ public class MainController {
         }
         br.close();
         //todo то что сказал в гс
-        return stringBuilder.toString().split(" , ");
+        return stringBuilder.toString().split("@");
     }
 
     @FXML
