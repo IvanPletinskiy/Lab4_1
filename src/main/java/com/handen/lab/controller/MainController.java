@@ -62,8 +62,8 @@ public class MainController {
 
     public void showErrorMessage(String errorText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Error message!");
+        alert.setTitle("Ошибка");
+        alert.setHeaderText("");
         alert.setContentText(errorText);
         alert.showAndWait();
     }

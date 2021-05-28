@@ -1,93 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #6B8E23;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.handen.lab.controller.MainController">
     <children>
-        <Button layoutX="139.0" layoutY="408.0" mnemonicParsing="false" onAction="#subscribeFile" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: #FF8C00;" text="Подписать" textFill="WHITE" />
-        <TextField fx:id="InputPTextField" layoutX="76.0" layoutY="42.0" promptText="Простое число" />
-        <TextField fx:id="InputQTextField" layoutX="76.0" layoutY="79.0" promptText="Простое число" />
-        <TextField fx:id="RTextField" layoutX="76.0" layoutY="119.0" promptText="Произведение r * q" />
-        <TextField fx:id="EulerFunctionTextField" layoutX="76.0" layoutY="159.0" promptText=" φ(r) = (p–1)*(q–1)" />
-        <Text fill="WHITE" layoutX="43.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="p:">
+        <Button layoutX="134.0" layoutY="449.0" mnemonicParsing="false" onAction="#subscribeFile" prefHeight="26.0" prefWidth="170.0" text="Подписать" />
+        <TextField fx:id="InputPTextField" layoutX="42.0" layoutY="54.0" promptText="Простое число" />
+        <TextField fx:id="InputQTextField" layoutX="42.0" layoutY="107.0" promptText="Простое число" />
+        <TextField fx:id="RTextField" layoutX="42.0" layoutY="153.0" promptText="Произведение r * q" />
+        <TextField fx:id="EulerFunctionTextField" layoutX="42.0" layoutY="202.0" promptText=" φ(r) = (p–1)*(q–1)" />
+        <Text layoutX="43.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите p:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <Text fill="WHITE" layoutX="43.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="q:">
+        <Text layoutX="43.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите q:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <Text fill="WHITE" layoutX="45.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="r:">
+        <Text layoutX="45.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="r:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <Text fill="WHITE" layoutX="32.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="φ(r):">
+        <Text layoutX="44.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="φ(r):">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <TextField fx:id="InputDTextField" layoutX="76.0" layoutY="203.0" promptText="(e*d)mod φ(r) = 1" />
-        <TextField fx:id="ETextField" layoutX="76.0" layoutY="250.0" promptText=" 1&lt;e&lt;φ(r) и (e, φ(r)) = 1" />
-        <Text fill="WHITE" layoutX="42.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="d:">
+        <TextField fx:id="InputDTextField" layoutX="42.0" layoutY="246.0" promptText="(e*d)mod φ(r) = 1" />
+        <TextField fx:id="ETextField" layoutX="42.0" layoutY="289.0" promptText=" 1&lt;e&lt;φ(r) и (e, φ(r)) = 1" />
+        <Text layoutX="42.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите d:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <Text fill="WHITE" layoutX="43.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e:">
+        <Text layoutX="43.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <Button layoutX="294.0" layoutY="55.0" mnemonicParsing="false" onAction="#inputPQ" text="Ввод p и q" />
-        <Button layoutX="294.0" layoutY="203.0" mnemonicParsing="false" onAction="#inputD" prefHeight="26.0" prefWidth="74.0" text="Ввод d" />
-        <TextArea fx:id="SignCheckHashTextArea" layoutX="480.0" layoutY="153.0" prefHeight="25.0" prefWidth="262.0" />
-        <Text fill="WHITE" layoutX="389.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Хэш h(M):">
+        <Button layoutX="204.0" layoutY="81.0" mnemonicParsing="false" onAction="#inputPQ" text="Проверить p и q" />
+        <Button layoutX="204.0" layoutY="246.0" mnemonicParsing="false" onAction="#inputD" prefHeight="26.0" prefWidth="108.0" text="Проверить d" />
+        <TextArea fx:id="SignCheckHashTextArea" layoutX="480.0" layoutY="218.0" prefHeight="25.0" prefWidth="262.0" />
+        <Text layoutX="388.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Хэш h(M):">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <Text fill="WHITE" layoutX="19.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Подпись:">
+        <Text layoutX="16.0" layoutY="422.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Подпись:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <TextArea fx:id="SignTextArea" layoutX="110.0" layoutY="345.0" prefHeight="38.0" prefWidth="262.0" />
-        <Text fill="WHITE" layoutX="201.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Подпись:">
+        <TextArea fx:id="SignTextArea" layoutX="110.0" layoutY="395.0" prefHeight="38.0" prefWidth="262.0" />
+        <Text layoutX="201.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Подпись:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <Text fill="WHITE" layoutX="520.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Проверка подписи:">
+        <Text layoutX="520.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Проверка подписи:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <TextField fx:id="InputSignCheckRTextField" layoutX="480.0" layoutY="42.0" />
-        <Text fill="WHITE" layoutX="449.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="r:">
+        <TextField fx:id="InputSignCheckRTextField" layoutX="480.0" layoutY="67.0" />
+        <Text layoutX="480.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Введите r:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <TextField fx:id="InputSignCheckETextField" layoutX="480.0" layoutY="92.0" />
-        <Text fill="WHITE" layoutX="449.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e:">
+        <TextField fx:id="InputSignCheckETextField" layoutX="480.0" layoutY="120.0" />
+        <Text layoutX="480.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="введите e:">
             <font>
                 <Font size="19.0" />
             </font>
         </Text>
-        <Button layoutX="690.0" layoutY="41.0" mnemonicParsing="false" onAction="#inputSignCheckR" text="Ввод r" />
-        <Button layoutX="689.0" layoutY="91.0" mnemonicParsing="false" onAction="#inputSignCheckE" text="Ввод e" />
-        <Button layoutX="530.0" layoutY="228.0" mnemonicParsing="false" onAction="#signVerification" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: #FF8C00;" text="Проверка подписи" textFill="WHITE" />
-        <TextArea fx:id="HashTextArea" layoutX="110.0" layoutY="292.0" prefHeight="25.0" prefWidth="262.0" />
-        <Text fill="WHITE" layoutX="19.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Хэш h(M):">
+        <Button layoutX="647.0" layoutY="67.0" mnemonicParsing="false" onAction="#inputSignCheckR" text="Проверить r" />
+        <Button layoutX="646.0" layoutY="120.0" mnemonicParsing="false" onAction="#inputSignCheckE" text="Проверить e" />
+        <Button layoutX="526.0" layoutY="289.0" mnemonicParsing="false" onAction="#signVerification" prefHeight="26.0" prefWidth="170.0" text="Проверка подписи" />
+        <TextArea fx:id="HashTextArea" layoutX="110.0" layoutY="350.0" prefHeight="25.0" prefWidth="262.0" />
+        <Text layoutX="16.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Хэш h(M):">
             <font>
                 <Font size="19.0" />
             </font>
